@@ -1,5 +1,6 @@
 package com.phoenix.api.repositories.auth;
 
+import com.phoenix.api.constant.BeanIds;
 import com.phoenix.api.constant.DatabaseConstant;
 import com.phoenix.api.model.auth.UserPrincipal;
 import org.springframework.stereotype.Repository;
@@ -10,7 +11,7 @@ import javax.persistence.Query;
 import java.util.List;
 import java.util.Optional;
 
-@Repository(value = "AuthRepositoryImp")
+@Repository(value = BeanIds.AUTH_REPOSITORY_IMP)
 public class AuthRepositoryImp {
 
     @PersistenceContext

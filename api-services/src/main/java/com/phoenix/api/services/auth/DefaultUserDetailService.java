@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@Service("DefaultUserService")
+@Service(BeanIds.DEFAULT_USER_DETAIL_SERVICES)
 public class DefaultUserDetailService implements UserDetailsService {
 
     private final AuthRepositoryImp authRepositoryImp;
@@ -26,7 +26,7 @@ public class DefaultUserDetailService implements UserDetailsService {
     private final List<UserStatusEntity> userStatusEntities;
 
     public DefaultUserDetailService(
-            @Qualifier("AuthRepositoryImp") AuthRepositoryImp authRepositoryImp,
+            @Qualifier(BeanIds.AUTH_REPOSITORY_IMP) AuthRepositoryImp authRepositoryImp,
             @Qualifier(BeanIds.ALL_USER_STATUS) List<UserStatusEntity> userStatusEntities) {
         this.authRepositoryImp = authRepositoryImp;
         this.userStatusEntities = userStatusEntities;
@@ -37,7 +37,7 @@ public class DefaultUserDetailService implements UserDetailsService {
         Optional<UserPrincipal> optional = authRepositoryImp.findUserByUsername(username);
 
         if (!optional.isPresent()) {
-            throw new UsernameNotFoundException(username);
+            throw new UsernameNotFoundException("Couldn't find a matching user username in the database for: " + username);
         }
 
         UserPrincipal userPrincipal = optional.get();

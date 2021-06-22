@@ -5,6 +5,7 @@
 
 package com.phoenix.api.services.auth;
 
+import com.phoenix.api.constant.BeanIds;
 import com.phoenix.api.model.auth.DefaultUserDetails;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 @SpringBootTest
 public class TestDefaultUserDetailService {
     @Autowired
-    @Qualifier("DefaultUserService")
+    @Qualifier(BeanIds.DEFAULT_USER_DETAIL_SERVICES)
     private UserDetailsService userDetailsService;
 
     @Test
