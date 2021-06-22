@@ -12,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.util.AntPathMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -20,7 +21,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.List;
 
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtProvider tokenProvider;
@@ -35,9 +35,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
-        logger.info(request.getRequestURI());
-        String path = request.getRequestURI();
-        return "/api/v0/auth/ping".equals(path);
+        return Arrays.stream(ApplicationConstant.PUBLIC_URLS_MATCHER)
+                .anyMatch(e -> new AntPathMatcher().match(e, request.getServletPath()));
     }
 
     /**
@@ -47,7 +46,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest httpServletRequest,
                                     HttpServletResponse httpServletResponse,
                                     FilterChain filterChain) throws ServletException, IOException {
-        String tokenHeader = httpServletRequest.getHeader(ApplicationConstant.REQUEST_HEADER_TOKEN_KEY);
+        String tokenHeader = httpServletRequest.getHeader(ApplicationConstant.REQUEST_HEADER_AUTHORIZATION);
 
         if (tokenHeader == null) {
             filterChain.doFilter(httpServletRequest, httpServletResponse);

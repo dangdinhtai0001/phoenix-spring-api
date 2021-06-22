@@ -29,4 +29,5 @@ public interface JwtProvider {
 
     boolean validateToken(String token);
 
+    long getTtlMillis();
 }

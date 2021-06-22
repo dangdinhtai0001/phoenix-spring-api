@@ -7,7 +7,7 @@ package com.phoenix.api.constant;
 
 public class ApplicationConstant {
 
-    public static final String REQUEST_HEADER_TOKEN_KEY = "Authorization";
+    public static final String REQUEST_HEADER_AUTHORIZATION = "Authorization";
     public static final String JWT_TOKEN_TYPE = "Bearer ";
 
 
