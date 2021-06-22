@@ -1,0 +1,18 @@
+${Ansi.GREEN}
+          _                              _
+         | |                            (_)
+  _ __   | |__     ___     ___   _ __    _  __  __
+ | '_ \  | '_ \   / _ \   / _ \ | '_ \  | | \ \/ /
+ | |_) | | | | | | (_) | |  __/ | | | | | |  >  <
+ | .__/  |_| |_|  \___/   \___| |_| |_| |_| /_/\_\
+ | |
+ |_|
+
+ :: Spring Boot ${spring.application.name}.${application.version}
+ :: Spring Boot ${spring-boot.version}
+ :: Spring Boot ${spring-boot.formatted-version}
+ :: MIT License, Copyright (c) 2020 Đình Tài
+ :: Powered by Spring Boot ${spring-boot.version}
+
+
+${Ansi.DEFAULT}
