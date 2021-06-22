@@ -15,5 +15,5 @@ public class ApplicationConstant {
     public static final String USER_DETAILS_STATUS_EXPIRED = "EXPIRED";
 
     public static final String[] PUBLIC_URLS_MATCHER = {
-            "**/ping"};
+            "/**/ping"};
 }
