@@ -14,7 +14,7 @@ import java.util.Map;
 public class DefaultJwtProvider implements JwtProvider {
     private String secretKey;
     private SignatureAlgorithm signatureAlgorithm;
-    long ttlMillis;
+    private long ttlMillis;
 
     public DefaultJwtProvider() {
         this.signatureAlgorithm = SignatureAlgorithm.HS256;
@@ -141,5 +141,10 @@ public class DefaultJwtProvider implements JwtProvider {
             log.error("JWT claims string is empty.");
         }
         return false;
+    }
+
+    @Override
+    public long getTtlMillis() {
+        return ttlMillis;
     }
 }

@@ -8,6 +8,7 @@ package com.phoenix.api.constant;
 public class ApplicationConstant {
 
     public static final String REQUEST_HEADER_TOKEN_KEY = "Authorization";
+    public static final String JWT_TOKEN_TYPE = "Bearer ";
 
 
     public static final String USER_DETAILS_STATUS_LOCKED = "LOCKED";
@@ -15,5 +16,5 @@ public class ApplicationConstant {
     public static final String USER_DETAILS_STATUS_EXPIRED = "EXPIRED";
 
     public static final String[] PUBLIC_URLS_MATCHER = {
-            "/**/ping"};
+            "/**/ping", "/**/login"};
 }

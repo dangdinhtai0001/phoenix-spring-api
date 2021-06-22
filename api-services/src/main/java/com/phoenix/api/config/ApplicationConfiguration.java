@@ -6,6 +6,8 @@ import com.phoenix.api.repositories.auth.UserStatusRepository;
 import com.phoenix.auth.JwtProvider;
 import com.phoenix.auth.imp.DefaultJwtProvider;
 import com.phoenix.text.HashingText;
+import com.phoenix.util.UUIDFactory;
+import com.phoenix.util.imp.ConcurrentUUIDFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -44,5 +46,10 @@ public class ApplicationConfiguration {
     @DependsOn(BeanIds.JWT_SECRET_KEY)
     public JwtProvider getJwtProvider(@Qualifier(BeanIds.JWT_SECRET_KEY) String secretKey) {
         return new DefaultJwtProvider(secretKey, Long.parseLong(jwtExpired));
+    }
+
+    @Bean(value = BeanIds.UUID_Factory)
+    public UUIDFactory getUUIDFactory(){
+        return new ConcurrentUUIDFactory();
     }
 }
