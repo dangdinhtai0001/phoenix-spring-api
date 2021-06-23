@@ -2,6 +2,7 @@ package com.phoenix.api.config;
 
 import com.phoenix.api.constant.ApplicationConstant;
 import com.phoenix.api.constant.BeanIds;
+import com.phoenix.api.entrypoint.DefaultAccessDeniedEntryPoint;
 import com.phoenix.api.entrypoint.JwtAuthenticationEntryPoint;
 import com.phoenix.api.filter.JwtAuthenticationFilter;
 import com.phoenix.api.util.security.RawPasswordEncoder;
@@ -20,9 +21,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.*;
 import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.session.FindByIndexNameSessionRepository;
-import org.springframework.session.Session;
-import org.springframework.session.security.SpringSessionBackedSessionRegistry;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -40,14 +38,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private final JwtProvider tokenProvider;
     private final UserDetailsService userDetailsService;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+    private final DefaultAccessDeniedEntryPoint defaultAccessDeniedEntryPoint;
 
     public SecurityConfiguration(
             @Qualifier(BeanIds.JWT_PROVIDER) JwtProvider tokenProvider,
             @Qualifier(BeanIds.DEFAULT_USER_DETAIL_SERVICES) UserDetailsService userDetailsService,
-            @Qualifier(BeanIds.JWT_AUTHENTICATION_ENTRY_POINT) JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint) {
+            @Qualifier(BeanIds.JWT_AUTHENTICATION_ENTRY_POINT) JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint,
+            @Qualifier(BeanIds.DEFAULT_ACCESS_DENIED_ENTRY_POINT) DefaultAccessDeniedEntryPoint defaultAccessDeniedEntryPoint) {
         this.tokenProvider = tokenProvider;
         this.userDetailsService = userDetailsService;
         this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
+        this.defaultAccessDeniedEntryPoint = defaultAccessDeniedEntryPoint;
     }
 
     @Bean(name = BeanIds.JWT_AUTHENTICATION_FILTER)
@@ -70,9 +71,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         encoders.put(ApplicationConstant.PASSWORD_ENCODER_SCRYPT_ID, new SCryptPasswordEncoder());
         encoders.put(ApplicationConstant.PASSWORD_ENCODER_RAW_ID, new RawPasswordEncoder());
 
-        PasswordEncoder passwordEncoder = new DelegatingPasswordEncoder(idForEncode, encoders);
-
-        return passwordEncoder;
+        return new DelegatingPasswordEncoder(idForEncode, encoders);
     }
 
     @Override
@@ -87,6 +86,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
+                .and()
+                .exceptionHandling().accessDeniedHandler(defaultAccessDeniedEntryPoint)
                 .and()
                 .sessionManagement((sessionManagement) -> sessionManagement
                         .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)

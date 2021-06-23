@@ -88,4 +88,8 @@ public class AuthServiceImp {
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+
+    public ResponseEntity getCurrentSession(HttpSession session) {
+        return new ResponseEntity(session.getId(), HttpStatus.OK);
+    }
 }

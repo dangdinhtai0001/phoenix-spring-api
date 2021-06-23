@@ -35,4 +35,9 @@ public class AuthController {
     public ResponseEntity login(@RequestBody Object loginRequest, HttpSession session) {
         return authService.login(loginRequest, session);
     }
+
+    @GetMapping("/current")
+    public ResponseEntity currentSession(HttpSession session){
+        return authService.getCurrentSession(session);
+    }
 }
