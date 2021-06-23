@@ -1,9 +1,14 @@
 /*
+ * @Author: Đặng Đình Tài
+ * @Created_date: 6/23/21, 9:29 PM
+ */
+
+/*
  * @Author Đặng Đình Tài
  * @Date 6/23/21, 10:32 AM
  */
 
-package com.phoenix.api.services.auth.base;
+package com.phoenix.api.services.base;
 
 import com.phoenix.api.entities.base.BaseEntity;
 

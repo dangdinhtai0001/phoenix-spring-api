@@ -3,7 +3,7 @@
  * @Date 6/23/21, 10:20 AM
  */
 
-package com.phoenix.api.util.security;
+package com.phoenix.api.component.security;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 
