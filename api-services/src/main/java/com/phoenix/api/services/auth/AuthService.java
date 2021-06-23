@@ -7,6 +7,9 @@ package com.phoenix.api.services.auth;
 
 import org.springframework.http.ResponseEntity;
 
+import javax.servlet.http.HttpSession;
+
+
 public interface AuthService {
-    ResponseEntity login(Object payload);
+    ResponseEntity login(Object payload, HttpSession session);
 }

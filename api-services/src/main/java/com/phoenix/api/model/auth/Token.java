@@ -17,7 +17,6 @@ public class Token {
     private long expiresIn;
     private String refreshToken;
     private String tokenType;
-    private String idToken;
     private String sessionState;
 
 }

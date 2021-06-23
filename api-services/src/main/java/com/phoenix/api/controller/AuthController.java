@@ -6,13 +6,15 @@
 package com.phoenix.api.controller;
 
 import com.phoenix.api.constant.BeanIds;
-import com.phoenix.api.model.payload.LoginRequest;
 import com.phoenix.api.services.auth.AuthService;
 import com.phoenix.api.services.auth.AuthServiceImp;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpSession;
+
 
 @RestController
 @RequestMapping(value = "/auth")
@@ -31,7 +33,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody Object loginRequest) {
-        return authService.login(loginRequest);
+    public ResponseEntity login(@RequestBody Object loginRequest, HttpSession session) {
+        return authService.login(loginRequest, session);
     }
 }

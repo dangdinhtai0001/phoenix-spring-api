@@ -7,9 +7,11 @@ package com.phoenix.api.services.auth;
 
 import com.phoenix.api.constant.ApplicationConstant;
 import com.phoenix.api.constant.BeanIds;
-import com.phoenix.api.model.auth.DefaultUserDetails;
 import com.phoenix.api.model.auth.Token;
+import com.phoenix.api.repositories.auth.UserRepository;
 import com.phoenix.auth.JwtProvider;
+import com.phoenix.time.TimeProvider;
+import com.phoenix.time.imp.SystemTimeProvider;
 import com.phoenix.util.UUIDFactory;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.impl.DefaultClaims;
@@ -22,9 +24,9 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
 import java.util.LinkedHashMap;
 
 @Log4j2
@@ -34,18 +36,21 @@ public class AuthServiceImp implements AuthService {
     private final JwtProvider jwtProvider;
     private final UUIDFactory uuidFactory;
     private final AuthenticationManager authenticationManager;
+    private final UserRepository userRepository;
 
     public AuthServiceImp(
             @Qualifier(BeanIds.JWT_PROVIDER) JwtProvider jwtProvider,
             @Qualifier(BeanIds.UUID_Factory) UUIDFactory uuidFactory,
-            @Qualifier(BeanIds.DEFAULT_AUTHENTICATION_MANAGER) AuthenticationManager authenticationManager) {
+            @Qualifier(BeanIds.DEFAULT_AUTHENTICATION_MANAGER) AuthenticationManager authenticationManager,
+            @Qualifier(BeanIds.USER_REPOSITORY) UserRepository userRepository) {
         this.jwtProvider = jwtProvider;
         this.uuidFactory = uuidFactory;
         this.authenticationManager = authenticationManager;
+        this.userRepository = userRepository;
     }
 
     @Override
-    public ResponseEntity login(Object payload) {
+    public ResponseEntity login(Object payload, HttpSession session) {
         try {
             LinkedHashMap loginRequest = (LinkedHashMap) payload;
 
@@ -68,11 +73,16 @@ public class AuthServiceImp implements AuthService {
 
             Token token = new Token();
 
+            TimeProvider timeProvider = new SystemTimeProvider();
+            long now = timeProvider.getTime();
+
             token.setAccessToken(accessToken);
-            token.setIdToken(String.valueOf(uuidFactory.generateRandomUuid()));
+            token.setRefreshToken(String.valueOf(uuidFactory.generateRandomUuid()));
             token.setTokenType(ApplicationConstant.JWT_TOKEN_TYPE);
-            token.setRefreshToken("");
-            token.setSessionState("");
+            token.setSessionState(session.getId());
+            token.setExpiresIn(now + jwtProvider.getTtlMillis());
+
+            userRepository.updateRefreshTokenByUsername(token.getRefreshToken(), username);
 
             return new ResponseEntity(token, HttpStatus.OK);
         } catch (BadCredentialsException e) {

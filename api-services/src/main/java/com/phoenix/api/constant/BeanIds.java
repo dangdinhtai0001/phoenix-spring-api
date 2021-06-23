@@ -26,6 +26,7 @@ public class BeanIds {
     //====================================================
     public static  final String AUTH_REPOSITORY_IMP= "FW_AUTH_REPOSITORY_IMP";
     public static  final String USER_STATUS_REPOSITORY= "FW_USER_STATUS_REPOSITORY";
+    public static  final String USER_REPOSITORY= "FW_USER_REPOSITORY";
 
 
     //====================================================

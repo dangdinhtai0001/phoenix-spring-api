@@ -18,7 +18,7 @@ public class AuthRepositoryImp {
     private EntityManager entityManager;
 
     public Optional<UserPrincipal> findUserByUsername(String username) {
-        String sql = DatabaseConstant.SQL_FIND_USER_BY_USERNAME;
+        String sql = DatabaseConstant.FIND_USER_BY_USERNAME;
         Query query = entityManager.createNativeQuery(sql);
 
         query.setParameter(1, username);
