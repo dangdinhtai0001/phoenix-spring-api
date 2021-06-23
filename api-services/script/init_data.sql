@@ -3,7 +3,7 @@
 # SELECT CONV(BINARY ('100'),2, 10) from dual;
 # =================================
 insert into fw_user(username, password, hash_algorithm, status)
-    value ('admin_test', '123456', 'PLAIN TEXT', 4);
+    value ('admin_test', '123456', 'raw', 4);
 
 # =================================
 # select * from fw_user_group;
@@ -92,6 +92,11 @@ from dual;
 insert into fw_permission(name, description, code)
 select upper('Access')                      name,
        'Quyền truy cập'                     description,
+       (select count(*) from fw_permission) code
+from dual;
+insert into fw_permission(name, description, code)
+select upper('Grant')                      name,
+       'Quyền gán quyền '                     description,
        (select count(*) from fw_permission) code
 from dual;
 

@@ -60,11 +60,25 @@ public class UserEntity extends BaseEntityAudit<String> {
      * * joinColumns: Tên column trong bảng joinTable mà bảng USER sẽ foreign key tới,
      * * inverseJoinColumns: Tên column trong bảng joinTable mà bảng ROLE sẽ foreign key tới.
      */
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE,
+                    CascadeType.REFRESH
+            })
     @JoinTable(
             name = "FW_USER_GROUP",
-            joinColumns = @JoinColumn(name = "USER_ID", referencedColumnName = "ID"),
-            inverseJoinColumns = @JoinColumn(name = "GROUP_ID", referencedColumnName = "ID")
+            joinColumns = @JoinColumn(
+                    name = "USER_ID", referencedColumnName = "ID",
+                    foreignKey = @ForeignKey(
+                            name = "fw_user_group_fk",
+                            value = ConstraintMode.CONSTRAINT)),
+            inverseJoinColumns = @JoinColumn(
+                    name = "GROUP_ID",
+                    referencedColumnName = "ID"),
+            inverseForeignKey = @ForeignKey(
+                    name = "fw_group_user_fk",
+                    value = ConstraintMode.CONSTRAINT)
     )
     private List<GroupEntity> group;
 }
