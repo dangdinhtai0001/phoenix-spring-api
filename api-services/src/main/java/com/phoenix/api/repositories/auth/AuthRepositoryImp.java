@@ -25,25 +25,22 @@ public class AuthRepositoryImp {
 
         List<Object[]> results = query.getResultList();
 
-        if (results.size() < 1) {
-            return Optional.empty();
-        }
-
         Object[] record = results.get(0);
 
+        try {
+            Long id = Long.parseLong(String.valueOf(record[0]));
+            String username_ = String.valueOf(record[1]);
+            String password = String.valueOf(record[2]);
+            String hashAlgorithm = String.valueOf(record[3]);
+            String passwordSalt = String.valueOf(record[4]);
+            int status = (Integer) record[5];
+            String group = String.valueOf(record[6]);
 
-        Long id = Long.parseLong(String.valueOf(record[0]));
-        String username_ = String.valueOf(record[1]);
-        String password = String.valueOf(record[2]);
-        String hashAlgorithm = String.valueOf(record[3]);
-        String passwordSalt = String.valueOf(record[4]);
-        int status = (Integer) record[5];
-        String group = String.valueOf(record[6]);
+            UserPrincipal userPrincipal = new UserPrincipal(id, username_, password, hashAlgorithm, passwordSalt, 0, status, group);
 
-
-        UserPrincipal userPrincipal = new UserPrincipal(id, username_, password, hashAlgorithm, passwordSalt, 0, status, group);
-
-
-        return Optional.of(userPrincipal);
+            return Optional.of(userPrincipal);
+        } catch (NumberFormatException e) {
+            return Optional.empty();
+        }
     }
 }

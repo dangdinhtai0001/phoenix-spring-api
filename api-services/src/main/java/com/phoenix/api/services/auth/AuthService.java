@@ -5,8 +5,8 @@
 
 package com.phoenix.api.services.auth;
 
-import com.phoenix.api.model.auth.Token;
+import org.springframework.http.ResponseEntity;
 
 public interface AuthService {
-    public Token login(Object payload);
+    ResponseEntity login(Object payload);
 }
