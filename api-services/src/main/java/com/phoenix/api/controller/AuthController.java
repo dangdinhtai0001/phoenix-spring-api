@@ -6,7 +6,6 @@
 package com.phoenix.api.controller;
 
 import com.phoenix.api.constant.BeanIds;
-import com.phoenix.api.services.auth.AuthService;
 import com.phoenix.api.services.auth.AuthServiceImp;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -20,7 +19,7 @@ import javax.servlet.http.HttpSession;
 @RequestMapping(value = "/auth")
 public class AuthController {
 
-    private final AuthService authService;
+    private final AuthServiceImp authService;
 
     public AuthController(
             @Qualifier(BeanIds.AUTH_SERVICES) AuthServiceImp authServiceImp) {

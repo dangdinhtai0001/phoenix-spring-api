@@ -7,7 +7,6 @@ package com.phoenix.api.services.auth;
 
 import com.phoenix.api.constant.ApplicationConstant;
 import com.phoenix.api.constant.BeanIds;
-import com.phoenix.api.model.auth.Token;
 import com.phoenix.api.repositories.auth.UserRepository;
 import com.phoenix.auth.JwtProvider;
 import com.phoenix.time.TimeProvider;
@@ -31,7 +30,7 @@ import java.util.LinkedHashMap;
 
 @Log4j2
 @Service(BeanIds.AUTH_SERVICES)
-public class AuthServiceImp implements AuthService {
+public class AuthServiceImp {
 
     private final JwtProvider jwtProvider;
     private final UUIDFactory uuidFactory;
@@ -49,7 +48,6 @@ public class AuthServiceImp implements AuthService {
         this.userRepository = userRepository;
     }
 
-    @Override
     public ResponseEntity login(Object payload, HttpSession session) {
         try {
             LinkedHashMap loginRequest = (LinkedHashMap) payload;
@@ -70,19 +68,18 @@ public class AuthServiceImp implements AuthService {
             claims.setSubject(username);
 
             String accessToken = jwtProvider.generateToken(claims);
-
-            Token token = new Token();
-
+            String refreshToken = String.valueOf(uuidFactory.generateRandomUuid());
             TimeProvider timeProvider = new SystemTimeProvider();
             long now = timeProvider.getTime();
 
-            token.setAccessToken(accessToken);
-            token.setRefreshToken(String.valueOf(uuidFactory.generateRandomUuid()));
-            token.setTokenType(ApplicationConstant.JWT_TOKEN_TYPE);
-            token.setSessionState(session.getId());
-            token.setExpiresIn(now + jwtProvider.getTtlMillis());
+            LinkedHashMap<String, String> token = new LinkedHashMap<>();
+            token.put("access_token", accessToken);
+            token.put("refresh_token", refreshToken);
+            token.put("token_type", ApplicationConstant.JWT_TOKEN_TYPE);
+            token.put("session_id", session.getId());
+            token.put("expires_in", String.valueOf((now + jwtProvider.getTtlMillis())));
 
-            userRepository.updateRefreshTokenByUsername(token.getRefreshToken(), username);
+            userRepository.updateRefreshTokenByUsername(refreshToken, username);
 
             return new ResponseEntity(token, HttpStatus.OK);
         } catch (BadCredentialsException e) {
