@@ -89,6 +89,7 @@ public class AuthServiceImp {
         }
     }
 
+
     public ResponseEntity getCurrentSession(HttpSession session) {
         return new ResponseEntity(session.getId(), HttpStatus.OK);
     }

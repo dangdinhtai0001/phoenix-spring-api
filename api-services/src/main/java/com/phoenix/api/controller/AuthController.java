@@ -6,6 +6,7 @@
 package com.phoenix.api.controller;
 
 import com.phoenix.api.constant.BeanIds;
+import com.phoenix.api.controller.base.BaseController;
 import com.phoenix.api.services.auth.AuthServiceImp;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -17,7 +18,7 @@ import javax.servlet.http.HttpSession;
 
 @RestController
 @RequestMapping(value = "/auth")
-public class AuthController {
+public class AuthController extends BaseController {
 
     private final AuthServiceImp authService;
 
@@ -37,7 +38,7 @@ public class AuthController {
     }
 
     @GetMapping("/current")
-    public ResponseEntity currentSession(HttpSession session){
+    public ResponseEntity currentSession(HttpSession session) {
         return authService.getCurrentSession(session);
     }
 }

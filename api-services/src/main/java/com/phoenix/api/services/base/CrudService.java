@@ -14,7 +14,7 @@ import com.phoenix.api.entities.base.BaseEntity;
 
 import java.util.Optional;
 
-public interface BaseService<T extends BaseEntity> {
+public interface CrudService<T extends BaseEntity> {
     Iterable<T> findAll();
 
     T add(T obj) throws RuntimeException, Exception;
