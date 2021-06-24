@@ -43,20 +43,6 @@ select upper('Expired')                      name,
 from dual;
 
 # =================================
-# select * from fw_resource_type;
-# =================================
-insert into fw_resource_type(description, name)
-values ('Các path để truy cập vào api', upper('api')),
-       ('Menu của ứng dụng', upper('menu'));
-
-# =================================
-# select * from fw_resource;
-# =================================
-insert into fw_resource (name, details, description, type)
-values ('SIGN_IN', '/auth/login', 'api để đăng nhập', 1),
-       ('FETCH_USER', '/user/current', 'api để lấy thông tin user hiện tại', 1);
-
-# =================================
 # select * from fw_permission order by code;
 # =================================
 insert into fw_permission(name, description, code)
@@ -99,12 +85,5 @@ select upper('Grant')                      name,
        'Quyền gán quyền '                     description,
        (select count(*) from fw_permission) code
 from dual;
-
-# =================================
-# select * from fw_group_resources;
-# =================================
-insert into fw_group_resources(group_id, resource_id, permission)
-values (1, 1, 32),
-       (1, 2, 32);
 
 commit;

@@ -19,9 +19,9 @@ public interface BaseService<T extends BaseEntity> {
 
     T add(T obj) throws RuntimeException, Exception;
 
-    T edit(T obj) throws RuntimeException, Exception;
+    T update(T obj) throws RuntimeException, Exception;
 
-    void remove(Long key) throws RuntimeException, Exception;
+    int remove(Long key) throws RuntimeException, Exception;
 
     Optional<T> findById(Long id) throws RuntimeException, Exception;
 }

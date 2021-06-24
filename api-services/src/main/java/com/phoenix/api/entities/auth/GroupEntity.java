@@ -26,14 +26,10 @@ public class GroupEntity extends BaseEntityAudit<String> {
     @Column(name = "NAME", length = 50)
     private String name;
 
-    @Column(name = "DESCRIPTION", length = 255)
+    @Column(name = "DESCRIPTION")
     private String description;
 
     @ManyToMany(mappedBy = "group")
     private List<UserEntity> users;
-
-    @OneToMany(mappedBy = "group")
-    private List<GroupResourcesMapping> GroupResourcesEntities;
-
 
 }
