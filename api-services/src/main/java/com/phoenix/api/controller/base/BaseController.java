@@ -30,8 +30,11 @@ public abstract class BaseController {
         responseBody.put("code", defaultHandlerException.getCode());
         responseBody.put("resource", defaultHandlerException.getResource());
         responseBody.put("message", defaultHandlerException.getMessage());
-        responseBody.put("cause", defaultHandlerException.getCause().getMessage());
-
+        try {
+            responseBody.put("cause", defaultHandlerException.getCause().getMessage());
+        } catch (NullPointerException e) {
+            responseBody.put("cause", defaultHandlerException.getCause());
+        }
         if (defaultHandlerException.getHttpStatus() == null) {
             return new ResponseEntity(responseBody, HttpStatus.INTERNAL_SERVER_ERROR);
         }

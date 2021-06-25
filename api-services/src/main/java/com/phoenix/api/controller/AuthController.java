@@ -5,6 +5,7 @@
 
 package com.phoenix.api.controller;
 
+import com.phoenix.api.component.exception.DefaultHandlerException;
 import com.phoenix.api.constant.BeanIds;
 import com.phoenix.api.controller.base.BaseController;
 import com.phoenix.api.services.auth.AuthServiceImp;
@@ -33,7 +34,7 @@ public class AuthController extends BaseController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody Object loginRequest, HttpSession session) {
+    public ResponseEntity login(@RequestBody Object loginRequest, HttpSession session) throws DefaultHandlerException {
         return authService.login(loginRequest, session);
     }
 

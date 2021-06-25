@@ -5,6 +5,7 @@
 
 package com.phoenix.api.services.auth;
 
+import com.phoenix.api.component.exception.DefaultHandlerException;
 import com.phoenix.api.constant.ApplicationConstant;
 import com.phoenix.api.constant.BeanIds;
 import com.phoenix.api.repositories.auth.UserRepository;
@@ -48,7 +49,7 @@ public class AuthServiceImp {
         this.userRepository = userRepository;
     }
 
-    public ResponseEntity login(Object payload, HttpSession session) {
+    public ResponseEntity login(Object payload, HttpSession session) throws DefaultHandlerException {
         try {
             LinkedHashMap loginRequest = (LinkedHashMap) payload;
 
@@ -85,7 +86,7 @@ public class AuthServiceImp {
         } catch (BadCredentialsException e) {
             log.error(e.getMessage());
             e.printStackTrace();
-            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+            throw new DefaultHandlerException(e.getMessage(), e.getCause(), "", this.getClass().getName(), HttpStatus.BAD_REQUEST);
         }
     }
 
