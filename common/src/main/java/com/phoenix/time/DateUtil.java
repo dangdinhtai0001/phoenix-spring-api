@@ -59,13 +59,28 @@ public class DateUtil {
             endTime2 = endDate_2.getTime();
         }
 
-        if (startTime1 > endTime1 || endTime1 > startTime2 || startTime2 > endTime2 || startTime1 > startTime2) {
+//        if (startTime1 > endTime1 || endTime1 > startTime2 || startTime2 > endTime2 || startTime1 > startTime2) {
+//            return true;
+//        }
+        if(startTime1 == startTime2){
             return true;
         }
 
-        return endTime2 > startTime1;
+        if (startTime1 > startTime2 && (startTime2 > endTime2 || endTime2 > startTime1 || startTime1 > endTime1)) {
+            return true;
+        }
+
+        return startTime1 < startTime2 && (startTime1 > endTime1 || endTime1 > startTime2 || startTime2 > endTime2);
     }
 
+    /**
+     * @param strStartDate_1 : ngày bắt đầu khoảng 1 dạng String
+     * @param strEndDate_1   : ngày kết thúc khoảng 1 dạng String
+     * @param strStartDate_2 : ngày bắt đầu khoảng 2 dạng String
+     * @param strEndDate_2   : ngày kết thúc khoảng 2 dạng String
+     * @param format         : date format
+     * @return xem lại
+     */
     public static boolean isIntersectTime(String strStartDate_1, String strEndDate_1, String strStartDate_2,
                                           String strEndDate_2, String format) {
         Date startDate_1, endDate_1, startDate_2, endDate_2;

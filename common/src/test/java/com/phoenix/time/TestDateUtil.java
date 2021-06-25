@@ -5,6 +5,7 @@
 
 package com.phoenix.time;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.text.ParseException;
@@ -23,25 +24,28 @@ public class TestDateUtil {
 
     @Test
     public void testIsIntersectTime2() throws ParseException {
-        System.out.println(DateUtil.isIntersectTime("01/01/2021", "",
+        Assert.assertTrue(DateUtil.isIntersectTime("01/01/2021", "",
                 "02/01/2021", null, "dd/MM/yyyy"));
 
-        System.out.println(DateUtil.isIntersectTime("01/01/2021", "15/06/2021",
+        Assert.assertTrue(DateUtil.isIntersectTime("01/01/2021", "15/06/2021",
                 "10/01/2021", "", "dd/MM/yyyy"));
 
-        System.out.println(DateUtil.isIntersectTime("01/01/2021", "15/06/2021",
+        Assert.assertTrue(DateUtil.isIntersectTime("01/01/2021", "15/06/2021",
                 "10/01/2021", "04/04/2021", "dd/MM/yyyy"));
 
-        System.out.println(DateUtil.isIntersectTime("01/01/2021", "15/06/2021",
+        Assert.assertTrue(DateUtil.isIntersectTime("01/01/2021", "15/06/2021",
                 "01/01/2021", "", "dd/MM/yyyy"));
 
-        System.out.println(DateUtil.isIntersectTime("01/01/2021", "15/06/2021",
+        Assert.assertTrue(DateUtil.isIntersectTime("01/01/2021", "15/06/2021",
                 "09/12/2021", "04/04/2021", "dd/MM/yyyy"));
 
-        System.out.println(DateUtil.isIntersectTime("01/01/2021", "15/06/2021",
+        Assert.assertFalse(DateUtil.isIntersectTime("01/01/2021", "15/06/2021",
                 "09/12/2021", "", "dd/MM/yyyy"));
 
-        System.out.println(DateUtil.isIntersectTime("", "",
+        Assert.assertFalse(DateUtil.isIntersectTime("02/06/2021", "",
+                "01/01/2000", "01/06/2021", "dd/MM/yyyy"));
+
+        Assert.assertTrue(DateUtil.isIntersectTime("", "",
                 "", "", "dd/MM/yyyy"));
     }
 }
