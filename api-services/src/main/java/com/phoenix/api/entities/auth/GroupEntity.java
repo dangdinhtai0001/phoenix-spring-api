@@ -28,8 +28,4 @@ public class GroupEntity extends BaseEntityAudit<String> {
 
     @Column(name = "DESCRIPTION")
     private String description;
-
-    @ManyToMany(mappedBy = "group")
-    private List<UserEntity> users;
-
 }
