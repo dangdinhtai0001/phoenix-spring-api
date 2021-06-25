@@ -5,6 +5,7 @@
 
 package com.phoenix.time;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -23,6 +24,22 @@ public class DateUtil {
         } catch (ParseException | NullPointerException e) {
             return null;
         }
+    }
+
+    public static String convertDate2String(Date date, String format) {
+        if (date == null) {
+            return null;
+        }
+        try {
+            DateFormat dateFormat = new SimpleDateFormat(format);
+            return dateFormat.format(date.getTime());
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public static String formatStringDate(String strDate, String formFormat, String desFormat) {
+        return convertDate2String(convertString2Date(strDate, formFormat), desFormat);
     }
 
     /**
@@ -62,7 +79,7 @@ public class DateUtil {
 //        if (startTime1 > endTime1 || endTime1 > startTime2 || startTime2 > endTime2 || startTime1 > startTime2) {
 //            return true;
 //        }
-        if(startTime1 == startTime2){
+        if (startTime1 == startTime2) {
             return true;
         }
 

@@ -48,4 +48,14 @@ public class TestDateUtil {
         Assert.assertTrue(DateUtil.isIntersectTime("", "",
                 "", "", "dd/MM/yyyy"));
     }
+
+    @Test
+    public void testConvertString2Date() {
+        String raw = "30/02";
+        Date date = DateUtil.convertString2Date(raw, "dd/MM");
+        String strDate = DateUtil.convertDate2String(date, "dd/MM");
+        System.out.println(date);
+        System.out.println(strDate);
+        Assert.assertNotNull(DateUtil.convertString2Date("30/02", "dd/MM"));
+    }
 }

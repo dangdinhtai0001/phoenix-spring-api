@@ -18,6 +18,7 @@ public class TestTextMatcher {
         list.add("1/12/2021");
         list.add("1/22/2021");
         list.add("1/12/21");
+        list.add("30/02/2021");
 
         for (String s : list) {
             System.out.println(String.format("String: %s, validate: %s",s, TextMatcher.isDateInFormat(s)));
