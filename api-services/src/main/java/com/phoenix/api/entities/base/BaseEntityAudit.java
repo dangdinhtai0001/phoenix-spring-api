@@ -33,7 +33,7 @@ import java.util.Date;
 public abstract class BaseEntityAudit<U> extends BaseEntity{
 
     @CreatedBy
-    @Column(name = "CREATED_BY", columnDefinition = "varchar(50)")
+    @Column(name = "CREATED_BY", columnDefinition = "varchar(50) default 'NONE'")
     protected U createdBy;
 
     @CreatedDate
@@ -42,7 +42,7 @@ public abstract class BaseEntityAudit<U> extends BaseEntity{
     protected Date createdDate;
 
     @LastModifiedBy
-    @Column(name = "LAST_MODIFIED_BY", columnDefinition = "varchar(50) default 'SYSTEM'")
+    @Column(name = "LAST_MODIFIED_BY", columnDefinition = "varchar(50) default 'NONE'")
     protected U lastModifiedBy;
 
     @LastModifiedDate
