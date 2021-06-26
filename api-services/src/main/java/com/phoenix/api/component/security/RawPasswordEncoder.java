@@ -7,6 +7,9 @@ package com.phoenix.api.component.security;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+/**
+ * Implementation của PasswordEncoder. Dùng khi muốn check passwword được lwuu ở dạng raw. Chỉ nên dùng khi test.
+ */
 public class RawPasswordEncoder implements PasswordEncoder {
     @Override
     public String encode(CharSequence charSequence) {

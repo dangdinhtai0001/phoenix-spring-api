@@ -8,13 +8,16 @@ package com.phoenix.api.component.exception;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
+/**
+ *
+ */
 @Getter
 public class DefaultHandlerException extends Exception {
     //========================================================================
     //========== Property
     //========================================================================
-    private String code;
-    private String resource;
+    private final String code;
+    private final String resource;
     private HttpStatus httpStatus;
 
     //========================================================================

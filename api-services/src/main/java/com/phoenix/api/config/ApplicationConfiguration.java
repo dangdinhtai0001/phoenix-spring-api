@@ -18,6 +18,9 @@ import org.springframework.context.annotation.DependsOn;
 
 import java.util.List;
 
+/**
+ * Nơi nạp các bean cần thiết cho ứng dụng
+ */
 @Configuration(value = "ApplicationConfiguration")
 public class ApplicationConfiguration {
     @Value("${application.jwt.secret}")
@@ -37,27 +40,43 @@ public class ApplicationConfiguration {
         this.exceptionRepository = exceptionRepository;
     }
 
+    /**
+     * @return : List các status của user từ database
+     */
     @Bean(value = BeanIds.ALL_USER_STATUS)
     public List<UserStatusEntity> getAllUserStatus() {
         return userStatusRepository.findAll();
     }
 
+    /**
+     * @return : List thông tin các Exception được định nghĩa trong database trong database
+     */
     @Bean(value = BeanIds.ALL_EXCEPTION)
     public List<ExceptionEntity> getAllException() {
         return exceptionRepository.findAll();
     }
 
+    /**
+     * @return : Nạp khóa bí mật của ứng dụng.
+     */
     @Bean(value = BeanIds.JWT_SECRET_KEY)
     public String getSecretKey() {
         return HashingText.hashingSha256(this.secret);
     }
 
+    /**
+     * @param secretKey : khóa bí mật của ứng dụng
+     * @return : Đối tuwojng dùng để generate + validate token (dùng trong quá trình xác thực người dùng)
+     */
     @Bean(value = BeanIds.JWT_PROVIDER)
     @DependsOn(BeanIds.JWT_SECRET_KEY)
     public JwtProvider getJwtProvider(@Qualifier(BeanIds.JWT_SECRET_KEY) String secretKey) {
         return new DefaultJwtProvider(secretKey, Long.parseLong(jwtExpired));
     }
 
+    /**
+     * @return : Đối tượng sinh mã UUID duy nhất.
+     */
     @Bean(value = BeanIds.UUID_Factory)
     public UUIDFactory getUUIDFactory() {
         return new ConcurrentUUIDFactory();

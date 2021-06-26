@@ -95,7 +95,6 @@ public class AuthServiceImp extends AbstractService {
         } catch (BadCredentialsException e) {
             log.error(e.getMessage());
             e.printStackTrace();
-
             String code = "AUTH_001";
             throw getDefaultException(code);
         }

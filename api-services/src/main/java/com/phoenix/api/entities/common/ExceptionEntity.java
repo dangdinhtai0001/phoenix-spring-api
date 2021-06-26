@@ -13,12 +13,14 @@ package com.phoenix.api.entities.common;
 import com.phoenix.api.entities.base.BaseEntity;
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.Table;
 
+@Component
 @Entity
 @Table(name = "FW_EXCEPTION")
 @EntityListeners(AuditingEntityListener.class)

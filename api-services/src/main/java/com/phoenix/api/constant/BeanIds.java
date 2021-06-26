@@ -5,6 +5,9 @@
 
 package com.phoenix.api.constant;
 
+/**
+ *  Định nghĩa tên của các bean được dev định nghĩa trong application
+ */
 public class BeanIds {
     //====================================================
     // Application config

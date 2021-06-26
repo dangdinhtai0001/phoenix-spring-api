@@ -8,6 +8,9 @@ package com.phoenix.api.config;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
+/**
+ * Cấu hình aop
+ */
 @Configuration
 @EnableAspectJAutoProxy(proxyTargetClass = true)
 public class AopConfiguration {
