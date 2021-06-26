@@ -33,6 +33,7 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpSession;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @Log4j2
 @Service(BeanIds.AUTH_SERVICES)
@@ -57,9 +58,9 @@ public class AuthServiceImp extends AbstractService {
         this.userRepository = userRepository;
     }
 
-    public ResponseEntity login(Object payload, HttpSession session) throws DefaultHandlerException {
+    public ResponseEntity login(Map loginRequest, HttpSession session) throws DefaultHandlerException {
         try {
-            LinkedHashMap loginRequest = (LinkedHashMap) payload;
+            //LinkedHashMap loginRequest = (LinkedHashMap) payload;
 
             String username = String.valueOf(loginRequest.get("username"));
             String password = String.valueOf(loginRequest.get("password"));

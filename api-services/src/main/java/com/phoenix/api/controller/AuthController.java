@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.Map;
 
 
 @RestController
@@ -34,7 +35,7 @@ public class AuthController extends BaseController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody Object loginRequest, HttpSession session) throws DefaultHandlerException {
+    public ResponseEntity login(@RequestBody Map loginRequest, HttpSession session) throws DefaultHandlerException {
         return authService.login(loginRequest, session);
     }
 }
