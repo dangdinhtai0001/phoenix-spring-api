@@ -10,6 +10,7 @@ public class BeanIds {
     // Application config
     //====================================================
     public static final String ALL_USER_STATUS = "FW_ALL_USER_STATUS";
+    public static final String ALL_EXCEPTION = "FW_ALL_EXCEPTION";
     public static final String JWT_PROVIDER = "FW_JWT_PROVIDER";
     public static final String JWT_SECRET_KEY = "FW_SECRET_KEY";
     public static final String UUID_Factory = "FW_UUID_Factory";
@@ -28,6 +29,7 @@ public class BeanIds {
     public static final String AUTH_REPOSITORY_IMP = "FW_AUTH_REPOSITORY_IMP";
     public static final String USER_STATUS_REPOSITORY = "FW_USER_STATUS_REPOSITORY";
     public static final String USER_REPOSITORY = "FW_USER_REPOSITORY";
+    public static final String EXCEPTION_REPOSITORY = "FW_EXCEPTION_REPOSITORY";
 
 
     //====================================================

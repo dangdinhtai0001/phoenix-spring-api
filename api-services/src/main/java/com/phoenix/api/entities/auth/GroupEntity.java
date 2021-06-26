@@ -23,7 +23,7 @@ import java.util.Set;
 @ToString
 public class GroupEntity extends BaseEntityAudit<String> {
 
-    @Column(name = "NAME", length = 50)
+    @Column(name = "NAME")
     private String name;
 
     @Column(name = "DESCRIPTION")

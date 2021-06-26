@@ -76,10 +76,22 @@ public class DefaultHandlerException extends Exception {
         this.httpStatus = httpStatus;
     }
 
-    public DefaultHandlerException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace, String code, String resource, HttpStatus httpStatus) {
+    public DefaultHandlerException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace,
+                                   String code, String resource, HttpStatus httpStatus) {
         super(message, cause, enableSuppression, writableStackTrace);
         this.code = code;
         this.resource = resource;
         this.httpStatus = httpStatus;
     }
+
+    //========================================================================
+    //========== getter
+    //========================================================================
+
+    @Override
+    public synchronized Throwable getCause() {
+        return super.getCause();
+    }
+
+
 }

@@ -37,9 +37,4 @@ public class AuthController extends BaseController {
     public ResponseEntity login(@RequestBody Object loginRequest, HttpSession session) throws DefaultHandlerException {
         return authService.login(loginRequest, session);
     }
-
-    @GetMapping("/current")
-    public ResponseEntity currentSession(HttpSession session) {
-        return authService.getCurrentSession(session);
-    }
 }

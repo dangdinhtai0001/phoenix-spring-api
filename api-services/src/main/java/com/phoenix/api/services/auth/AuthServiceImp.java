@@ -8,8 +8,12 @@ package com.phoenix.api.services.auth;
 import com.phoenix.api.component.exception.DefaultHandlerException;
 import com.phoenix.api.constant.ApplicationConstant;
 import com.phoenix.api.constant.BeanIds;
+import com.phoenix.api.entities.common.ExceptionEntity;
 import com.phoenix.api.repositories.auth.UserRepository;
+import com.phoenix.api.services.base.AbstractService;
 import com.phoenix.auth.JwtProvider;
+import com.phoenix.searchs.SearchAlgorithm;
+import com.phoenix.searchs.imp.BinarySearch;
 import com.phoenix.time.TimeProvider;
 import com.phoenix.time.imp.SystemTimeProvider;
 import com.phoenix.util.UUIDFactory;
@@ -28,10 +32,11 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 @Log4j2
 @Service(BeanIds.AUTH_SERVICES)
-public class AuthServiceImp {
+public class AuthServiceImp extends AbstractService {
 
     private final JwtProvider jwtProvider;
     private final UUIDFactory uuidFactory;
@@ -42,7 +47,10 @@ public class AuthServiceImp {
             @Qualifier(BeanIds.JWT_PROVIDER) JwtProvider jwtProvider,
             @Qualifier(BeanIds.UUID_Factory) UUIDFactory uuidFactory,
             @Qualifier(BeanIds.DEFAULT_AUTHENTICATION_MANAGER) AuthenticationManager authenticationManager,
-            @Qualifier(BeanIds.USER_REPOSITORY) UserRepository userRepository) {
+            @Qualifier(BeanIds.USER_REPOSITORY) UserRepository userRepository,
+            @Qualifier(BeanIds.ALL_EXCEPTION) List<ExceptionEntity> exceptionEntities
+    ) {
+        super(exceptionEntities);
         this.jwtProvider = jwtProvider;
         this.uuidFactory = uuidFactory;
         this.authenticationManager = authenticationManager;
@@ -86,11 +94,9 @@ public class AuthServiceImp {
         } catch (BadCredentialsException e) {
             log.error(e.getMessage());
             e.printStackTrace();
-            throw new DefaultHandlerException(e.getMessage(), e.getCause(), "", this.getClass().getName(), HttpStatus.BAD_REQUEST);
-        }
-    }
 
-    public ResponseEntity getCurrentSession(HttpSession session) {
-        return new ResponseEntity(session.getId(), HttpStatus.OK);
+            String code = "AUTH_001";
+            throw getDefaultException(code);
+        }
     }
 }

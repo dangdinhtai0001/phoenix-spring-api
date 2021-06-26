@@ -48,4 +48,13 @@ values (1, 1),
        (1, 2)
 ;
 
+# =================================
+# select * from fw_exception;
+# delete from fw_exception;
+# =================================
+insert into fw_exception(code_, RESOURCE_, MESSAGE_, HTTP_CODE)
+values ('AUTH_001', 'com.phoenix.api.services.auth.AuthServiceImp', 'wrong user credentials', 400)
+;
+
+
 commit;
