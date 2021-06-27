@@ -6,6 +6,9 @@
 package com.phoenix.api.repositories.base;
 
 import com.phoenix.api.entities.base.BaseEntity;
+import com.phoenix.reflection.ReflectionUtil;
+import com.phoenix.structure.Pair;
+import sun.reflect.Reflection;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -81,5 +84,15 @@ public abstract class AbstractRepository<T extends BaseEntity> implements BaseRe
         List<Object[]> result = query.getResultList();
 
         return result;
+    }
+
+    public Object parseResult(Object[] record, List<Pair<String, Class>> params, Object target) throws NoSuchFieldException, IllegalAccessException {
+        Pair<String, Class> pair;
+        for (int i = 0; i < params.size(); i++) {
+            pair = params.get(i);
+            ReflectionUtil.setField(pair.first(), pair.second(), String.valueOf(record[i]), target);
+        }
+
+        return target;
     }
 }

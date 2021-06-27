@@ -28,7 +28,7 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
+@ToString(callSuper=true)
 public class ExceptionEntity extends BaseEntity {
     @Column(name = "CODE_")
     private String code;

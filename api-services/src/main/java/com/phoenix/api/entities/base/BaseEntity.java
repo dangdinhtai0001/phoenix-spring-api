@@ -18,6 +18,7 @@ import java.io.Serializable;
 @MappedSuperclass
 @Getter
 @Setter
+@ToString
 public abstract class BaseEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -28,4 +28,9 @@ public interface Count {
      * @return: trả về giá trị trước khi tăng biến đếm lên dlta đơn vị
      */
     int getAndSet(int newValue);
+
+    /**
+     * @return : trả về giá trị hiện tại
+     */
+    int get();
 }
