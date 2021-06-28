@@ -182,8 +182,8 @@ CREATE TABLE `profile`
 (
     `id`        bigint NOT NULL AUTO_INCREMENT,
     `user_id`        bigint NOT NULL,
-    `firstname`     varchar(50) COLLATE utf8mb4_vietnamese_ci  DEFAULT NULL,
-    `lastname`     varchar(50) COLLATE utf8mb4_vietnamese_ci  DEFAULT NULL,
+    `first_name`     varchar(50) COLLATE utf8mb4_vietnamese_ci  DEFAULT NULL,
+    `last_name`     varchar(50) COLLATE utf8mb4_vietnamese_ci  DEFAULT NULL,
     `email`     varchar(50) COLLATE utf8mb4_vietnamese_ci  DEFAULT NULL,
     `mobile_number`     varchar(50) COLLATE utf8mb4_vietnamese_ci  DEFAULT NULL,
     PRIMARY KEY (`id`),

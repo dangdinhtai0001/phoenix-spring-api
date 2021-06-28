@@ -30,7 +30,7 @@ import java.util.List;
 @Setter
 @ToString
 public class UserEntity extends BaseEntityAudit<String> {
-    @Column(name = "USERNAME", length = 50)
+    @Column(name = "USERNAME")
     private String username;
 
     @Column(name = "PASSWORD")
@@ -39,7 +39,7 @@ public class UserEntity extends BaseEntityAudit<String> {
     @Column(name = "PASSWORD_SALT")
     private String passwordSalt;
 
-    @Column(name = "HASH_ALGORITHM", length = 50)
+    @Column(name = "HASH_ALGORITHM")
     private String hashAlgorithm;
 
     @Column(name = "STATUS")
@@ -48,7 +48,7 @@ public class UserEntity extends BaseEntityAudit<String> {
     @Column(name = "PASSWORD_REMINDER_TOKEN")
     private String passwordReminderToken;
 
-    @Column(name = "REFRESH_TOKEN", length = 200)
+    @Column(name = "REFRESH_TOKEN")
     private String refreshToken;
 
     @Column(name = "PASSWORD_REMINDER_EXPIRE")
