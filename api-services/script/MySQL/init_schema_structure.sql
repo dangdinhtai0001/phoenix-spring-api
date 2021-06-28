@@ -78,8 +78,8 @@ CREATE TABLE `fw_user_group`
     `group_id` bigint NOT NULL,
     KEY `FK_USER__USER_GROUP` (`user_id`),
     KEY `FK_GROUP__USER_GROUP` (`group_id`),
-    CONSTRAINT `FK_GROUP__USER_GROUP` FOREIGN KEY (`group_id`) REFERENCES `fw_group` (`id`),
-    CONSTRAINT `FK_USER__USER_GROUP` FOREIGN KEY (`user_id`) REFERENCES `fw_user` (`id`)
+    CONSTRAINT `GROUP__USER_GROUP_FK` FOREIGN KEY (`group_id`) REFERENCES `fw_group` (`id`),
+    CONSTRAINT `USER__USER_GROUP_FK` FOREIGN KEY (`user_id`) REFERENCES `fw_user` (`id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_vietnamese_ci;
@@ -165,6 +165,29 @@ CREATE TABLE `fw_exception`
     `MESSAGE_`  varchar(255) COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
     `HTTP_CODE` int    NOT NULL,
     PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_vietnamese_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+
+--
+-- Table structure for table `profile`
+--
+
+DROP TABLE IF EXISTS `profile`;
+/*!40101 SET @saved_cs_client = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `profile`
+(
+    `id`        bigint NOT NULL AUTO_INCREMENT,
+    `user_id`        bigint NOT NULL,
+    `firstname`     varchar(50) COLLATE utf8mb4_vietnamese_ci  DEFAULT NULL,
+    `lastname`     varchar(50) COLLATE utf8mb4_vietnamese_ci  DEFAULT NULL,
+    `email`     varchar(50) COLLATE utf8mb4_vietnamese_ci  DEFAULT NULL,
+    `mobile_number`     varchar(50) COLLATE utf8mb4_vietnamese_ci  DEFAULT NULL,
+    PRIMARY KEY (`id`),
+    CONSTRAINT `PROFILE__USER_FK` FOREIGN KEY (`user_id`) REFERENCES `fw_user` (`id`) ON DELETE CASCADE
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_vietnamese_ci;
