@@ -6,12 +6,10 @@
 package com.phoenix.api.controller.base;
 
 import com.phoenix.api.component.exception.DefaultHandlerException;
-import com.phoenix.api.entities.common.ExceptionEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 /**

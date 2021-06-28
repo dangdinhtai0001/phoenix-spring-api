@@ -34,13 +34,11 @@ public class TestAbstractRepository {
     }
 
     @Test
-    public void testParseResult() throws NoSuchFieldException, IllegalAccessException {
-        List<Object[]> result = exceptionRepo.executeNativeQuery("select * from fw_exception");
+    public void testParseSingleResult() throws NoSuchFieldException, IllegalAccessException, InstantiationException {
+        List<Object[]> result = exceptionRepo.executeNativeQuery("select code_,resource_, message_, http_code, id  from fw_exception");
         print(result);
 
         Object[] record = result.get(0);
-
-        ExceptionEntity exceptionEntity = new ExceptionEntity();
 
         List<Pair<String, Class>> params = new LinkedList<>();
         params.add(new Pair<>("code", String.class));
@@ -49,9 +47,30 @@ public class TestAbstractRepository {
         params.add(new Pair<>("httpCode", int.class));
         params.add(new Pair<>("id", long.class));
 
-        exceptionRepo.parseResult(record, params, exceptionEntity);
+        System.out.println(exceptionRepo.parseResult(record, params, ExceptionEntity.class));
+    }
 
-        System.out.println(exceptionEntity);
+    @Test
+    public void testParseResult() throws NoSuchFieldException, IllegalAccessException, InstantiationException {
+        List<Object[]> result = exceptionRepo.executeNativeQuery("select code_,resource_, message_, http_code, id  from fw_exception");
+        print(result);
+
+        List<Pair<String, Class>> params = new LinkedList<>();
+        params.add(new Pair<>("code", String.class));
+        params.add(new Pair<>("resource", String.class));
+        params.add(new Pair<>("message", String.class));
+        params.add(new Pair<>("httpCode", int.class));
+        params.add(new Pair<>("id", long.class));
+
+        System.out.println(exceptionRepo.parseResult(result, params, ExceptionEntity.class));
+    }
+
+    @Test
+    public void testUpdateNativeQuery(){
+        int row = exceptionRepo.updateNativeQuery("update fw_exception set message_ = ? where code_ = ?;",
+                "Wrong user credentials", "AUTH_001");
+
+        System.out.println(row);
     }
 
 
