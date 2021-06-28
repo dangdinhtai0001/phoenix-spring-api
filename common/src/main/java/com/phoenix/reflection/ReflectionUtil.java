@@ -12,10 +12,18 @@ import java.util.List;
 import java.util.Optional;
 
 public class ReflectionUtil {
+    /**
+     * @param aClass : Class
+     * @return : Mảng chứa tất cả các field của class (Không bao gồm các field của supper class)
+     */
     public static Field[] getDeclaredFields(Class aClass) {
         return aClass.getDeclaredFields();
     }
 
+    /**
+     * @param aClass : Class
+     * @return : Mảng chứa tất cả các field của class (Bbao gồm các field của supper class), dùng đệ quy
+     */
     public static List<Field> getAllFields(Class aClass) {
         if (aClass == null) {
             return new LinkedList<>();
@@ -30,6 +38,11 @@ public class ReflectionUtil {
         return list;
     }
 
+    /**
+     * @param name : tên field cần tìm
+     * @param aClass : Class
+     * @return : Field có tên == name, nếu không tìm thấy trả về null
+     */
     public static Field findFieldByName(String name, Class aClass) {
         List<Field> list = ReflectionUtil.getAllFields(aClass);
 
@@ -40,6 +53,14 @@ public class ReflectionUtil {
         return optional.orElse(null);
     }
 
+    /**
+     * @param fieldName : Tên field cần set
+     * @param classOfField: Kiểu dữ liệu của field cần set
+     * @param value: Giá trị muốn set (dạng String)
+     * @param obj: Instance để set giá trị
+     * @throws NoSuchFieldException: nếu không tìm thấy field
+     * @throws IllegalAccessException
+     */
     public static void setField(String fieldName, Class classOfField, String value, Object obj) throws NoSuchFieldException, IllegalAccessException {
         Class objClass = obj.getClass();
         Field field;
@@ -65,4 +86,6 @@ public class ReflectionUtil {
         }
 
     }
+
+
 }
