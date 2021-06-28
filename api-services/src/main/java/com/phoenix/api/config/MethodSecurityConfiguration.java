@@ -21,18 +21,5 @@ import org.springframework.security.config.annotation.method.configuration.Globa
         prePostEnabled = true)
 public class MethodSecurityConfiguration extends GlobalMethodSecurityConfiguration {
 
-    private final PermissionEvaluator permissionEvaluator;
 
-    public MethodSecurityConfiguration(
-            @Qualifier(BeanIds.DEFAULT_EVALUATOR_SERVICE) PermissionEvaluator permissionEvaluator
-    ) {
-        this.permissionEvaluator = permissionEvaluator;
-    }
-
-    @Override
-    protected MethodSecurityExpressionHandler createExpressionHandler() {
-        DefaultMethodSecurityExpressionHandler expressionHandler = new DefaultMethodSecurityExpressionHandler();
-        expressionHandler.setPermissionEvaluator(permissionEvaluator);
-        return expressionHandler;
-    }
 }

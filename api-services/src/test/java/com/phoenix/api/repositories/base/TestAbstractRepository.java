@@ -7,14 +7,13 @@ package com.phoenix.api.repositories.base;
 
 import com.phoenix.api.entities.common.ExceptionEntity;
 import com.phoenix.api.repositories.common.ExceptionRepositoryImp;
+import com.phoenix.reflection.ReflectionUtil;
 import com.phoenix.structure.Pair;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 @SpringBootTest
 public class TestAbstractRepository {
@@ -79,6 +78,22 @@ public class TestAbstractRepository {
         List<ExceptionEntity> list = (List<ExceptionEntity>) exceptionRepo.findAll();
 
         System.out.println(list);
+    }
+
+    @Test
+    public void testConvertMapToObject() throws NoSuchFieldException, InstantiationException, IllegalAccessException {
+        Map<String, String> map = new LinkedHashMap<>();
+
+        map.put("code", "Auth_002");
+        map.put("resource", "resource");
+        map.put("message", "message");
+        map.put("httpCode", "400");
+        map.put("id", "2");
+
+        ExceptionEntity exceptionEntity = (ExceptionEntity) ReflectionUtil.convertMapToObject(map, ExceptionEntity.class);
+
+        System.out.println(exceptionEntity);
+
     }
 
 

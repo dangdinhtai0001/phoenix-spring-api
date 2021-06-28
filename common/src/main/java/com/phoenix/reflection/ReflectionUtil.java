@@ -6,10 +6,7 @@
 package com.phoenix.reflection;
 
 import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class ReflectionUtil {
     /**
@@ -39,7 +36,7 @@ public class ReflectionUtil {
     }
 
     /**
-     * @param name : tên field cần tìm
+     * @param name   : tên field cần tìm
      * @param aClass : Class
      * @return : Field có tên == name, nếu không tìm thấy trả về null
      */
@@ -54,11 +51,11 @@ public class ReflectionUtil {
     }
 
     /**
-     * @param fieldName : Tên field cần set
+     * @param fieldName     : Tên field cần set
      * @param classOfField: Kiểu dữ liệu của field cần set
-     * @param value: Giá trị muốn set (dạng String)
-     * @param obj: Instance để set giá trị
-     * @throws NoSuchFieldException: nếu không tìm thấy field
+     * @param value:        Giá trị muốn set (dạng String)
+     * @param obj:          Instance để set giá trị
+     * @throws NoSuchFieldException:  nếu không tìm thấy field
      * @throws IllegalAccessException
      */
     public static void setField(String fieldName, Class classOfField, String value, Object obj) throws NoSuchFieldException, IllegalAccessException {
@@ -77,15 +74,50 @@ public class ReflectionUtil {
 
         field.setAccessible(true);
 
-        if (int.class.equals(classOfField)) {
+        if (int.class.equals(classOfField) || Integer.class.equals(classOfField)) {
             field.set(obj, Integer.parseInt(value));
-        } else if (long.class.equals(classOfField)) {
+        } else if (long.class.equals(classOfField) || Long.class.equals(classOfField)) {
             field.set(obj, Long.parseLong(value));
+        } else if (double.class.equals(classOfField) || Double.class.equals(classOfField)) {
+            field.set(obj, Double.parseDouble(value));
         } else {
             field.set(obj, classOfField.cast(value));
         }
 
     }
 
+    public static void setField(Field field, String value, Object obj) throws NoSuchFieldException, IllegalAccessException {
+        setField(field.getName(), field.getType(), value, obj);
+    }
 
+    public static Object convertMapToObject(Map<String, String> map, Class aClass) throws InstantiationException, IllegalAccessException, NoSuchFieldException {
+        Object target = aClass.newInstance();
+
+        List<Field> fields = getAllFields(aClass);
+
+        for (Field field : fields) {
+            setField(field, map.get(field.getName()), target);
+        }
+
+        return target;
+
+    }
+
+    public static Map<String, String> convertObjectToMap(Object source, Class aClass) throws InstantiationException, IllegalAccessException {
+        Map<String, String> map = new LinkedHashMap<>();
+
+        List<Field> fields = getAllFields(aClass);
+
+        Class<?> targetType;
+        Object objectValue;
+        for (Field field : fields) {
+            field.setAccessible(true);
+            targetType = field.getType();
+            objectValue = targetType.newInstance();
+
+            map.put(field.getName(), String.valueOf(field.get(objectValue)));
+        }
+
+        return map;
+    }
 }
