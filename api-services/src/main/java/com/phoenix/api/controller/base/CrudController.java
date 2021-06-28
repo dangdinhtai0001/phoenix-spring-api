@@ -22,27 +22,27 @@ public abstract class CrudController<T extends BaseEntity> extends AbstractContr
     }
 
     @Override
-    public ResponseEntity add(Map payload) {
-        return null;
+    public ResponseEntity add(Map payload) throws Exception {
+        return successResponse(service.add(payload));
     }
 
     @Override
-    public ResponseEntity update(Map payload) {
-        return null;
+    public ResponseEntity update(Map payload) throws Exception {
+        return successResponse(service.update(payload));
     }
 
     @Override
-    public ResponseEntity remove(Map payload) {
-        return null;
+    public ResponseEntity remove(Map payload) throws Exception {
+        return successResponse(service.remove(payload));
     }
 
     @Override
     public ResponseEntity findAll() {
-        return null;
+        return successResponse(service.findAll());
     }
 
     @Override
-    public ResponseEntity findById() {
-        return null;
+    public ResponseEntity findById(Long id) throws Exception {
+        return successResponse(service.findById(id));
     }
 }

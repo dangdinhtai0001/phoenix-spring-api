@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import java.util.Map;
 
 public interface BaseController<T extends BaseEntity> {
-    ResponseEntity add(Map payload);
+    ResponseEntity add(Map payload) throws Exception;
 
-    ResponseEntity update(Map payload);
+    ResponseEntity update(Map payload) throws Exception;
 
-    ResponseEntity remove(Map payload);
+    ResponseEntity remove(Map payload) throws Exception;
 
     ResponseEntity findAll();
 
-    ResponseEntity findById();
+    ResponseEntity findById(Long id) throws Exception;
 }

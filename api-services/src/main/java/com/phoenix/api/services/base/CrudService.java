@@ -13,16 +13,17 @@ package com.phoenix.api.services.base;
 import com.phoenix.api.entities.base.BaseEntity;
 import com.phoenix.api.repositories.base.AbstractRepository;
 
+import java.util.Map;
 import java.util.Optional;
 
 public interface CrudService<T extends BaseEntity> {
     Iterable<T> findAll();
 
-    Optional<T> add(T obj) throws RuntimeException, Exception;
+    Optional<T> add(Map payload) throws RuntimeException, Exception;
 
-    Optional<T> update(T obj) throws RuntimeException, Exception;
+    Optional<T> update(Map payload) throws RuntimeException, Exception;
 
-    void remove(T obj) throws RuntimeException, Exception;
+    Optional<T> remove(Map payload) throws RuntimeException, Exception;
 
     Optional<T> findById(Long id) throws RuntimeException, Exception;
 }

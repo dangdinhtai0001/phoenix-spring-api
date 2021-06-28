@@ -8,19 +8,28 @@ package com.phoenix.api.services.base;
 import com.phoenix.api.entities.base.BaseEntity;
 import com.phoenix.api.entities.common.ExceptionEntity;
 import com.phoenix.api.repositories.base.AbstractRepository;
+import com.phoenix.reflection.ReflectionUtil;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public abstract class CrudAbstractService<T extends BaseEntity> extends AbstractService implements CrudService<T> {
     private final AbstractRepository<T> repository;
+    private final Class<T> typeParameterClass;
 
     protected CrudAbstractService(
             List<ExceptionEntity> exceptionEntities,
-            AbstractRepository<T> repository
-    ) {
+            AbstractRepository<T> repository,
+            Class<T> typeParameterClass) {
         super(exceptionEntities);
         this.repository = repository;
+        this.typeParameterClass = typeParameterClass;
+    }
+
+    public T convertPayload(Map payload)
+            throws NoSuchFieldException, InstantiationException, IllegalAccessException {
+        return (T) ReflectionUtil.convertMapToObject(payload, typeParameterClass);
     }
 
     public abstract T preAdd(T object);
@@ -42,7 +51,8 @@ public abstract class CrudAbstractService<T extends BaseEntity> extends Abstract
     }
 
     @Override
-    public Optional<T> add(T obj) throws RuntimeException, Exception {
+    public Optional<T> add(Map payload) throws RuntimeException, Exception {
+        T obj = convertPayload(payload);
         preAdd(obj);
         Optional<T> optional = repository.add(obj);
         afterAdd(obj);
@@ -51,19 +61,23 @@ public abstract class CrudAbstractService<T extends BaseEntity> extends Abstract
     }
 
     @Override
-    public Optional<T> update(T obj) throws RuntimeException, Exception {
-        preAdd(obj);
+    public Optional<T> update(Map payload) throws RuntimeException, Exception {
+        T obj = convertPayload(payload);
+        preUpdate(obj);
         Optional<T> optional = repository.update(obj);
-        afterAdd(obj);
+        afterUpdate(obj);
 
         return optional;
     }
 
     @Override
-    public void remove(T obj) throws RuntimeException, Exception {
-        preAdd(obj);
+    public Optional<T> remove(Map payload) throws RuntimeException, Exception {
+        T obj = convertPayload(payload);
+        preRemove(obj);
         repository.remove(obj);
-        afterAdd(obj);
+        afterRemove(obj);
+
+        return Optional.ofNullable(obj);
     }
 
     @Override
