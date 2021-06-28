@@ -7,7 +7,7 @@ package com.phoenix.api.controller;
 
 import com.phoenix.api.component.exception.DefaultHandlerException;
 import com.phoenix.api.constant.BeanIds;
-import com.phoenix.api.controller.base.BaseController;
+import com.phoenix.api.controller.base.AbstractController;
 import com.phoenix.api.services.auth.AuthServiceImp;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -20,7 +20,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/auth")
-public class AuthController extends BaseController {
+public class AuthController extends AbstractController {
 
     private final AuthServiceImp authService;
 
