@@ -22,7 +22,7 @@ import javax.persistence.Table;
 @Getter
 @Setter
 @ToString
-public class Profile extends BaseEntityAudit<String> {
+public class ProfileEntity extends BaseEntityAudit<String> {
     @Column(name = "USER_ID")
     private int userId;
 
@@ -37,6 +37,4 @@ public class Profile extends BaseEntityAudit<String> {
 
     @Column(name = "MOBILE_NUMBER")
     private String mobileNumber;
-
-
 }

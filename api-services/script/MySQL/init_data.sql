@@ -56,5 +56,14 @@ insert into fw_exception(code_, RESOURCE_, MESSAGE_, HTTP_CODE)
 values ('AUTH_001', 'com.phoenix.api.services.auth.AuthServiceImp', 'wrong user credentials', 400)
 ;
 
+# =================================
+select * from profile;
+select * from fw_user;
+# delete from fw_exception;
+# =================================
+insert into profile(first_name, last_name, email, mobile_number, user_id)
+value ('first', 'last', 'abc@xyz.com', '0326649876', 1);
+;
+
 
 commit;

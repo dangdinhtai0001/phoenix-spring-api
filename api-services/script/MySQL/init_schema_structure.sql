@@ -78,8 +78,8 @@ CREATE TABLE `fw_user_group`
     `group_id` bigint NOT NULL,
     KEY `FK_USER__USER_GROUP` (`user_id`),
     KEY `FK_GROUP__USER_GROUP` (`group_id`),
-    CONSTRAINT `GROUP__USER_GROUP_FK` FOREIGN KEY (`group_id`) REFERENCES `fw_group` (`id`),
-    CONSTRAINT `USER__USER_GROUP_FK` FOREIGN KEY (`user_id`) REFERENCES `fw_user` (`id`)
+    CONSTRAINT `GROUP__USER_GROUP_FK` FOREIGN KEY (`group_id`) REFERENCES `fw_group` (`id`) on delete cascade ,
+    CONSTRAINT `USER__USER_GROUP_FK` FOREIGN KEY (`user_id`) REFERENCES `fw_user` (`id`) on delete cascade
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_vietnamese_ci;
