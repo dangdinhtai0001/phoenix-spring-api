@@ -6,6 +6,7 @@
 package com.phoenix.api.repositories.base;
 
 import com.phoenix.api.entities.common.ExceptionEntity;
+import com.phoenix.api.repositories.common.ExceptionRepositoryImp;
 import com.phoenix.structure.Pair;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ import java.util.List;
 @SpringBootTest
 public class TestAbstractRepository {
     @Autowired
-    private ExceptionRepo exceptionRepo;
+    private ExceptionRepositoryImp exceptionRepo;
 
     @Test
     public void test() throws Exception {
@@ -66,12 +67,20 @@ public class TestAbstractRepository {
     }
 
     @Test
-    public void testUpdateNativeQuery(){
+    public void testUpdateNativeQuery() {
         int row = exceptionRepo.updateNativeQuery("update fw_exception set message_ = ? where code_ = ?;",
                 "Wrong user credentials", "AUTH_001");
 
         System.out.println(row);
     }
+
+    @Test
+    public void testFindAll() {
+        List<ExceptionEntity> list = (List<ExceptionEntity>) exceptionRepo.findAll();
+
+        System.out.println(list);
+    }
+
 
 
     private void print(List<Object[]> list) {

@@ -4,7 +4,7 @@ import com.phoenix.api.constant.BeanIds;
 import com.phoenix.api.entities.auth.UserStatusEntity;
 import com.phoenix.api.entities.common.ExceptionEntity;
 import com.phoenix.api.repositories.auth.UserStatusRepository;
-import com.phoenix.api.repositories.common.ExceptionRepository;
+import com.phoenix.api.repositories.common.ExceptionRepositoryImp;
 import com.phoenix.auth.JwtProvider;
 import com.phoenix.auth.imp.DefaultJwtProvider;
 import com.phoenix.text.HashingText;
@@ -30,14 +30,14 @@ public class ApplicationConfiguration {
     private String jwtExpired;
 
     private final UserStatusRepository userStatusRepository;
-    private final ExceptionRepository exceptionRepository;
+    private final ExceptionRepositoryImp exceptionRepositoryImp;
 
     public ApplicationConfiguration(
             @Qualifier(BeanIds.USER_STATUS_REPOSITORY) UserStatusRepository userStatusRepository,
-            @Qualifier(BeanIds.EXCEPTION_REPOSITORY) ExceptionRepository exceptionRepository
+            @Qualifier(BeanIds.EXCEPTION_REPOSITORY_IMP) ExceptionRepositoryImp exceptionRepositoryImp
     ) {
         this.userStatusRepository = userStatusRepository;
-        this.exceptionRepository = exceptionRepository;
+        this.exceptionRepositoryImp = exceptionRepositoryImp;
     }
 
     /**
@@ -53,7 +53,7 @@ public class ApplicationConfiguration {
      */
     @Bean(value = BeanIds.ALL_EXCEPTION)
     public List<ExceptionEntity> getAllException() {
-        return exceptionRepository.findAll();
+        return (List<ExceptionEntity>) exceptionRepositoryImp.findAll();
     }
 
     /**
