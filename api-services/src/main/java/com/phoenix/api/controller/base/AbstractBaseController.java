@@ -14,14 +14,14 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * The AbstractController class implements common functionality for all Controller
+ * The AbstractBaseController class implements common functionality for all Controller
  * classes. The <code>@ExceptionHandler</code> methods provide a consistent
  * response when Exceptions are thrown from <code>@RequestMapping</code>
  * annotated Controller methods.
  *
  * @author Matt Warman from https://github.com/leanstacks/spring-boot-fundamentals/blob/HEAD/src/main/java/org/example/ws/web/api/BaseController.java
  */
-public abstract class AbstractController {
+public abstract class AbstractBaseController {
 
     @ExceptionHandler({DefaultHandlerException.class})
     public ResponseEntity handleException(DefaultHandlerException defaultHandlerException) {

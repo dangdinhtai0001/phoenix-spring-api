@@ -6,16 +6,17 @@
 package com.phoenix.api.controller;
 
 import com.phoenix.api.constant.BeanIds;
-import com.phoenix.api.controller.base.CrudController;
+import com.phoenix.api.controller.base.AbstractCrudController;
 import com.phoenix.api.entities.ProfileEntity;
 import com.phoenix.api.services.ProfileService;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 
 @RequestMapping("/profile")
-@Controller
-public class ProfileController extends CrudController<ProfileEntity> {
+@RestController(value = BeanIds.PROFILE_CONTROLLER)
+public class ProfileController extends AbstractCrudController<ProfileEntity> {
     protected ProfileController(
             @Qualifier(BeanIds.PROFILE_SERVICE) ProfileService service) {
         super(service);

@@ -14,11 +14,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-public abstract class CrudAbstractService<T extends BaseEntity> extends AbstractService implements CrudService<T> {
+public abstract class AbstractCrudService<T extends BaseEntity> extends AbstractBaseService implements CrudService<T> {
     private final AbstractRepository<T> repository;
     private final Class<T> typeParameterClass;
 
-    protected CrudAbstractService(
+    protected AbstractCrudService(
             List<ExceptionEntity> exceptionEntities,
             AbstractRepository<T> repository,
             Class<T> typeParameterClass) {
@@ -32,17 +32,17 @@ public abstract class CrudAbstractService<T extends BaseEntity> extends Abstract
         return (T) ReflectionUtil.convertMapToObject(payload, typeParameterClass);
     }
 
-    public abstract T preAdd(T object);
+    public abstract void preAdd(T object);
 
-    public abstract T preUpdate(T object);
+    public abstract void preUpdate(T object);
 
-    public abstract T preRemove(T object);
+    public abstract void preRemove(T object);
 
-    public abstract T afterAdd(T object);
+    public abstract void afterAdd(T object);
 
-    public abstract T afterUpdate(T object);
+    public abstract void afterUpdate(T object);
 
-    public abstract T afterRemove(T object);
+    public abstract void afterRemove(T object);
 
 
     @Override

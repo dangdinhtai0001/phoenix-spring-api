@@ -18,6 +18,11 @@ public class BeanIds {
     public static final String JWT_SECRET_KEY = "FW_SECRET_KEY";
     public static final String UUID_Factory = "FW_UUID_Factory";
 
+    // ====================================================
+    // controller
+    //====================================================
+    public static final String PROFILE_CONTROLLER = "FW_PROFILE_CONTROLLER";
+    public static final String AUTH_CONTROLLER = "FW_AUTH_CONTROLLER";
 
     //====================================================
     // services

@@ -10,10 +10,7 @@ import com.phoenix.api.constant.ApplicationConstant;
 import com.phoenix.api.constant.BeanIds;
 import com.phoenix.api.entities.common.ExceptionEntity;
 import com.phoenix.api.repositories.auth.UserRepository;
-import com.phoenix.api.services.base.AbstractService;
 import com.phoenix.auth.JwtProvider;
-import com.phoenix.searchs.SearchAlgorithm;
-import com.phoenix.searchs.imp.BinarySearch;
 import com.phoenix.time.TimeProvider;
 import com.phoenix.time.imp.SystemTimeProvider;
 import com.phoenix.util.UUIDFactory;
@@ -37,7 +34,7 @@ import java.util.Map;
 
 @Log4j2
 @Service(BeanIds.AUTH_SERVICES)
-public class AuthServiceImp extends AbstractService {
+public class AuthServiceImp extends AbstractBaseService {
 
     private final JwtProvider jwtProvider;
     private final UUIDFactory uuidFactory;

@@ -1,6 +1,6 @@
 /*
- * @Author: Đặng Đình Tài
- * @Created_date: 6/26/21, 11:41 AM
+ * @Author Đặng Đình Tài
+ * @Date 6/29/21, 10:04 AM
  */
 
 package com.phoenix.api.services.base;
@@ -11,11 +11,10 @@ import org.springframework.http.HttpStatus;
 
 import java.util.List;
 
-public abstract class AbstractService {
-
+public abstract class AbstractBaseService {
     private final List<ExceptionEntity> exceptionEntities;
 
-    protected AbstractService(List<ExceptionEntity> exceptionEntities) {
+    protected AbstractBaseService(List<ExceptionEntity> exceptionEntities) {
         this.exceptionEntities = exceptionEntities;
     }
 
