@@ -11,7 +11,6 @@
 package com.phoenix.api.services.base;
 
 import com.phoenix.api.entities.base.BaseEntity;
-import com.phoenix.api.repositories.base.AbstractRepository;
 
 import java.util.Map;
 import java.util.Optional;

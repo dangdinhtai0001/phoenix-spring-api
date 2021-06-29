@@ -1,79 +1,25 @@
 /*
- * @Author: Đặng Đình Tài
- * @Created_date: 6/26/21, 12:24 PM
+ * @Author Đặng Đình Tài
+ * @Date 6/29/21, 9:55 AM
  */
 
 package com.phoenix.api.repositories.base;
 
-import com.phoenix.api.entities.base.BaseEntity;
 import com.phoenix.reflection.ReflectionUtil;
 import com.phoenix.structure.Pair;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.transaction.annotation.Transactional;
-import sun.reflect.Reflection;
 
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Optional;
 
-public abstract class AbstractRepository<T extends BaseEntity> implements BaseRepository<T>, NativeRepository {
-
+public class AbstractNativeRepository implements NativeRepository {
     private final EntityManager entityManager;
 
-    private final Class<T> typeParameterClass;
-
-    public AbstractRepository(EntityManager entityManager, Class<T> typeParameterClass) {
+    public AbstractNativeRepository(EntityManager entityManager) {
         this.entityManager = entityManager;
-        this.typeParameterClass = typeParameterClass;
-    }
-
-
-    @Override
-    public Iterable<T> findAll() {
-        CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
-        CriteriaQuery<T> cq = builder.createQuery(typeParameterClass);
-        Root<T> root = cq.from(typeParameterClass);
-        cq.select(root);
-        return this.entityManager.createQuery(cq).getResultList();
-    }
-
-    @Override
-    public Optional<T> add(T object) throws RuntimeException, Exception {
-        try {
-            this.entityManager.persist(object);
-            return Optional.of(object);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return Optional.empty();
-    }
-
-    @Override
-    public Optional<T> update(T object) throws RuntimeException, Exception {
-        return Optional.ofNullable(this.entityManager.merge(object));
-    }
-
-    @Override
-    public void remove(T object) throws RuntimeException, Exception {
-        this.entityManager.remove(this.entityManager.merge(object));
-    }
-
-    @Override
-    public Optional<T> findById(Long id) throws RuntimeException, Exception {
-        T entity = entityManager.find(typeParameterClass, id);
-        return Optional.ofNullable(entity);
-    }
-
-    @Override
-    public boolean exists(Long id) {
-        T entity = this.entityManager.find(this.typeParameterClass, id);
-        return entity != null;
     }
 
     @Override

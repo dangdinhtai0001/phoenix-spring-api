@@ -9,7 +9,6 @@ import com.phoenix.api.constant.BeanIds;
 import com.phoenix.api.entities.ProfileEntity;
 import com.phoenix.api.entities.common.ExceptionEntity;
 import com.phoenix.api.repositories.ProfileRepositoryImp;
-import com.phoenix.api.repositories.base.AbstractRepository;
 import com.phoenix.api.services.base.CrudAbstractService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
