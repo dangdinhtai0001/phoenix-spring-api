@@ -78,7 +78,7 @@ CREATE TABLE `fw_user_group`
     `group_id` bigint NOT NULL,
     KEY `FK_USER__USER_GROUP` (`user_id`),
     KEY `FK_GROUP__USER_GROUP` (`group_id`),
-    CONSTRAINT `GROUP__USER_GROUP_FK` FOREIGN KEY (`group_id`) REFERENCES `fw_group` (`id`) on delete cascade ,
+    CONSTRAINT `GROUP__USER_GROUP_FK` FOREIGN KEY (`group_id`) REFERENCES `fw_group` (`id`) on delete cascade,
     CONSTRAINT `USER__USER_GROUP_FK` FOREIGN KEY (`user_id`) REFERENCES `fw_user` (`id`) on delete cascade
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
@@ -180,12 +180,12 @@ DROP TABLE IF EXISTS `profile`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `profile`
 (
-    `id`        bigint NOT NULL AUTO_INCREMENT,
-    `user_id`        bigint NOT NULL,
-    `first_name`     varchar(50) COLLATE utf8mb4_vietnamese_ci  DEFAULT NULL,
-    `last_name`     varchar(50) COLLATE utf8mb4_vietnamese_ci  DEFAULT NULL,
-    `email`     varchar(50) COLLATE utf8mb4_vietnamese_ci  DEFAULT NULL,
-    `mobile_number`     varchar(50) COLLATE utf8mb4_vietnamese_ci  DEFAULT NULL,
+    `id`            bigint NOT NULL AUTO_INCREMENT,
+    `user_id`       bigint NOT NULL,
+    `first_name`    varchar(50) COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
+    `last_name`     varchar(50) COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
+    `email`         varchar(50) COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
+    `mobile_number` varchar(50) COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
     PRIMARY KEY (`id`),
     CONSTRAINT `PROFILE__USER_FK` FOREIGN KEY (`user_id`) REFERENCES `fw_user` (`id`) ON DELETE CASCADE
 ) ENGINE = InnoDB

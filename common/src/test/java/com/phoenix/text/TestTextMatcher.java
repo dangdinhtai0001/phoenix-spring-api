@@ -2,6 +2,10 @@ package com.phoenix.text;
 
 import org.junit.Test;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -57,5 +61,12 @@ public class TestTextMatcher {
         for (String s : list) {
             System.out.println(String.format("String: %s, validate: %s",s, TextMatcher.isHexColor(s)));
         }
+    }
+
+
+    @Test
+    public void test() throws IOException {
+        Path path = Paths.get("src/test/resources/fileTest.txt");
+        String read = Files.readAllLines(path).get(0);
     }
 }

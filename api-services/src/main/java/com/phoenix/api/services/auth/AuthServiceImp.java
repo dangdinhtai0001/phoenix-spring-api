@@ -10,6 +10,7 @@ import com.phoenix.api.constant.ApplicationConstant;
 import com.phoenix.api.constant.BeanIds;
 import com.phoenix.api.entities.common.ExceptionEntity;
 import com.phoenix.api.repositories.auth.UserRepository;
+import com.phoenix.api.services.base.AbstractBaseService;
 import com.phoenix.auth.JwtProvider;
 import com.phoenix.time.TimeProvider;
 import com.phoenix.time.imp.SystemTimeProvider;

@@ -8,6 +8,7 @@ package com.phoenix.api.services.base;
 import com.phoenix.api.component.exception.DefaultHandlerException;
 import com.phoenix.api.entities.common.ExceptionEntity;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
