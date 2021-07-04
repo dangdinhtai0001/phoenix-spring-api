@@ -30,6 +30,7 @@ public class BeanIds {
     public static final String DEFAULT_USER_DETAIL_SERVICES = "FW_DEFAULT_USER_DETAIL_SERVICES";
     public static final String AUTH_SERVICES = "FW_AUTH_SERVICES";
     public static final String PROFILE_SERVICE = "FW_PROFILE_SERVICE";
+    public static final String PERMISSION_EVALUATOR = "FW_PERMISSION_EVALUATOR";
 
     // ====================================================
     // Repository
