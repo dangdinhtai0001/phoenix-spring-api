@@ -40,7 +40,7 @@ public class BeanIds {
     public static final String USER_REPOSITORY = "FW_USER_REPOSITORY";
     public static final String EXCEPTION_REPOSITORY = "FW_EXCEPTION_REPOSITORY";
     public static final String EXCEPTION_REPOSITORY_IMP = "FW_EXCEPTION_REPOSITORY_IMP";
-    public static final String PROFILE_REPOSITORY_IMP = "FW_PROFILE_REPOSITORY_IMP";
+    public static final String MENU_REPOSITORY_IMP = "FW_MENU_REPOSITORY_IMP";
 
 
     //====================================================

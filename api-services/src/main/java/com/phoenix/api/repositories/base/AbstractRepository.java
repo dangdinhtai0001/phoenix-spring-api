@@ -24,12 +24,9 @@ public abstract class AbstractRepository<T extends BaseEntity> extends AbstractB
 
     private final EntityManager entityManager;
 
-    private final Class<T> typeParameterClass;
-
     public AbstractRepository(EntityManager entityManager, Class<T> typeParameterClass) {
         super(entityManager, typeParameterClass);
         this.entityManager = entityManager;
-        this.typeParameterClass = typeParameterClass;
     }
 
     @Override
