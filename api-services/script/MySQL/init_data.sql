@@ -46,13 +46,13 @@ INSERT INTO `fw_menu` VALUES (1,'menu_1','/menu_1','menu_1',NULL),(2,'menu_2','/
 UNLOCK TABLES;
 
 --
--- Dumping data for table `fw_permissions`
+-- Dumping data for table `fw_permission`
 --
 
-LOCK TABLES `fw_permissions` WRITE;
-/*!40000 ALTER TABLE `fw_permissions` DISABLE KEYS */;
-INSERT INTO `fw_permissions` VALUES (6,1,'CREATE',NULL),(7,2,'READ',NULL),(8,3,'UPDATE',NULL),(9,4,'DELETE',NULL),(10,5,'ADMIN',NULL);
-/*!40000 ALTER TABLE `fw_permissions` ENABLE KEYS */;
+LOCK TABLES `fw_permission` WRITE;
+/*!40000 ALTER TABLE `fw_permission` DISABLE KEYS */;
+INSERT INTO `fw_permission` VALUES (1,1,'CREATE','CR',NULL),(2,2,'READ','RE',NULL),(3,3,'UPDATE','UP',NULL),(4,4,'DELETE','DE',NULL),(5,5,'ADMIN','AD',NULL);
+/*!40000 ALTER TABLE `fw_permission` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -61,7 +61,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `fw_resource` WRITE;
 /*!40000 ALTER TABLE `fw_resource` DISABLE KEYS */;
-INSERT INTO `fw_resource` VALUES (1,'MENU');
+INSERT INTO `fw_resource` VALUES (1,'fw_menu','TABLE');
 /*!40000 ALTER TABLE `fw_resource` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -72,6 +72,16 @@ UNLOCK TABLES;
 LOCK TABLES `fw_resource_entry` WRITE;
 /*!40000 ALTER TABLE `fw_resource_entry` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fw_resource_entry` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `fw_resource_identity`
+--
+
+LOCK TABLES `fw_resource_identity` WRITE;
+/*!40000 ALTER TABLE `fw_resource_identity` DISABLE KEYS */;
+INSERT INTO `fw_resource_identity` VALUES (1,1,1,NULL,NULL),(2,1,2,NULL,NULL),(3,1,3,NULL,NULL),(4,1,4,NULL,NULL),(5,1,5,NULL,NULL),(6,1,6,NULL,NULL),(7,1,7,NULL,NULL),(8,1,8,NULL,NULL);
+/*!40000 ALTER TABLE `fw_resource_identity` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -141,4 +151,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-07-06 11:15:29
+-- Dump completed on 2021-07-06 16:23:17
