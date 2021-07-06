@@ -29,9 +29,7 @@ public abstract class AbstractBaseService {
     private ExceptionEntity findExceptionByCode(String code) {
         return exceptionEntities
                 .stream()
-                .filter(
-                        exceptionEntity -> code.equals(exceptionEntity.getCode())
-                )
+                .filter(exceptionEntity -> code.equals(exceptionEntity.getCode()))
                 .findFirst().orElse(null);
     }
 }

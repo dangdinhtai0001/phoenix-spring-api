@@ -9,6 +9,7 @@ import com.phoenix.api.entities.base.BaseEntity;
 import com.phoenix.api.entities.common.ExceptionEntity;
 import com.phoenix.api.repositories.base.AbstractRepository;
 import com.phoenix.reflection.ReflectionUtil;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.util.List;
 import java.util.Map;
@@ -38,12 +39,13 @@ public abstract class AbstractCrudService<T extends BaseEntity> extends Abstract
 
     public abstract void preRemove(T object);
 
+    public abstract void preFindById(Long id);
+
     public abstract void afterAdd(T object);
 
     public abstract void afterUpdate(T object);
 
     public abstract void afterRemove(T object);
-
 
     @Override
     public Iterable<T> findAll() {
@@ -82,6 +84,7 @@ public abstract class AbstractCrudService<T extends BaseEntity> extends Abstract
 
     @Override
     public Optional<T> findById(Long id) throws RuntimeException, Exception {
+        preFindById(id);
         return repository.findById(id);
     }
 }

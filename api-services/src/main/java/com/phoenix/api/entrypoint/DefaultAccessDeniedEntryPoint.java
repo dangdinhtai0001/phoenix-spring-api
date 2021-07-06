@@ -21,6 +21,8 @@ import java.io.IOException;
 @Log4j2
 @Component(BeanIds.DEFAULT_ACCESS_DENIED_ENTRY_POINT)
 public class DefaultAccessDeniedEntryPoint extends BaseEntryPoint implements AccessDeniedHandler {
+    private final String DEFAULT_ERROR_MESSAGE = "Access Denied, You don’t have permission to access on this server. Routing from the entry point";
+
     protected DefaultAccessDeniedEntryPoint(
             @Qualifier("handlerExceptionResolver") HandlerExceptionResolver resolver) {
         super(resolver);
@@ -29,19 +31,25 @@ public class DefaultAccessDeniedEntryPoint extends BaseEntryPoint implements Acc
     @Override
     public void handle(HttpServletRequest httpServletRequest,
                        HttpServletResponse httpServletResponse,
-                       AccessDeniedException e) throws IOException, ServletException {
-        handle(httpServletRequest, httpServletResponse, e);
+                       Exception e) throws IOException, ServletException {
+        handleRequest(httpServletRequest, httpServletResponse, e);
     }
 
     @Override
-    protected void handle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Exception e)
+    public void handle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
+                       AccessDeniedException e) throws IOException, ServletException {
+        handleRequest(httpServletRequest, httpServletResponse, e);
+    }
+
+
+    protected void handleRequest(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Exception e)
             throws IOException, ServletException {
-        log.error("Access Denied, You don’t have permission to access on this server. Routing from the entry point");
+        log.error(DEFAULT_ERROR_MESSAGE);
 
         if (httpServletRequest.getAttribute("javax.servlet.error.exception") != null) {
             Throwable throwable = (Throwable) httpServletRequest.getAttribute("javax.servlet.error.exception");
             resolver.resolveException(httpServletRequest, httpServletResponse, null, (Exception) throwable);
         }
-        httpServletResponse.sendError(HttpServletResponse.SC_FORBIDDEN, e.getMessage());
+        httpServletResponse.sendError(HttpServletResponse.SC_FORBIDDEN, DEFAULT_ERROR_MESSAGE);
     }
 }

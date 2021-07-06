@@ -21,5 +21,4 @@ import org.springframework.security.config.annotation.method.configuration.Globa
         prePostEnabled = true)
 public class MethodSecurityConfiguration extends GlobalMethodSecurityConfiguration {
 
-
 }

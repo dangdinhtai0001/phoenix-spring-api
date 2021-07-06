@@ -46,32 +46,36 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest httpServletRequest,
                                     HttpServletResponse httpServletResponse,
                                     FilterChain filterChain) throws ServletException, IOException {
-        String tokenHeader = httpServletRequest.getHeader(ApplicationConstant.REQUEST_HEADER_AUTHORIZATION);
+        try {
+            String tokenHeader = httpServletRequest.getHeader(ApplicationConstant.REQUEST_HEADER_AUTHORIZATION);
 
-        if (tokenHeader == null) {
-            filterChain.doFilter(httpServletRequest, httpServletResponse);
-            return;
-        }
-
-        String token = getTokenFromHeader(tokenHeader);
-
-        if (tokenProvider.validateToken(token)) {
-            String username = tokenProvider.getSubjectFromToken(token);
-
-            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-
-            if (userDetails != null) {
-                UsernamePasswordAuthenticationToken authenticationToken
-                        = new UsernamePasswordAuthenticationToken(
-                        userDetails.getUsername(), userDetails.getPassword(),
-                        userDetails.getAuthorities()
-                );
-
-                authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));
-                SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-
+            if (tokenHeader == null) {
                 filterChain.doFilter(httpServletRequest, httpServletResponse);
+                return;
             }
+
+            String token = getTokenFromHeader(tokenHeader);
+
+            if (tokenProvider.validateToken(token)) {
+                String username = tokenProvider.getSubjectFromToken(token);
+
+                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+
+                if (userDetails != null) {
+                    UsernamePasswordAuthenticationToken authenticationToken
+                            = new UsernamePasswordAuthenticationToken(
+                            userDetails.getUsername(), userDetails.getPassword(),
+                            userDetails.getAuthorities()
+                    );
+
+                    authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));
+                    SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+
+                    filterChain.doFilter(httpServletRequest, httpServletResponse);
+                }
+            }
+        } catch (Exception e) {
+            httpServletResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, e.getMessage());
         }
     }
 

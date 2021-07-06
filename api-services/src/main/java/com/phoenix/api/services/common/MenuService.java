@@ -6,6 +6,7 @@ import com.phoenix.api.entities.common.MenuEntity;
 import com.phoenix.api.repositories.base.AbstractRepository;
 import com.phoenix.api.services.base.AbstractCrudService;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -33,6 +34,11 @@ public class MenuService extends AbstractCrudService<MenuEntity> {
     public void preRemove(MenuEntity object) {
         System.out.println("Pre remove");
 
+    }
+
+    @Override
+    public void preFindById(Long id) {
+        System.out.println("Pre find by id");
     }
 
     @Override

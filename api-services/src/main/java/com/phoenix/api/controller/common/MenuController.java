@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController(BeanIds.MENU_CONTROLLER)
-@RequestMapping(value ="/menu")
+@RequestMapping(value = "/menu")
 public class MenuController extends AbstractCrudController<MenuEntity> {
     protected MenuController(CrudService<MenuEntity> service) {
         super(service);
