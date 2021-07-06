@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.22, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.25, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: phoenix
+-- Host: localhost    Database: phoenix
 -- ------------------------------------------------------
--- Server version	8.0.22
+-- Server version	8.0.25
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -75,6 +75,16 @@ LOCK TABLES `fw_resource_entry` WRITE;
 UNLOCK TABLES;
 
 --
+-- Dumping data for table `fw_sid`
+--
+
+LOCK TABLES `fw_sid` WRITE;
+/*!40000 ALTER TABLE `fw_sid` DISABLE KEYS */;
+INSERT INTO `fw_sid` VALUES (1,'admin_test',1),(2,'ADMIN',0),(3,'SYSTEM',0),(4,'USER',0),(5,'GUEST',0);
+/*!40000 ALTER TABLE `fw_sid` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Dumping data for table `fw_user`
 --
 
@@ -121,14 +131,6 @@ LOCK TABLES `spring_session_attributes` WRITE;
 /*!40000 ALTER TABLE `spring_session_attributes` DISABLE KEYS */;
 /*!40000 ALTER TABLE `spring_session_attributes` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Dumping events for database 'phoenix'
---
-
---
--- Dumping routines for database 'phoenix'
---
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -139,4 +141,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-07-04 23:30:50
+-- Dump completed on 2021-07-06 11:15:29

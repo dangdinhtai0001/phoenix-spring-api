@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.22, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.25, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: phoenix
+-- Host: localhost    Database: phoenix
 -- ------------------------------------------------------
--- Server version	8.0.22
+-- Server version	8.0.25
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -60,9 +60,9 @@ DROP TABLE IF EXISTS `fw_menu`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `fw_menu` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) COLLATE utf8mb4_vietnamese_ci NOT NULL,
-  `href` varchar(255) COLLATE utf8mb4_vietnamese_ci NOT NULL,
-  `title` varchar(255) COLLATE utf8mb4_vietnamese_ci NOT NULL,
+  `name` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
+  `href` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
+  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
   `parent_id` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
@@ -79,8 +79,8 @@ DROP TABLE IF EXISTS `fw_permissions`;
 CREATE TABLE `fw_permissions` (
   `id` int NOT NULL AUTO_INCREMENT,
   `code` int NOT NULL,
-  `name` varchar(10) COLLATE utf8mb4_vietnamese_ci NOT NULL,
-  `description` varchar(255) COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
+  `name` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
+  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
   UNIQUE KEY `code_UNIQUE` (`code`),
@@ -97,7 +97,7 @@ DROP TABLE IF EXISTS `fw_resource`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `fw_resource` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) COLLATE utf8mb4_vietnamese_ci NOT NULL,
+  `name` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name_UNIQUE` (`name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
@@ -121,18 +121,20 @@ CREATE TABLE `fw_resource_entry` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Temporary view structure for view `fw_sid`
+-- Table structure for table `fw_sid`
 --
 
 DROP TABLE IF EXISTS `fw_sid`;
-/*!50001 DROP VIEW IF EXISTS `fw_sid`*/;
-SET @saved_cs_client     = @@character_set_client;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-/*!50001 CREATE VIEW `fw_sid` AS SELECT 
- 1 AS `id`,
- 1 AS `name`,
- 1 AS `principal`*/;
-SET character_set_client = @saved_cs_client;
+CREATE TABLE `fw_sid` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) COLLATE utf8mb4_vietnamese_ci NOT NULL,
+  `principal` int NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `idfw_sid_UNIQUE` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `fw_user`
@@ -229,32 +231,6 @@ CREATE TABLE `spring_session_attributes` (
   CONSTRAINT `SPRING_SESSION_ATTRIBUTES_FK` FOREIGN KEY (`SESSION_PRIMARY_ID`) REFERENCES `spring_session` (`PRIMARY_ID`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci ROW_FORMAT=DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping events for database 'phoenix'
---
-
---
--- Dumping routines for database 'phoenix'
---
-
---
--- Final view structure for view `fw_sid`
---
-
-/*!50001 DROP VIEW IF EXISTS `fw_sid`*/;
-/*!50001 SET @saved_cs_client          = @@character_set_client */;
-/*!50001 SET @saved_cs_results         = @@character_set_results */;
-/*!50001 SET @saved_col_connection     = @@collation_connection */;
-/*!50001 SET character_set_client      = utf8mb4 */;
-/*!50001 SET character_set_results     = utf8mb4 */;
-/*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
-/*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`phoenix`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `fw_sid` AS select `fw_user`.`id` AS `id`,`fw_user`.`username` AS `name`,1 AS `principal` from `fw_user` union all select `fw_group`.`id` AS `id`,`fw_group`.`name` AS `name`,0 AS `principal` from `fw_group` */;
-/*!50001 SET character_set_client      = @saved_cs_client */;
-/*!50001 SET character_set_results     = @saved_cs_results */;
-/*!50001 SET collation_connection      = @saved_col_connection */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -265,4 +241,4 @@ CREATE TABLE `spring_session_attributes` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-07-04 23:29:32
+-- Dump completed on 2021-07-06 11:16:23
