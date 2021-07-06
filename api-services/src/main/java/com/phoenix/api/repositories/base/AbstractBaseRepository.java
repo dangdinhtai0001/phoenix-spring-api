@@ -39,7 +39,7 @@ public abstract class AbstractBaseRepository<T extends BaseEntity> implements Ba
     }
 
     @Override
-    public Optional<T> add(T object) throws RuntimeException, Exception {
+    public Optional<T> add(T object) throws Exception {
         try {
             this.entityManager.persist(object);
             return Optional.of(object);
@@ -50,17 +50,17 @@ public abstract class AbstractBaseRepository<T extends BaseEntity> implements Ba
     }
 
     @Override
-    public Optional<T> update(T object) throws RuntimeException, Exception {
+    public Optional<T> update(T object) throws Exception {
         return Optional.ofNullable(this.entityManager.merge(object));
     }
 
     @Override
-    public void remove(T object) throws RuntimeException, Exception {
+    public void remove(T object) throws Exception {
         this.entityManager.remove(this.entityManager.merge(object));
     }
 
     @Override
-    public Optional<T> findById(Long id) throws RuntimeException, Exception {
+    public Optional<T> findById(Long id) throws Exception {
         T entity = entityManager.find(typeParameterClass, id);
         return Optional.ofNullable(entity);
     }

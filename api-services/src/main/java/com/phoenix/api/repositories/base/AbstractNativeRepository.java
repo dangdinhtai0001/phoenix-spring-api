@@ -15,7 +15,7 @@ import javax.persistence.Query;
 import java.util.LinkedList;
 import java.util.List;
 
-public class AbstractNativeRepository implements NativeRepository {
+public abstract class AbstractNativeRepository implements NativeRepository {
     private final EntityManager entityManager;
 
     public AbstractNativeRepository(EntityManager entityManager) {
