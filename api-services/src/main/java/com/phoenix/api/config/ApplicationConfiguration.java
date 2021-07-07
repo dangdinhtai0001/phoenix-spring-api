@@ -108,7 +108,7 @@ public class ApplicationConfiguration {
         List<String> permissions = new LinkedList<>();
         String strPermissions = "";
         for (Object[] record : result) {
-            permissions = CommonUtil.generatePermissions(permissions,
+             permissions = CommonUtil.generatePermissions(permissions,
                     Integer.parseInt(String.valueOf(record[1])),
                     String.valueOf(record[0]), getAllPermissions());
             strPermissions = generateStringFromList(permissions, ", ");
