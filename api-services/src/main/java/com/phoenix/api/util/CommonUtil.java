@@ -35,11 +35,11 @@ public class CommonUtil {
     public static List<String> generatePermissions(List<String> permissions, int mask, String resource, List<PermissionEntity> allPermissions) {
         int[] positions = BitUtil.getAllBitOnePosition(mask, allPermissions.size());
 
-        permissions.addAll(Arrays
-                .stream(positions)
-                .filter(position -> position > -1)
-                .mapToObj(position -> resource + ApplicationConstant.PERMISSION_SPERATE + allPermissions.get(position).getName())
-                .collect(Collectors.toCollection(LinkedList::new)));
+        for (int i = 0; i < positions.length; i++) {
+            if(positions[i] > 0){
+                permissions.add(resource + ApplicationConstant.PERMISSION_SPERATE + allPermissions.get(i).getName());
+            }
+        }
 
         return permissions;
     }

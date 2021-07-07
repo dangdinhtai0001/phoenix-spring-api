@@ -28,7 +28,7 @@ public abstract class AbstractBaseController {
         Map<String, Object> responseBody = new LinkedHashMap<>();
 
         responseBody.put("code", defaultHandlerException.getCode());
-        responseBody.put("resource", defaultHandlerException.getResource());
+//        responseBody.put("resource", defaultHandlerException.getResource());
         responseBody.put("message", defaultHandlerException.getMessage());
 
         if(defaultHandlerException.getHttpStatus() == null){

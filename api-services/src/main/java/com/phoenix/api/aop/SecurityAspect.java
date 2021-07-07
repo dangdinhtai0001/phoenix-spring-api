@@ -12,6 +12,8 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
@@ -35,6 +37,7 @@ public class SecurityAspect {
         String serviceName = joinPoint.getTarget().getClass().getName();
         String methodName = joinPoint.getSignature().getName();
         String methodFullName = serviceName + "." + methodName;
+        String strPermissionRequirement = allResourcePermissionRequirement.get(methodFullName);
 
 
         System.out.println("----------------------------------------------------------------------------------------");
@@ -42,10 +45,18 @@ public class SecurityAspect {
         System.out.println(String.format("Auth name: %s", authentication));
         System.out.println(String.format("Service name: %s", serviceName));
         System.out.println(String.format("Method full name: %s", methodFullName));
-        System.out.println(String.format("Permission required: %s", allResourcePermissionRequirement.get(methodFullName)));
+        System.out.println(String.format("Permission required: %s", strPermissionRequirement));
 
+        boolean isDenied = true;
+        for (GrantedAuthority simpleGrantedAuthority : authentication.getAuthorities()) {
+            if (strPermissionRequirement.contains(simpleGrantedAuthority.getAuthority())) {
+                isDenied = false;
+                break;
+            }
+        }
 
-
-        throw new DefaultHandlerException("bla", "bla");
+        if (isDenied) {
+            throw new DefaultHandlerException("bla", "bla");
+        }
     }
 }

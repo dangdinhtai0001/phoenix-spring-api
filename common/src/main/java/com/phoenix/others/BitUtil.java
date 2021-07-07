@@ -34,9 +34,9 @@ public class BitUtil {
 
         for (int i = 0; i < length; i++) {
             if (bit[i] != null && Integer.parseInt(bit[i]) > 0) {
-                arr[i] = Integer.parseInt(bit[i]);
+                arr[length - 1 - i] = Integer.parseInt(bit[i]);
             } else {
-                arr[i] = -1;
+                arr[length - 1 - i] = -1;
             }
         }
         return arr;
