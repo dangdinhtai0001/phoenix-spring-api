@@ -102,7 +102,7 @@ CREATE TABLE `fw_resource` (
   `type` varchar(45) COLLATE utf8mb4_vietnamese_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name_UNIQUE` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -136,8 +136,28 @@ CREATE TABLE `fw_resource_identity` (
   `parent_resource` int DEFAULT NULL,
   `owner_sid` int DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `id_UNIQUE` (`id`)
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  KEY `fw_resource_identity_fw_resource_id_fk` (`resource_id`),
+  CONSTRAINT `fw_resource_identity_fw_resource_id_fk` FOREIGN KEY (`resource_id`) REFERENCES `fw_resource` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `fw_resource_requirement`
+--
+
+DROP TABLE IF EXISTS `fw_resource_requirement`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `fw_resource_requirement` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `resource_id` int NOT NULL,
+  `mask` int NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `fw_resource_requirement_resource_id_uindex` (`resource_id`),
+  UNIQUE KEY `fw_resource_requirement_id_uindex` (`id`),
+  CONSTRAINT `fw_resource_requirement_fw_resource_id_fk` FOREIGN KEY (`resource_id`) REFERENCES `fw_resource` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -152,8 +172,28 @@ CREATE TABLE `fw_sid` (
   `name` varchar(45) COLLATE utf8mb4_vietnamese_ci NOT NULL,
   `principal` int NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `idfw_sid_UNIQUE` (`id`)
+  UNIQUE KEY `idfw_sid_UNIQUE` (`id`),
+  UNIQUE KEY `fw_sid_name_uindex` (`name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `fw_sid_resource`
+--
+
+DROP TABLE IF EXISTS `fw_sid_resource`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `fw_sid_resource` (
+  `sid` int NOT NULL,
+  `resource_id` int NOT NULL,
+  `mask` int NOT NULL,
+  PRIMARY KEY (`sid`,`resource_id`),
+  UNIQUE KEY `fw_sid_resource_sid_resource_id_uindex` (`sid`,`resource_id`),
+  KEY `fw_sid_resource_fw_resource_id_fk` (`resource_id`),
+  CONSTRAINT `fw_sid_resource_fw_resource_id_fk` FOREIGN KEY (`resource_id`) REFERENCES `fw_resource` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `fw_sid_resource_fw_sid_id_fk` FOREIGN KEY (`sid`) REFERENCES `fw_sid` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -177,7 +217,8 @@ CREATE TABLE `fw_user` (
   `date_created` datetime DEFAULT CURRENT_TIMESTAMP,
   `last_modified_by` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci DEFAULT 'NONE',
   `last_modified_date` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `fw_user_username_uindex` (`username`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -261,4 +302,4 @@ CREATE TABLE `spring_session_attributes` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-07-06 16:23:02
+-- Dump completed on 2021-07-07 15:30:17

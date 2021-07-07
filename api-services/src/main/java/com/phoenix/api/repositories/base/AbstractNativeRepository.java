@@ -23,7 +23,7 @@ public abstract class AbstractNativeRepository implements NativeRepository {
     }
 
     @Override
-    public List executeNativeQuery(String sql, String... params) {
+    public List<Object[]> executeNativeQuery(String sql, String... params) {
         Query query = createNativeQuery(sql, params);
         List<Object[]> result = query.getResultList();
 

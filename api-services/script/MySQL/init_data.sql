@@ -51,7 +51,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `fw_permission` WRITE;
 /*!40000 ALTER TABLE `fw_permission` DISABLE KEYS */;
-INSERT INTO `fw_permission` VALUES (1,1,'CREATE','CR',NULL),(2,2,'READ','RE',NULL),(3,3,'UPDATE','UP',NULL),(4,4,'DELETE','DE',NULL),(5,5,'ADMIN','AD',NULL);
+INSERT INTO `fw_permission` VALUES (1,0,'CREATE','CR',NULL),(2,1,'READ','RE',NULL),(3,2,'UPDATE','UP',NULL),(4,3,'DELETE','DE',NULL),(5,4,'ADMIN','AD',NULL);
 /*!40000 ALTER TABLE `fw_permission` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -61,7 +61,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `fw_resource` WRITE;
 /*!40000 ALTER TABLE `fw_resource` DISABLE KEYS */;
-INSERT INTO `fw_resource` VALUES (1,'fw_menu','TABLE');
+INSERT INTO `fw_resource` VALUES (1,'fw_menu','TABLE'),(2,'com.phoenix.api.services.common.MenuService','SERVICE'),(3,'com.phoenix.api.services.common.MenuService.findAll','METHOD');
 /*!40000 ALTER TABLE `fw_resource` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -85,6 +85,15 @@ INSERT INTO `fw_resource_identity` VALUES (1,1,1,NULL,NULL),(2,1,2,NULL,NULL),(3
 UNLOCK TABLES;
 
 --
+-- Dumping data for table `fw_resource_requirement`
+--
+
+LOCK TABLES `fw_resource_requirement` WRITE;
+/*!40000 ALTER TABLE `fw_resource_requirement` DISABLE KEYS */;
+/*!40000 ALTER TABLE `fw_resource_requirement` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Dumping data for table `fw_sid`
 --
 
@@ -95,12 +104,22 @@ INSERT INTO `fw_sid` VALUES (1,'admin_test',1),(2,'ADMIN',0),(3,'SYSTEM',0),(4,'
 UNLOCK TABLES;
 
 --
+-- Dumping data for table `fw_sid_resource`
+--
+
+LOCK TABLES `fw_sid_resource` WRITE;
+/*!40000 ALTER TABLE `fw_sid_resource` DISABLE KEYS */;
+INSERT INTO `fw_sid_resource` VALUES (1,2,2),(2,1,31),(2,2,31);
+/*!40000 ALTER TABLE `fw_sid_resource` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Dumping data for table `fw_user`
 --
 
 LOCK TABLES `fw_user` WRITE;
 /*!40000 ALTER TABLE `fw_user` DISABLE KEYS */;
-INSERT INTO `fw_user` VALUES (1,'raw','123456',NULL,NULL,NULL,'451b7cba-b9e0-4098-b534-7ba9e2ed8cc7',4,'admin_test','NONE','2021-07-03 22:03:08','NONE','2021-07-03 22:09:33');
+INSERT INTO `fw_user` VALUES (1,'raw','123456',NULL,NULL,NULL,'916b02e2-f9af-404a-b6e3-c68f53633526',1,'admin_test','NONE','2021-07-03 22:03:08','NONE','2021-07-07 11:48:17');
 /*!40000 ALTER TABLE `fw_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -151,4 +170,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-07-06 16:23:17
+-- Dump completed on 2021-07-07 15:30:30

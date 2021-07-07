@@ -8,6 +8,7 @@ package com.phoenix.api.model.auth;
 import com.phoenix.api.constant.ApplicationConstant;
 import javafx.application.Application;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serializable;
@@ -27,6 +28,10 @@ public class DefaultUserDetails implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
 
         Set<GrantedAuthority> authorities = new HashSet<>();
+
+        for (String permission : userPrincipal.getPermissions()) {
+            authorities.add(new SimpleGrantedAuthority(permission));
+        }
 
         return authorities;
     }
@@ -68,11 +73,12 @@ public class DefaultUserDetails implements UserDetails {
     @Override
     public String toString() {
         return "DefaultUserDetails{" +
-                "id=" + userPrincipal.getId() + ", "+
-                "username=" + userPrincipal.getUsername() + ", "+
-                "password=" + userPrincipal.getPassword() + ", "+
-                "hashing algorithm=" + userPrincipal.getHashAlgorithm() + ", "+
-                "status=" + userPrincipal.getListStatus() +
+                "id=" + userPrincipal.getId() + ", " +
+                "username=" + userPrincipal.getUsername() + ", " +
+                "password=" + userPrincipal.getPassword() + ", " +
+                "hashing algorithm=" + userPrincipal.getHashAlgorithm() + ", " +
+                "status=" + userPrincipal.getListStatus()  + ", " +
+                "authorities=" + userPrincipal.getPermissions() +
                 '}';
     }
 }
