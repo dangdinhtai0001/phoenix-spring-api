@@ -39,8 +39,6 @@ public abstract class AbstractCrudService<T extends BaseEntity> extends Abstract
 
     public abstract void preRemove(T object);
 
-    public abstract void preFindById(Long id);
-
     public abstract void afterAdd(T object);
 
     public abstract void afterUpdate(T object);
@@ -84,7 +82,6 @@ public abstract class AbstractCrudService<T extends BaseEntity> extends Abstract
 
     @Override
     public Optional<T> findById(Long id) throws RuntimeException, Exception {
-        preFindById(id);
         return repository.findById(id);
     }
 }

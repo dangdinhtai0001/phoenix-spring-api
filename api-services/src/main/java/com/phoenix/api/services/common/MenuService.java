@@ -37,11 +37,6 @@ public class MenuService extends AbstractCrudService<MenuEntity> {
     }
 
     @Override
-    public void preFindById(Long id) {
-        System.out.println("Pre find by id");
-    }
-
-    @Override
     public void afterAdd(MenuEntity object) {
         System.out.println("after add");
 
