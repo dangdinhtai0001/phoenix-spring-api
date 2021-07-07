@@ -67,14 +67,14 @@ public class DefaultUserDetailService implements UserDetailsService {
      * @return : Danh sách các trạng thái của user (chi tiết trong bảng fw_user_status)
      */
     private List<String> getListStatus(int status) {
-        List<String> listStatus;
+        List<String> listStatus = new LinkedList<>();
         int[] positions = BitUtil.getAllBitOnePosition(status, allUserStatus.size());
 
-        listStatus = Arrays
-                .stream(positions)
-                .filter(position -> position > -1)
-                .mapToObj(position -> allUserStatus.get(position).getName())
-                .collect(Collectors.toCollection(LinkedList::new));
+        for (int i = 0; i < positions.length; i++) {
+            if(positions[i] > 0){
+                listStatus.add(allUserStatus.get(i).getName());
+            }
+        }
         return listStatus;
     }
 }

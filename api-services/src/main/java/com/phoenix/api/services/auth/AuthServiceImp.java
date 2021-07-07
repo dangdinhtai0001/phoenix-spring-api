@@ -21,14 +21,13 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
+import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -94,6 +93,15 @@ public class AuthServiceImp extends AbstractBaseService {
             log.error(e.getMessage());
             e.printStackTrace();
             String code = "AUTH_001";
+            throw getDefaultException(code);
+        } catch (LockedException e) {
+            log.error(e.getMessage());
+            String code = "AUTH_002";
+            throw getDefaultException(code);
+        }
+        catch (AccountExpiredException e) {
+            log.error(e.getMessage());
+            String code = "AUTH_003";
             throw getDefaultException(code);
         }
     }

@@ -5,7 +5,7 @@ import org.junit.Test;
 public class TestBitUtil {
     @Test
     public void testGetAllBitOnePosition() {
-        int[] array = BitUtil.getAllBitOnePosition(2,6);
+        int[] array = BitUtil.getAllBitOnePosition(4,3);
 
         for (int i : array) {
             System.out.println(i);
