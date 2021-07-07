@@ -13,6 +13,7 @@ public class BeanIds {
     // Application config
     //====================================================
     public static final String ALL_USER_STATUS = "FW_ALL_USER_STATUS";
+    public static final String ALL_PERMISSIONS = "FW_ALL_PERMISSIONS";
     public static final String ALL_EXCEPTION = "FW_ALL_EXCEPTION";
     public static final String JWT_PROVIDER = "FW_JWT_PROVIDER";
     public static final String JWT_SECRET_KEY = "FW_SECRET_KEY";
@@ -41,6 +42,7 @@ public class BeanIds {
     public static final String EXCEPTION_REPOSITORY = "FW_EXCEPTION_REPOSITORY";
     public static final String EXCEPTION_REPOSITORY_IMP = "FW_EXCEPTION_REPOSITORY_IMP";
     public static final String MENU_REPOSITORY_IMP = "FW_MENU_REPOSITORY_IMP";
+    public static final String PERMISSION_REPOSITORY_IMP = "FW_PERMISSION_REPOSITORY_IMP";
 
 
     //====================================================

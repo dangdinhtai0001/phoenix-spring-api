@@ -1,8 +1,10 @@
 package com.phoenix.api.config;
 
 import com.phoenix.api.constant.BeanIds;
+import com.phoenix.api.entities.auth.PermissionEntity;
 import com.phoenix.api.entities.auth.UserStatusEntity;
 import com.phoenix.api.entities.common.ExceptionEntity;
+import com.phoenix.api.repositories.auth.PermissionRepositoryImp;
 import com.phoenix.api.repositories.auth.UserStatusRepository;
 import com.phoenix.api.repositories.common.ExceptionRepositoryImp;
 import com.phoenix.auth.JwtProvider;
@@ -31,13 +33,15 @@ public class ApplicationConfiguration {
 
     private final UserStatusRepository userStatusRepository;
     private final ExceptionRepositoryImp exceptionRepositoryImp;
+    private final PermissionRepositoryImp permissionRepositoryImp;
 
     public ApplicationConfiguration(
             @Qualifier(BeanIds.USER_STATUS_REPOSITORY) UserStatusRepository userStatusRepository,
-            @Qualifier(BeanIds.EXCEPTION_REPOSITORY_IMP) ExceptionRepositoryImp exceptionRepositoryImp
-    ) {
+            @Qualifier(BeanIds.EXCEPTION_REPOSITORY_IMP) ExceptionRepositoryImp exceptionRepositoryImp,
+            @Qualifier(BeanIds.PERMISSION_REPOSITORY_IMP) PermissionRepositoryImp permissionRepositoryImp) {
         this.userStatusRepository = userStatusRepository;
         this.exceptionRepositoryImp = exceptionRepositoryImp;
+        this.permissionRepositoryImp = permissionRepositoryImp;
     }
 
     /**
@@ -80,5 +84,13 @@ public class ApplicationConfiguration {
     @Bean(value = BeanIds.UUID_Factory)
     public UUIDFactory getUUIDFactory() {
         return new ConcurrentUUIDFactory();
+    }
+
+    /**
+     * @return Danh sách tất cả quyền trong ứng dụng
+     */
+    @Bean(value = BeanIds.ALL_PERMISSIONS)
+    public List<PermissionEntity> getAllPermissions() {
+        return (List<PermissionEntity>) permissionRepositoryImp.findAll();
     }
 }
