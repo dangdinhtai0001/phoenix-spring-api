@@ -22,6 +22,8 @@ import java.io.IOException;
 @Component(value = BeanIds.JWT_AUTHENTICATION_ENTRY_POINT)
 public class JwtAuthenticationEntryPoint extends BaseEntryPoint implements AuthenticationEntryPoint {
 
+    private final String DEFAULT_ERROR_MESSAGE = "User is unauthorised. Routing from the entry point.";
+
     protected JwtAuthenticationEntryPoint(
             @Qualifier("handlerExceptionResolver") HandlerExceptionResolver resolver) {
         super(resolver);
@@ -38,12 +40,12 @@ public class JwtAuthenticationEntryPoint extends BaseEntryPoint implements Authe
     protected void handle(HttpServletRequest httpServletRequest,
                           HttpServletResponse httpServletResponse,
                           Exception e) throws IOException, ServletException {
-        log.error("User is unauthorised. Routing from the entry point");
+        log.error(DEFAULT_ERROR_MESSAGE);
 
         if (httpServletRequest.getAttribute("javax.servlet.error.exception") != null) {
             Throwable throwable = (Throwable) httpServletRequest.getAttribute("javax.servlet.error.exception");
             resolver.resolveException(httpServletRequest, httpServletResponse, null, (Exception) throwable);
         }
-        httpServletResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, e.getMessage());
+        httpServletResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, DEFAULT_ERROR_MESSAGE);
     }
 }

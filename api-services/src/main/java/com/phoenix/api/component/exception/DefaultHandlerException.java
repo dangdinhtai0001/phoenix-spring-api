@@ -96,5 +96,7 @@ public class DefaultHandlerException extends Exception {
         return super.getCause();
     }
 
-
+    public void setHttpStatus(HttpStatus httpStatus) {
+        this.httpStatus = httpStatus;
+    }
 }

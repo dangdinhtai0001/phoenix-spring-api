@@ -28,30 +28,30 @@ public abstract class AbstractCrudController<T extends BaseEntity> extends Abstr
     @PostMapping(value = "/add")
     @Override
     public ResponseEntity add(@RequestBody Map payload) throws Exception {
-        return successResponse(service.add(payload));
+        return sendResponse(service.add(payload));
     }
 
     @PostMapping(value = "/update")
     @Override
     public ResponseEntity update(@RequestBody Map payload) throws Exception {
-        return successResponse(service.update(payload));
+        return sendResponse(service.update(payload));
     }
 
     @PostMapping(value = "/remove")
     @Override
     public ResponseEntity remove(@RequestBody Map payload) throws Exception {
-        return successResponse(service.remove(payload));
+        return sendResponse(service.remove(payload));
     }
 
     @GetMapping(value = "/all")
     @Override
     public ResponseEntity findAll() {
-        return successResponse(service.findAll());
+        return sendResponse(service.findAll());
     }
 
     @GetMapping(value = "/find")
     @Override
     public ResponseEntity findById(@RequestParam("id") Long id) throws Exception {
-        return successResponse(service.findById(id));
+        return sendResponse(service.findById(id));
     }
 }

@@ -31,10 +31,13 @@ public abstract class AbstractBaseController {
         responseBody.put("resource", defaultHandlerException.getResource());
         responseBody.put("message", defaultHandlerException.getMessage());
 
+        if(defaultHandlerException.getHttpStatus() == null){
+            defaultHandlerException.setHttpStatus(HttpStatus.FOUND);
+        }
         return new ResponseEntity(responseBody, defaultHandlerException.getHttpStatus());
     }
 
-    public ResponseEntity successResponse(Object response) {
+    public ResponseEntity sendResponse(Object response) {
         return new ResponseEntity(response, HttpStatus.OK);
     }
 }
