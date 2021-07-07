@@ -7,6 +7,7 @@ import com.phoenix.api.entities.auth.UserStatusEntity;
 import com.phoenix.api.model.auth.DefaultUserDetails;
 import com.phoenix.api.model.auth.UserPrincipal;
 import com.phoenix.api.repositories.auth.AuthRepositoryImp;
+import com.phoenix.api.util.CommonUtil;
 import com.phoenix.others.BitUtil;
 import com.phoenix.structure.Pair;
 import lombok.extern.log4j.Log4j2;
@@ -52,7 +53,7 @@ public class DefaultUserDetailService implements UserDetailsService {
 
         userPrincipal.setListStatus(getListStatus(userPrincipal.getStatus()));
         try {
-            userPrincipal.setPermissions(getListPermissions(username));
+            userPrincipal.setPermissions(CommonUtil.getListPermissions(username, authRepositoryImp, allPermissions));
         } catch (NoSuchFieldException | IllegalAccessException | InstantiationException e) {
             log.error(e.getMessage(), e);
             userPrincipal.setPermissions(new LinkedList<>());
@@ -75,41 +76,5 @@ public class DefaultUserDetailService implements UserDetailsService {
                 .mapToObj(position -> allUserStatus.get(position).getName())
                 .collect(Collectors.toCollection(LinkedList::new));
         return listStatus;
-    }
-
-    /**
-     * @param username : Tên username
-     * @return : Danh sách các quyền của user (dạng: resource__permission)
-     * @throws NoSuchFieldException
-     * @throws IllegalAccessException
-     * @throws InstantiationException
-     */
-    private List<String> getListPermissions(String username) throws NoSuchFieldException, IllegalAccessException, InstantiationException {
-        List<Object[]> results = authRepositoryImp.executeNativeQuery(DatabaseConstant.FIND_PERMISSIONS_BY_USERNAME, username, username);
-
-        List<Pair<String, Class>> params = new LinkedList<>();
-        params.add(new Pair<>("mFirst", String.class));
-        params.add(new Pair<>("mSecond", String.class));
-        List<Pair> list = authRepositoryImp.parseResult(results, params, Pair.class);
-
-        List<String> permissions = new LinkedList<>();
-
-        for (Pair pair : list) {
-            permissions = generatePermissions(permissions, Integer.parseInt(String.valueOf(pair.second())), String.valueOf(pair.first()));
-        }
-
-        return permissions;
-    }
-
-    private List<String> generatePermissions(List<String> permissions, int mask, String resource) {
-        int[] positions = BitUtil.getAllBitOnePosition(mask, allPermissions.size());
-
-        permissions.addAll(Arrays
-                .stream(positions)
-                .filter(position -> position > -1)
-                .mapToObj(position -> resource + "__" + allPermissions.get(position).getName())
-                .collect(Collectors.toCollection(LinkedList::new)));
-
-        return permissions;
     }
 }

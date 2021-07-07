@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class SecurityAspect {
     @Before("execution(* com.phoenix.api.services.base.AbstractCrudService+.*(..))")
-    public void logBeforeAllMethods(JoinPoint joinPoint) throws DefaultHandlerException {
+    public void checkPermission(JoinPoint joinPoint) throws DefaultHandlerException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         System.out.println("----------------------------------------------------------------------------------------");
         System.out.println(String.format("Method name: %s", joinPoint.getSignature().getName()));
