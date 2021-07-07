@@ -32,7 +32,7 @@ public class CommonUtil {
         return permissions;
     }
 
-    private static List<String> generatePermissions(List<String> permissions, int mask, String resource, List<PermissionEntity> allPermissions) {
+    public static List<String> generatePermissions(List<String> permissions, int mask, String resource, List<PermissionEntity> allPermissions) {
         int[] positions = BitUtil.getAllBitOnePosition(mask, allPermissions.size());
 
         permissions.addAll(Arrays
@@ -43,4 +43,6 @@ public class CommonUtil {
 
         return permissions;
     }
+
+
 }

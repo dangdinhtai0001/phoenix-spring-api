@@ -1,12 +1,14 @@
 package com.phoenix.api.config;
 
 import com.phoenix.api.constant.BeanIds;
+import com.phoenix.api.constant.DatabaseConstant;
 import com.phoenix.api.entities.auth.PermissionEntity;
 import com.phoenix.api.entities.auth.UserStatusEntity;
 import com.phoenix.api.entities.common.ExceptionEntity;
 import com.phoenix.api.repositories.auth.PermissionRepositoryImp;
 import com.phoenix.api.repositories.auth.UserStatusRepository;
 import com.phoenix.api.repositories.common.ExceptionRepositoryImp;
+import com.phoenix.api.util.CommonUtil;
 import com.phoenix.auth.JwtProvider;
 import com.phoenix.auth.imp.DefaultJwtProvider;
 import com.phoenix.text.HashingText;
@@ -18,7 +20,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Nơi nạp các bean cần thiết cho ứng dụng
@@ -92,5 +97,35 @@ public class ApplicationConfiguration {
     @Bean(value = BeanIds.ALL_PERMISSIONS)
     public List<PermissionEntity> getAllPermissions() {
         return (List<PermissionEntity>) permissionRepositoryImp.findAll();
+    }
+
+    @Bean(value = BeanIds.ALL_RESOURCE_PERMISSIONS_REQUIRED)
+    public LinkedHashMap<String, String> getAllResourcePermissionRequirement() {
+        List<Object[]> result = permissionRepositoryImp.executeNativeQuery(DatabaseConstant.FW_ALL_RESOURCE_PERMISSIONS_REQUIRED);
+
+        LinkedHashMap<String, String> map = new LinkedHashMap<>();
+
+        List<String> permissions = new LinkedList<>();
+        String strPermissions = "";
+        for (Object[] record : result) {
+            permissions = CommonUtil.generatePermissions(permissions,
+                    Integer.parseInt(String.valueOf(record[1])),
+                    String.valueOf(record[0]), getAllPermissions());
+            strPermissions = generateStringFromList(permissions, ", ");
+
+            map.put(String.valueOf(record[0]), strPermissions);
+
+        }
+        return map;
+    }
+
+    //    ==============================================================================================================
+    //
+    //    ==============================================================================================================
+
+    private String generateStringFromList(List<String> list, String delimiter) {
+        return list.stream()
+                .map(s -> String.valueOf(s))
+                .collect(Collectors.joining(delimiter, "", ""));
     }
 }

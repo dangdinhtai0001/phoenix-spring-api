@@ -27,5 +27,11 @@ public class DatabaseConstant {
             "                            left join fw_group fg on fug.group_id = fg.id\n" +
             "                   where fu.username = ?))\n" +
             "  and fr.name IS NOT NULL";
-
+    public static final String FW_ALL_RESOURCE_PERMISSIONS_REQUIRED = "select\n" +
+            "#        fr.id resource_id, fr.name name, fr.type type, frr.mask mask\n" +
+            "fr.name  name,\n" +
+            "frr.mask mask\n" +
+            "from fw_resource fr\n" +
+            "         left join fw_resource_requirement frr on fr.id = frr.resource_id\n" +
+            "where frr.id is not null";
 }
