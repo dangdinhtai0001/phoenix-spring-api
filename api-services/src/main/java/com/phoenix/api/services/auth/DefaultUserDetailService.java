@@ -23,13 +23,13 @@ public class DefaultUserDetailService implements UserDetailsService {
 
     private final AuthRepositoryImp authRepositoryImp;
 
-    private final List<UserStatusEntity> userStatusEntities;
+    private final List<UserStatusEntity> allUserStatus;
 
     public DefaultUserDetailService(
             @Qualifier(BeanIds.AUTH_REPOSITORY_IMP) AuthRepositoryImp authRepositoryImp,
             @Qualifier(BeanIds.ALL_USER_STATUS) List<UserStatusEntity> userStatusEntities) {
         this.authRepositoryImp = authRepositoryImp;
-        this.userStatusEntities = userStatusEntities;
+        this.allUserStatus = userStatusEntities;
     }
 
     @Override
@@ -49,12 +49,12 @@ public class DefaultUserDetailService implements UserDetailsService {
 
     private List<String> getListStatus(int status) {
         List<String> listStatus;
-        int[] positions = BitUtil.getAllBitOnePosition(status);
+        int[] positions = BitUtil.getAllBitOnePosition(status, allUserStatus.size());
 
         listStatus = Arrays
                 .stream(positions)
                 .filter(position -> position > -1)
-                .mapToObj(position -> userStatusEntities.get(position).getName())
+                .mapToObj(position -> allUserStatus.get(position).getName())
                 .collect(Collectors.toCollection(LinkedList::new));
         return listStatus;
     }
