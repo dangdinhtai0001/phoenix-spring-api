@@ -12,6 +12,8 @@ public class BitUtil {
         return arr;
     }
 
+
+    @Deprecated
     public static int[] getAllBitOnePosition(int decimal) {
         return getAllBitOnePosition(decimal, String.valueOf(decimal).length());
     }
