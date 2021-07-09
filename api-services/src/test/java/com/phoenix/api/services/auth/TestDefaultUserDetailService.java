@@ -1,10 +1,16 @@
 /*
+ * @Author: Đặng Đình Tài
+ * @Created_date: 7/9/21, 11:10 PM
+ */
+
+/*
  * @Author Đặng Đình Tài
  * @Created_date: 6/22/21, 9:42 AM
  */
 
 package com.phoenix.api.services.auth;
 
+import com.phoenix.api.base.constant.BeanIds;
 import com.phoenix.api.model.auth.DefaultUserDetails;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +21,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 @SpringBootTest
 public class TestDefaultUserDetailService {
     @Autowired
-    @Qualifier("DefaultUserService")
+    @Qualifier(BeanIds.DEFAULT_USER_DETAIL_SERVICES)
     private UserDetailsService userDetailsService;
 
     @Test

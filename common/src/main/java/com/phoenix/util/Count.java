@@ -1,3 +1,8 @@
+/*
+ * @Author: Đặng Đình Tài
+ * @Created_date: 7/9/21, 11:10 PM
+ */
+
 package com.phoenix.util;
 
 /**
@@ -28,4 +33,9 @@ public interface Count {
      * @return: trả về giá trị trước khi tăng biến đếm lên dlta đơn vị
      */
     int getAndSet(int newValue);
+
+    /**
+     * @return : trả về giá trị hiện tại
+     */
+    int get();
 }
