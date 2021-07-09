@@ -7,6 +7,7 @@ package com.phoenix.api.repositories.base;
 
 import com.phoenix.api.entities.base.BaseEntity;
 import com.phoenix.structure.Pair;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -63,4 +64,11 @@ public interface BaseRepository<T extends BaseEntity> {
      * - false: nếu ko tồn tại
      */
     boolean exists(Long id);
+
+
+    /**
+     * @param specification : Điều kiện truy vấn.
+     * @return Tìm tất cả các entity thỏa mãn điều kiện specification
+     */
+    Iterable<T> findBySpecification(Specification specification);
 }

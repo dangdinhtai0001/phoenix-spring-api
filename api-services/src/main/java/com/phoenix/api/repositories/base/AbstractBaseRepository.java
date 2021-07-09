@@ -6,6 +6,7 @@
 package com.phoenix.api.repositories.base;
 
 import com.phoenix.api.entities.base.BaseEntity;
+import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -15,10 +16,10 @@ import java.util.Optional;
 
 /**
  * @param <T> : Đối tượng entity map với csdl
- *
- *      - Thực hiện các thao tác crud với @param <T>
+ *            <p>
+ *            - Thực hiện các thao tác crud với @param <T>
  */
-public abstract class AbstractBaseRepository<T extends BaseEntity> implements BaseRepository<T>{
+public abstract class AbstractBaseRepository<T extends BaseEntity> implements BaseRepository<T> {
     private final EntityManager entityManager;
 
     private final Class<T> typeParameterClass;
@@ -32,10 +33,10 @@ public abstract class AbstractBaseRepository<T extends BaseEntity> implements Ba
     @Override
     public Iterable<T> findAll() {
         CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
-        CriteriaQuery<T> cq = builder.createQuery(typeParameterClass);
-        Root<T> root = cq.from(typeParameterClass);
-        cq.select(root);
-        return this.entityManager.createQuery(cq).getResultList();
+        CriteriaQuery<T> criteriaQuery = builder.createQuery(typeParameterClass);
+        Root<T> root = criteriaQuery.from(typeParameterClass);
+        criteriaQuery.select(root);
+        return this.entityManager.createQuery(criteriaQuery).getResultList();
     }
 
     @Override
@@ -69,5 +70,15 @@ public abstract class AbstractBaseRepository<T extends BaseEntity> implements Ba
     public boolean exists(Long id) {
         T entity = this.entityManager.find(this.typeParameterClass, id);
         return entity != null;
+    }
+
+    @Override
+    public Iterable<T> findBySpecification(Specification specification) {
+        CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
+        CriteriaQuery<T> criteriaQuery = builder.createQuery(typeParameterClass);
+        Root<T> root = criteriaQuery.from(typeParameterClass);
+        criteriaQuery.select(root);
+        criteriaQuery.where(specification.toPredicate(root, criteriaQuery, builder));
+        return this.entityManager.createQuery(criteriaQuery).getResultList();
     }
 }
