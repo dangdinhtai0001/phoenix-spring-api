@@ -1,7 +1,6 @@
 package com.phoenix.api.services.auth;
 
 import com.phoenix.api.constant.BeanIds;
-import com.phoenix.api.constant.DatabaseConstant;
 import com.phoenix.api.entities.auth.PermissionEntity;
 import com.phoenix.api.entities.auth.UserStatusEntity;
 import com.phoenix.api.model.auth.DefaultUserDetails;
@@ -9,7 +8,6 @@ import com.phoenix.api.model.auth.UserPrincipal;
 import com.phoenix.api.repositories.auth.AuthRepositoryImp;
 import com.phoenix.api.util.CommonUtil;
 import com.phoenix.others.BitUtil;
-import com.phoenix.structure.Pair;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,7 +16,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service(BeanIds.DEFAULT_USER_DETAIL_SERVICES)
 @Log4j2
@@ -50,7 +47,7 @@ public class DefaultUserDetailService implements UserDetailsService {
 
         userPrincipal.setListStatus(getListStatus(userPrincipal.getStatus()));
         try {
-            userPrincipal.setPermissions(CommonUtil.getListPermissions(username, authRepositoryImp, allPermissions));
+            userPrincipal.setPermissions(CommonUtil.getSetPermissions(username, authRepositoryImp, allPermissions));
         } catch (NoSuchFieldException | IllegalAccessException | InstantiationException e) {
             log.error(e.getMessage(), e);
             userPrincipal.setPermissions(new HashSet<>());

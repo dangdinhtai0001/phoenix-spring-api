@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 public class CommonUtil {
 
-    public static Set<String> getListPermissions(String username, NativeRepository nativeRepository, List<PermissionEntity> allPermissions)
+    public static Set<String> getSetPermissions(String username, NativeRepository nativeRepository, List<PermissionEntity> allPermissions)
             throws NoSuchFieldException, IllegalAccessException, InstantiationException {
         List<Object[]> results = nativeRepository.executeNativeQuery(DatabaseConstant.FIND_PERMISSIONS_BY_USERNAME, username, username);
 

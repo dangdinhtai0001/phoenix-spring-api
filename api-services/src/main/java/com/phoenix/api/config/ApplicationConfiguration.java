@@ -124,12 +124,15 @@ public class ApplicationConfiguration {
 
         List<Object[]> queryResult = permissionRepositoryImp.executeNativeQuery(DatabaseConstant.FW_ALL_RESOURCE_PERMISSIONS_REQUIRED);
         Set<String> permissions = new HashSet<>();
+        String resourceAction;
+
         for (Object[] record : queryResult) {
-            permissions = CommonUtil.generatePermissions(permissions,
-                    Integer.parseInt(String.valueOf(record[1])),
+            CommonUtil.generatePermissions(permissions,
+                    Integer.parseInt(String.valueOf(record[2])),
                     String.valueOf(record[0]), getAllPermissions());
 
-            result.putAll(String.valueOf(record[0]), permissions);
+            resourceAction = record[0] + "." + record[1];
+            result.putAll(resourceAction, permissions);
         }
 
         return result;

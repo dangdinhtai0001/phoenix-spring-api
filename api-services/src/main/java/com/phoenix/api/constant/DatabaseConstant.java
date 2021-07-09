@@ -28,10 +28,11 @@ public class DatabaseConstant {
             "                   where fu.username = ?))\n" +
             "  and fr.name IS NOT NULL";
     public static final String FW_ALL_RESOURCE_PERMISSIONS_REQUIRED = "select\n" +
-            "#        fr.id resource_id, fr.name name, fr.type type, frr.mask mask\n" +
-            "fr.name  name,\n" +
-            "frr.mask mask\n" +
+            "       fr.name             name,\n" +
+            "       fra.action_name     action,\n" +
+            "       fra.permission_mask mask\n" +
+            "\n" +
             "from fw_resource fr\n" +
-            "         left join fw_resource_requirement frr on fr.id = frr.resource_id\n" +
-            "where frr.id is not null";
+            "         left join fw_resource_action fra on fr.id = fra.resource_id\n" +
+            "where fra.action_name is not null";
 }
