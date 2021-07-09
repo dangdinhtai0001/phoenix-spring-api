@@ -5,12 +5,12 @@
 
 package com.phoenix.api.services.auth;
 
-import com.phoenix.api.component.exception.DefaultHandlerException;
-import com.phoenix.api.constant.ApplicationConstant;
-import com.phoenix.api.constant.BeanIds;
+import com.phoenix.api.base.component.exception.DefaultHandlerException;
+import com.phoenix.api.base.constant.ApplicationConstant;
+import com.phoenix.api.base.constant.BeanIds;
 import com.phoenix.api.entities.common.ExceptionEntity;
 import com.phoenix.api.repositories.auth.UserRepository;
-import com.phoenix.api.services.base.AbstractBaseService;
+import com.phoenix.api.base.services.AbstractBaseService;
 import com.phoenix.auth.JwtProvider;
 import com.phoenix.time.TimeProvider;
 import com.phoenix.time.imp.SystemTimeProvider;
@@ -27,7 +27,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
-import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;

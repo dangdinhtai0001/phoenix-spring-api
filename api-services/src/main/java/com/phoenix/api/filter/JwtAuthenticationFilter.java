@@ -5,7 +5,7 @@
 
 package com.phoenix.api.filter;
 
-import com.phoenix.api.constant.ApplicationConstant;
+import com.phoenix.api.base.constant.ApplicationConstant;
 import com.phoenix.auth.JwtProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;

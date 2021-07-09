@@ -1,14 +1,13 @@
 package com.phoenix.api.util;
 
-import com.phoenix.api.constant.ApplicationConstant;
-import com.phoenix.api.constant.DatabaseConstant;
+import com.phoenix.api.base.constant.ApplicationConstant;
+import com.phoenix.api.base.constant.DatabaseConstant;
 import com.phoenix.api.entities.auth.PermissionEntity;
-import com.phoenix.api.repositories.base.NativeRepository;
+import com.phoenix.api.base.repositories.NativeRepository;
 import com.phoenix.others.BitUtil;
 import com.phoenix.structure.Pair;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class CommonUtil {
 

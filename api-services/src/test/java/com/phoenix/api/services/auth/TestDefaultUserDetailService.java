@@ -5,7 +5,7 @@
 
 package com.phoenix.api.services.auth;
 
-import com.phoenix.api.constant.BeanIds;
+import com.phoenix.api.base.constant.BeanIds;
 import com.phoenix.api.model.auth.DefaultUserDetails;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

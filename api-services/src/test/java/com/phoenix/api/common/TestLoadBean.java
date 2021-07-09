@@ -5,7 +5,7 @@
 
 package com.phoenix.api.common;
 
-import com.phoenix.api.constant.BeanIds;
+import com.phoenix.api.base.constant.BeanIds;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

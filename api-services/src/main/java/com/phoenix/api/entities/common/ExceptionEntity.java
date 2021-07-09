@@ -10,7 +10,7 @@
 
 package com.phoenix.api.entities.common;
 
-import com.phoenix.api.entities.base.BaseEntity;
+import com.phoenix.api.base.entities.BaseEntity;
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.stereotype.Component;

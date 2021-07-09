@@ -5,13 +5,11 @@
 
 package com.phoenix.api.entities.auth;
 
-import com.phoenix.api.entities.base.BaseEntityAudit;
+import com.phoenix.api.base.entities.BaseEntityAudit;
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "FW_GROUP")

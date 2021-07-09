@@ -5,13 +5,11 @@
 
 package com.phoenix.api.model.auth;
 
-import com.phoenix.api.constant.ApplicationConstant;
-import javafx.application.Application;
+import com.phoenix.api.base.constant.ApplicationConstant;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;

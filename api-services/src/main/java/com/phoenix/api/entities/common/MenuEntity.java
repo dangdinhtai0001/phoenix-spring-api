@@ -1,6 +1,6 @@
 package com.phoenix.api.entities.common;
 
-import com.phoenix.api.entities.base.BaseEntity;
+import com.phoenix.api.base.entities.BaseEntity;
 import lombok.ToString;
 
 import javax.persistence.*;

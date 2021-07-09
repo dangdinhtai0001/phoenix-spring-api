@@ -5,14 +5,11 @@
 
 package com.phoenix.api.entities.auth;
 
-import com.phoenix.api.entities.base.BaseEntity;
-import com.phoenix.api.entities.base.BaseEntityAudit;
-import com.phoenix.api.entities.base.BaseEntityAudit;
+import com.phoenix.api.base.entities.BaseEntity;
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "FW_USER_STATUS")

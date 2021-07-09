@@ -1,6 +1,6 @@
 package com.phoenix.api.services.auth;
 
-import com.phoenix.api.constant.BeanIds;
+import com.phoenix.api.base.constant.BeanIds;
 import com.phoenix.api.entities.auth.PermissionEntity;
 import com.phoenix.api.entities.auth.UserStatusEntity;
 import com.phoenix.api.model.auth.DefaultUserDetails;

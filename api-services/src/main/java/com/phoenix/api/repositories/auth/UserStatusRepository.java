@@ -1,6 +1,6 @@
 package com.phoenix.api.repositories.auth;
 
-import com.phoenix.api.constant.BeanIds;
+import com.phoenix.api.base.constant.BeanIds;
 import com.phoenix.api.entities.auth.UserStatusEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

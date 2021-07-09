@@ -1,5 +1,7 @@
 package com.phoenix.api.repositories.base;
 
+import com.phoenix.api.base.repositories.GenericSpecificationsBuilder;
+import com.phoenix.api.base.repositories.SpecificationFactory;
 import com.phoenix.api.entities.common.MenuEntity;
 import com.phoenix.api.repositories.common.MenuRepositoryImp;
 import org.junit.jupiter.api.Test;
