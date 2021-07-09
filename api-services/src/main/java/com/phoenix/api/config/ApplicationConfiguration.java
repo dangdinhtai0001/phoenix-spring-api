@@ -1,5 +1,7 @@
 package com.phoenix.api.config;
 
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Multimap;
 import com.phoenix.api.constant.BeanIds;
 import com.phoenix.api.constant.DatabaseConstant;
 import com.phoenix.api.entities.auth.PermissionEntity;
@@ -99,33 +101,39 @@ public class ApplicationConfiguration {
         return (List<PermissionEntity>) permissionRepositoryImp.findAll();
     }
 
+//    @Bean(value = BeanIds.ALL_RESOURCE_PERMISSIONS_REQUIRED)
+//    public LinkedHashMap<String, String> getAllResourcePermissionRequirement() {
+//        List<Object[]> result = permissionRepositoryImp.executeNativeQuery(DatabaseConstant.FW_ALL_RESOURCE_PERMISSIONS_REQUIRED);
+//
+//        LinkedHashMap<String, String> map = new LinkedHashMap<>();
+//
+//        List<String> permissions = new LinkedList<>();
+//        String strPermissions = "";
+//        for (Object[] record : result) {
+//             permissions = CommonUtil.generatePermissions(permissions,
+//                    Integer.parseInt(String.valueOf(record[1])),
+//                    String.valueOf(record[0]), getAllPermissions());
+//            strPermissions = generateStringFromList(permissions, ", ");
+//
+//            map.put(String.valueOf(record[0]), strPermissions);
+//        }
+//        return map;
+//    }
+
     @Bean(value = BeanIds.ALL_RESOURCE_PERMISSIONS_REQUIRED)
-    public LinkedHashMap<String, String> getAllResourcePermissionRequirement() {
-        List<Object[]> result = permissionRepositoryImp.executeNativeQuery(DatabaseConstant.FW_ALL_RESOURCE_PERMISSIONS_REQUIRED);
+    public Multimap<String, String> getAllResourcePermissionRequirement() {
+        Multimap<String, String> result = ArrayListMultimap.create();
 
-        LinkedHashMap<String, String> map = new LinkedHashMap<>();
-
+        List<Object[]> queryResult = permissionRepositoryImp.executeNativeQuery(DatabaseConstant.FW_ALL_RESOURCE_PERMISSIONS_REQUIRED);
         List<String> permissions = new LinkedList<>();
-        String strPermissions = "";
-        for (Object[] record : result) {
-             permissions = CommonUtil.generatePermissions(permissions,
+        for (Object[] record : queryResult) {
+            permissions = CommonUtil.generatePermissions(permissions,
                     Integer.parseInt(String.valueOf(record[1])),
                     String.valueOf(record[0]), getAllPermissions());
-            strPermissions = generateStringFromList(permissions, ", ");
 
-            map.put(String.valueOf(record[0]), strPermissions);
-
+            result.putAll(String.valueOf(record[0]), permissions);
         }
-        return map;
-    }
 
-    //    ==============================================================================================================
-    //
-    //    ==============================================================================================================
-
-    private String generateStringFromList(List<String> list, String delimiter) {
-        return list.stream()
-                .map(s -> String.valueOf(s))
-                .collect(Collectors.joining(delimiter, "", ""));
+        return result;
     }
 }

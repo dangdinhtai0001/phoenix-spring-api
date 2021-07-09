@@ -5,30 +5,38 @@
 
 package com.phoenix.api.aop;
 
+import com.google.common.collect.Multimap;
 import com.phoenix.api.component.exception.DefaultHandlerException;
 import com.phoenix.api.constant.BeanIds;
+import com.phoenix.api.entities.common.ExceptionEntity;
+import lombok.extern.log4j.Log4j2;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
+import java.util.Collection;
+import java.util.List;
 
 @Aspect
+@Log4j2
 @Component
-public class SecurityAspect {
+public class SecurityMethodAspect {
 
-    private final HashMap<String, String> allResourcePermissionRequirement;
+    private final Multimap<String, String> allResourcePermissionRequirement;
+    private final List<ExceptionEntity> listExceptions;
 
-    public SecurityAspect(
-            @Qualifier(BeanIds.ALL_RESOURCE_PERMISSIONS_REQUIRED) HashMap<String, String> allResourcePermissionRequirement
+    public SecurityMethodAspect(
+            @Qualifier(BeanIds.ALL_RESOURCE_PERMISSIONS_REQUIRED) Multimap<String, String> allResourcePermissionRequirement,
+            @Qualifier(BeanIds.ALL_EXCEPTION) List<ExceptionEntity> listExceptions
     ) {
         this.allResourcePermissionRequirement = allResourcePermissionRequirement;
+        this.listExceptions = listExceptions;
     }
 
     @Before("execution(* com.phoenix.api.services.base.AbstractCrudService+.*(..))")
@@ -37,26 +45,28 @@ public class SecurityAspect {
         String serviceName = joinPoint.getTarget().getClass().getName();
         String methodName = joinPoint.getSignature().getName();
         String methodFullName = serviceName + "." + methodName;
-        String strPermissionRequirement = allResourcePermissionRequirement.get(methodFullName);
-
-
-        System.out.println("----------------------------------------------------------------------------------------");
-        System.out.println(String.format("Method name: %s", methodName));
-        System.out.println(String.format("Auth name: %s", authentication));
-        System.out.println(String.format("Service name: %s", serviceName));
-        System.out.println(String.format("Method full name: %s", methodFullName));
-        System.out.println(String.format("Permission required: %s", strPermissionRequirement));
+        Collection permissionRequirement = allResourcePermissionRequirement.get(methodFullName);
 
         boolean isDenied = true;
         for (GrantedAuthority simpleGrantedAuthority : authentication.getAuthorities()) {
-            if (strPermissionRequirement.contains(simpleGrantedAuthority.getAuthority())) {
+            if (permissionRequirement.contains(simpleGrantedAuthority.getAuthority())) {
                 isDenied = false;
                 break;
             }
         }
 
         if (isDenied) {
-            throw new DefaultHandlerException("bla", "bla");
+            String code = "AUTH_004";
+            ExceptionEntity exceptionEntity = findExceptionByCode(code);
+            throw new DefaultHandlerException(exceptionEntity.getMessage(), code, this.getClass().getName(),
+                    HttpStatus.valueOf(exceptionEntity.getHttpCode()));
         }
+    }
+
+    private ExceptionEntity findExceptionByCode(String code) {
+        return listExceptions
+                .stream()
+                .filter(exceptionEntity -> code.equals(exceptionEntity.getCode()))
+                .findFirst().orElse(null);
     }
 }

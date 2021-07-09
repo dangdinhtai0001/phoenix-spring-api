@@ -33,9 +33,6 @@ public class ExceptionEntity extends BaseEntity {
     @Column(name = "CODE_")
     private String code;
 
-    @Column(name = "RESOURCE_")
-    private String resource;
-
     @Column(name = "MESSAGE_")
     private String message;
 
