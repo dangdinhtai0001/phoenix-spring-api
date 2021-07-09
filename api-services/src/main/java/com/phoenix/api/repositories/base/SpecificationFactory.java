@@ -1,8 +1,11 @@
+/*
+ * @Author: Đặng Đình Tài
+ * @Created date: 7/9/21, 5:37 PM
+ */
+
 package com.phoenix.api.repositories.base;
 
 import com.phoenix.api.constant.BeanIds;
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 

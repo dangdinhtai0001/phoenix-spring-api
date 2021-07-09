@@ -5,6 +5,10 @@ import org.springframework.data.jpa.domain.Specification;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+/*
+ * @Author: Đặng Đình Tài
+ * @Created date: 7/9/21, 5:37 PM
+ */
 
 public class GenericSpecificationsBuilder<T> {
     private final List<SearchCriteria> params;
