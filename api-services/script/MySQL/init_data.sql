@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.22, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.25, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: phoenix
+-- Host: localhost    Database: phoenix
 -- ------------------------------------------------------
--- Server version	8.0.22
+-- Server version	8.0.25
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -21,7 +21,7 @@
 
 LOCK TABLES `fw_exception` WRITE;
 /*!40000 ALTER TABLE `fw_exception` DISABLE KEYS */;
-INSERT INTO `fw_exception` VALUES (1,'AUTH_001','com.phoenix.api.services.auth.AuthServiceImp','Wrong user credentials',400),(2,'AUTH_002','com.phoenix.api.services.auth.AuthServiceImp','Your account has been locked',401),(3,'AUTH_003','com.phoenix.api.services.auth.AuthServiceImp','Your account has expired',401);
+INSERT INTO `fw_exception` VALUES (1,'AUTH_001','Wrong user credentials',400),(2,'AUTH_002','Your account has been locked',401),(3,'AUTH_003','Your account has expired',401),(4,'AUTH_004','Access denied, You do not have permission to access this feature.',403);
 /*!40000 ALTER TABLE `fw_exception` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -61,8 +61,18 @@ UNLOCK TABLES;
 
 LOCK TABLES `fw_resource` WRITE;
 /*!40000 ALTER TABLE `fw_resource` DISABLE KEYS */;
-INSERT INTO `fw_resource` VALUES (1,'fw_menu','TABLE'),(2,'com.phoenix.api.services.common.MenuService','SERVICE'),(3,'com.phoenix.api.services.common.MenuService.findAll','METHOD'),(4,'com.phoenix.api.services.common.MenuService.findById','METHOD');
+INSERT INTO `fw_resource` VALUES (1,'fw_menu','TABLE',NULL),(2,'com.phoenix.api.services.common.MenuService','SERVICE',NULL);
 /*!40000 ALTER TABLE `fw_resource` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `fw_resource_action`
+--
+
+LOCK TABLES `fw_resource_action` WRITE;
+/*!40000 ALTER TABLE `fw_resource_action` DISABLE KEYS */;
+INSERT INTO `fw_resource_action` VALUES (1,2,'findAll',2,'T√¨m ki·∫øm t·∫•t c·∫£'),(2,2,'findById',2,'T√¨m ki·∫øm theo id');
+/*!40000 ALTER TABLE `fw_resource_action` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -85,22 +95,12 @@ INSERT INTO `fw_resource_identity` VALUES (1,1,1,NULL,NULL),(2,1,2,NULL,NULL),(3
 UNLOCK TABLES;
 
 --
--- Dumping data for table `fw_resource_requirement`
---
-
-LOCK TABLES `fw_resource_requirement` WRITE;
-/*!40000 ALTER TABLE `fw_resource_requirement` DISABLE KEYS */;
-INSERT INTO `fw_resource_requirement` VALUES (1,4,32);
-/*!40000 ALTER TABLE `fw_resource_requirement` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Dumping data for table `fw_sid`
 --
 
 LOCK TABLES `fw_sid` WRITE;
 /*!40000 ALTER TABLE `fw_sid` DISABLE KEYS */;
-INSERT INTO `fw_sid` VALUES (1,'admin_test',1),(2,'ADMIN',0),(3,'SYSTEM',0),(4,'USER',0),(5,'GUEST',0);
+INSERT INTO `fw_sid` VALUES (1,'admin_test',1),(2,'ADMIN',0),(3,'SYSTEM',0),(4,'USER',0),(5,'GUEST',0),(9,'guest',1);
 /*!40000 ALTER TABLE `fw_sid` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -110,7 +110,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `fw_sid_resource` WRITE;
 /*!40000 ALTER TABLE `fw_sid_resource` DISABLE KEYS */;
-INSERT INTO `fw_sid_resource` VALUES (1,2,2),(2,1,31),(2,2,31),(2,4,32);
+INSERT INTO `fw_sid_resource` VALUES (1,2,2),(2,1,31),(2,2,31);
 /*!40000 ALTER TABLE `fw_sid_resource` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -120,7 +120,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `fw_user` WRITE;
 /*!40000 ALTER TABLE `fw_user` DISABLE KEYS */;
-INSERT INTO `fw_user` VALUES (1,'raw','123456',NULL,NULL,NULL,'5198c832-3148-4e82-a37d-8d3056f150f3',1,'admin_test','NONE','2021-07-03 22:03:08','NONE','2021-07-07 22:54:45');
+INSERT INTO `fw_user` VALUES (1,'raw','123456',NULL,NULL,NULL,'5174673e-6b26-4816-a415-74dc980aa62c',1,'admin_test','NONE','2021-07-03 22:03:08','NONE','2021-07-09 11:43:42'),(2,'raw','123456',NULL,NULL,NULL,'87bfa4a2-fe64-411d-b7ec-1e42596bda26',1,'guest','NONE','2021-07-09 09:42:01','NONE','2021-07-09 11:43:25');
 /*!40000 ALTER TABLE `fw_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -130,7 +130,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `fw_user_group` WRITE;
 /*!40000 ALTER TABLE `fw_user_group` DISABLE KEYS */;
-INSERT INTO `fw_user_group` VALUES (1,1),(1,2);
+INSERT INTO `fw_user_group` VALUES (1,1),(1,2),(2,4);
 /*!40000 ALTER TABLE `fw_user_group` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -150,7 +150,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `spring_session` WRITE;
 /*!40000 ALTER TABLE `spring_session` DISABLE KEYS */;
-INSERT INTO `spring_session` VALUES ('570b7130-8c14-46aa-89d0-36d3ed1844ee','9b4f8a6d-99ff-45ea-a027-92c068c6e52a',1625670649287,1625673785456,1800,1625675585456,'admin_test');
+INSERT INTO `spring_session` VALUES ('5fac0157-04d2-468a-801b-853f7ba701ae','b334a898-2559-4b54-a2cc-897a41e8ac99',1625805805581,1625806174470,1800,1625807974470,'admin_test');
 /*!40000 ALTER TABLE `spring_session` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -160,17 +160,9 @@ UNLOCK TABLES;
 
 LOCK TABLES `spring_session_attributes` WRITE;
 /*!40000 ALTER TABLE `spring_session_attributes` DISABLE KEYS */;
-INSERT INTO `spring_session_attributes` VALUES ('570b7130-8c14-46aa-89d0-36d3ed1844ee','SPRING_SECURITY_CONTEXT',_binary '¨\Ì\0sr\0=org.springframework.security.core.context.SecurityContextImpl\0\0\0\0\0\0&\0L\0authenticationt\02Lorg/springframework/security/core/Authentication;xpsr\0Oorg.springframework.security.authentication.UsernamePasswordAuthenticationToken\0\0\0\0\0\0&\0L\0credentialst\0Ljava/lang/Object;L\0	principalq\0~\0xr\0Gorg.springframework.security.authentication.AbstractAuthenticationToken”™(~nGd\0Z\0\rauthenticatedL\0authoritiest\0Ljava/util/Collection;L\0detailsq\0~\0xpsr\0&java.util.Collections$UnmodifiableList¸%1µ\Ïé\0L\0listt\0Ljava/util/List;xr\0,java.util.Collections$UnmodifiableCollectionB\0Ä\À^˜\0L\0cq\0~\0xpsr\0java.util.ArrayListxÅ\“ô\«aù\0I\0sizexp\0\0\0w\0\0\0sr\0Borg.springframework.security.core.authority.SimpleGrantedAuthority\0\0\0\0\0\0&\0L\0rolet\0Ljava/lang/String;xpt\0\rfw_menu__READsq\0~\0t\03com.phoenix.api.services.common.MenuService__UPDATEsq\0~\0t\0fw_menu__CREATEsq\0~\0t\02com.phoenix.api.services.common.MenuService__ADMINsq\0~\0t\0fw_menu__DELETEsq\0~\0t\01com.phoenix.api.services.common.MenuService__READsq\0~\0t\0=com.phoenix.api.services.common.MenuService.findById__EXECUTEsq\0~\0t\0fw_menu__UPDATEsq\0~\0t\0fw_menu__ADMINsq\0~\0t\03com.phoenix.api.services.common.MenuService__CREATEsq\0~\0t\03com.phoenix.api.services.common.MenuService__DELETExq\0~\0\rsr\0Horg.springframework.security.web.authentication.WebAuthenticationDetails\0\0\0\0\0\0&\0L\0\rremoteAddressq\0~\0L\0	sessionIdq\0~\0xpt\0	127.0.0.1t\0$9b4f8a6d-99ff-45ea-a027-92c068c6e52at\0{raw}123456t\0\nadmin_test');
+INSERT INTO `spring_session_attributes` VALUES ('5fac0157-04d2-468a-801b-853f7ba701ae','SPRING_SECURITY_CONTEXT',_binary '¨\Ì\0sr\0=org.springframework.security.core.context.SecurityContextImpl\0\0\0\0\0\0&\0L\0authenticationt\02Lorg/springframework/security/core/Authentication;xpsr\0Oorg.springframework.security.authentication.UsernamePasswordAuthenticationToken\0\0\0\0\0\0&\0L\0credentialst\0Ljava/lang/Object;L\0	principalq\0~\0xr\0Gorg.springframework.security.authentication.AbstractAuthenticationToken”™(~nGd\0Z\0\rauthenticatedL\0authoritiest\0Ljava/util/Collection;L\0detailsq\0~\0xpsr\0&java.util.Collections$UnmodifiableList¸%1µ\Ïé\0L\0listt\0Ljava/util/List;xr\0,java.util.Collections$UnmodifiableCollectionB\0Ä\À^˜\0L\0cq\0~\0xpsr\0java.util.ArrayListxÅ\“ô\«aù\0I\0sizexp\0\0\0\nw\0\0\0\nsr\0Borg.springframework.security.core.authority.SimpleGrantedAuthority\0\0\0\0\0\0&\0L\0rolet\0Ljava/lang/String;xpt\0\rfw_menu__READsq\0~\0t\03com.phoenix.api.services.common.MenuService__UPDATEsq\0~\0t\0fw_menu__CREATEsq\0~\0t\02com.phoenix.api.services.common.MenuService__ADMINsq\0~\0t\0fw_menu__DELETEsq\0~\0t\01com.phoenix.api.services.common.MenuService__READsq\0~\0t\0fw_menu__UPDATEsq\0~\0t\0fw_menu__ADMINsq\0~\0t\03com.phoenix.api.services.common.MenuService__CREATEsq\0~\0t\03com.phoenix.api.services.common.MenuService__DELETExq\0~\0\rsr\0Horg.springframework.security.web.authentication.WebAuthenticationDetails\0\0\0\0\0\0&\0L\0\rremoteAddressq\0~\0L\0	sessionIdq\0~\0xpt\0	127.0.0.1t\0$b334a898-2559-4b54-a2cc-897a41e8ac99t\0{raw}123456t\0\nadmin_test');
 /*!40000 ALTER TABLE `spring_session_attributes` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Dumping events for database 'phoenix'
---
-
---
--- Dumping routines for database 'phoenix'
---
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -181,4 +173,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-07-07 23:30:09
+-- Dump completed on 2021-07-09 11:51:38
