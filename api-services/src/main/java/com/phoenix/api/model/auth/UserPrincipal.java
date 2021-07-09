@@ -5,6 +5,7 @@ import lombok.*;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 @ToString
 public class UserPrincipal implements Serializable {
@@ -17,7 +18,7 @@ public class UserPrincipal implements Serializable {
     private int status;
     private String group;
 
-    private List<String> permissions;
+    private Set<String> permissions;
     private List<String> listStatus;
     private List<String> groups;
 
@@ -99,7 +100,7 @@ public class UserPrincipal implements Serializable {
         return group;
     }
 
-    public List<String> getPermissions() {
+    public Set<String> getPermissions() {
         return permissions;
     }
 
@@ -111,7 +112,7 @@ public class UserPrincipal implements Serializable {
         return groups;
     }
 
-    public void setPermissions(List<String> permissions) {
+    public void setPermissions(Set<String> permissions) {
         this.permissions = permissions;
     }
 

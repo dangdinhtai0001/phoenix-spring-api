@@ -17,10 +17,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service(BeanIds.DEFAULT_USER_DETAIL_SERVICES)
@@ -56,7 +53,7 @@ public class DefaultUserDetailService implements UserDetailsService {
             userPrincipal.setPermissions(CommonUtil.getListPermissions(username, authRepositoryImp, allPermissions));
         } catch (NoSuchFieldException | IllegalAccessException | InstantiationException e) {
             log.error(e.getMessage(), e);
-            userPrincipal.setPermissions(new LinkedList<>());
+            userPrincipal.setPermissions(new HashSet<>());
         }
 
         return new DefaultUserDetails(userPrincipal);
@@ -71,7 +68,7 @@ public class DefaultUserDetailService implements UserDetailsService {
         int[] positions = BitUtil.getAllBitOnePosition(status, allUserStatus.size());
 
         for (int i = 0; i < positions.length; i++) {
-            if(positions[i] > 0){
+            if (positions[i] > 0) {
                 listStatus.add(allUserStatus.get(i).getName());
             }
         }

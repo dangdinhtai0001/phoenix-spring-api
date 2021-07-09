@@ -22,9 +22,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -125,7 +123,7 @@ public class ApplicationConfiguration {
         Multimap<String, String> result = ArrayListMultimap.create();
 
         List<Object[]> queryResult = permissionRepositoryImp.executeNativeQuery(DatabaseConstant.FW_ALL_RESOURCE_PERMISSIONS_REQUIRED);
-        List<String> permissions = new LinkedList<>();
+        Set<String> permissions = new HashSet<>();
         for (Object[] record : queryResult) {
             permissions = CommonUtil.generatePermissions(permissions,
                     Integer.parseInt(String.valueOf(record[1])),

@@ -7,14 +7,12 @@ import com.phoenix.api.repositories.base.NativeRepository;
 import com.phoenix.others.BitUtil;
 import com.phoenix.structure.Pair;
 
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class CommonUtil {
 
-    public static List<String> getListPermissions(String username, NativeRepository nativeRepository, List<PermissionEntity> allPermissions)
+    public static Set<String> getListPermissions(String username, NativeRepository nativeRepository, List<PermissionEntity> allPermissions)
             throws NoSuchFieldException, IllegalAccessException, InstantiationException {
         List<Object[]> results = nativeRepository.executeNativeQuery(DatabaseConstant.FIND_PERMISSIONS_BY_USERNAME, username, username);
 
@@ -23,7 +21,7 @@ public class CommonUtil {
         params.add(new Pair<>("mSecond", String.class));
         List<Pair> list = nativeRepository.parseResult(results, params, Pair.class);
 
-        List<String> permissions = new LinkedList<>();
+        Set<String> permissions = new HashSet<>();
 
         for (Pair pair : list) {
             permissions = generatePermissions(permissions, Integer.parseInt(String.valueOf(pair.second())), String.valueOf(pair.first()), allPermissions);
@@ -32,7 +30,7 @@ public class CommonUtil {
         return permissions;
     }
 
-    public static List<String> generatePermissions(List<String> permissions, int mask, String resource, List<PermissionEntity> allPermissions) {
+    public static Set<String> generatePermissions(Set<String> permissions, int mask, String resource, List<PermissionEntity> allPermissions) {
         int[] positions = BitUtil.getAllBitOnePosition(mask, allPermissions.size());
 
         for (int i = 0; i < positions.length; i++) {
