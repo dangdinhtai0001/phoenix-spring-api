@@ -16,6 +16,7 @@
 package com.phoenix.api.base.controller;
 
 import com.phoenix.api.base.entities.BaseEntity;
+import com.phoenix.api.base.repositories.SearchCriteria;
 import com.phoenix.api.base.services.CrudService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -66,5 +68,14 @@ public abstract class AbstractCrudController<T extends BaseEntity> extends Abstr
     @Override
     public ResponseEntity findById(@RequestParam("id") Long id) throws Exception {
         return sendResponse(service.findById(id));
+    }
+
+    @GetMapping("/findBy")
+    public ResponseEntity findBy(
+            @RequestParam(defaultValue = "0",value = "page") int page,
+            @RequestParam(defaultValue = "3", value = "size") int size,
+            @RequestBody(required = false) List<SearchCriteria> conditional
+    ) throws Exception {
+        return sendResponse(service.findBy(page, size, conditional));
     }
 }

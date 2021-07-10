@@ -21,7 +21,12 @@
 package com.phoenix.api.base.services;
 
 import com.phoenix.api.base.entities.BaseEntity;
+import com.phoenix.api.base.repositories.SearchCriteria;
+import org.springframework.beans.support.PagedListHolder;
+import org.springframework.data.domain.Page;
 
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -32,11 +37,13 @@ import java.util.Optional;
 public interface CrudService<T extends BaseEntity> {
     Iterable<T> findAll();
 
-    Optional<T> add(Map payload) throws RuntimeException, Exception;
+    Optional<T> add(Map payload) throws Exception;
 
-    Optional<T> update(Map payload) throws RuntimeException, Exception;
+    Optional<T> update(Map payload) throws Exception;
 
-    Optional<T> remove(Map payload) throws RuntimeException, Exception;
+    Optional<T> remove(Map payload) throws Exception;
 
-    Optional<T> findById(Long id) throws RuntimeException, Exception;
+    Optional<T> findById(Long id) throws Exception;
+
+    LinkedHashMap findBy(int page, int size, List<SearchCriteria> conditional) throws Exception;
 }

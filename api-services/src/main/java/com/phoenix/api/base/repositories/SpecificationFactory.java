@@ -17,7 +17,6 @@ import org.springframework.stereotype.Component;
 import java.util.Collections;
 import java.util.List;
 
-@Component(BeanIds.SPECIFICATION_FACTORY)
 public class SpecificationFactory<T> {
     public Specification<T> isEqual(String key, Object arg) {
         GenericSpecificationsBuilder<T> builder = new GenericSpecificationsBuilder<>();

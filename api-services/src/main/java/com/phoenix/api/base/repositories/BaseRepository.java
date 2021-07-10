@@ -16,6 +16,8 @@
 package com.phoenix.api.base.repositories;
 
 import com.phoenix.api.base.entities.BaseEntity;
+import org.springframework.beans.support.PagedListHolder;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.util.Optional;
@@ -80,4 +82,12 @@ public interface BaseRepository<T extends BaseEntity> {
      * @return Tìm tất cả các entity thỏa mãn điều kiện specification
      */
     Iterable<T> findBySpecification(Specification specification);
+
+
+    /**
+     * @param specification : Điều kiện truy vấn.
+     * @param pageRequest : Tham số để phân trang
+     * @return
+     */
+    PagedListHolder<T> findBySpecificationAndPageRequest(Specification specification, PageRequest pageRequest);
 }
