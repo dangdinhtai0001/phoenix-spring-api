@@ -16,12 +16,18 @@
 package com.phoenix.api.base.repositories;
 
 import com.phoenix.api.base.entities.BaseEntity;
+import org.springframework.beans.support.PagedListHolder;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -88,7 +94,20 @@ public abstract class AbstractBaseRepository<T extends BaseEntity> implements Ba
         CriteriaQuery<T> criteriaQuery = builder.createQuery(typeParameterClass);
         Root<T> root = criteriaQuery.from(typeParameterClass);
         criteriaQuery.select(root);
-        criteriaQuery.where(specification.toPredicate(root, criteriaQuery, builder));
+        if (specification != null) {
+            criteriaQuery.where(specification.toPredicate(root, criteriaQuery, builder));
+        }
         return this.entityManager.createQuery(criteriaQuery).getResultList();
+    }
+
+    @Override
+    public PagedListHolder<T> findBySpecificationAndPageRequest(Specification specification, PageRequest pageRequest) {
+        List<T> queryResultList = (List<T>) findBySpecification(specification);
+
+        PagedListHolder page = new PagedListHolder(queryResultList);
+        page.setPageSize(pageRequest.getPageSize()); // number of items per page
+        page.setPage(pageRequest.getPageNumber());      // set to first page
+
+        return page;
     }
 }
