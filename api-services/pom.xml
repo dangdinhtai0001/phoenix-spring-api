@@ -17,10 +17,9 @@
     <parent>
         <artifactId>spring-api-template</artifactId>
         <groupId>com.phoenix</groupId>
-        <version>0.0.0</version>
+        <version>1.0.0</version>
     </parent>
 
-    <groupId>com.phoenix</groupId>
     <artifactId>api-services</artifactId>
     <version>${module.services.version}</version>
     <name>module-services</name>

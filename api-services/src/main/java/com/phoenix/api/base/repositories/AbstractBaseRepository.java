@@ -1,18 +1,3 @@
-/*
- * @Author: Đặng Đình Tài
- * @Created_date: 7/9/21, 11:10 PM
- */
-
-/*
- * @Author: Đặng Đình Tài
- * @Created_date: 7/9/21, 9:14 PM
- */
-
-/*
- * @Author Đặng Đình Tài
- * @Date 6/29/21, 9:51 AM
- */
-
 package com.phoenix.api.base.repositories;
 
 import com.phoenix.api.base.entities.BaseEntity;

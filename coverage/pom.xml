@@ -10,12 +10,11 @@
     <parent>
         <artifactId>spring-api-template</artifactId>
         <groupId>com.phoenix</groupId>
-        <version>0.0.0</version>
+        <version>1.0.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
 
-    <groupId>com.phoenix</groupId>
     <artifactId>coverage</artifactId>
     <version>0.0.0</version>
     <name>module-coverage</name>
