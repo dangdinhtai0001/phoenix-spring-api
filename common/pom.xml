@@ -14,14 +14,17 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
+    <groupId>com.phoenix</groupId>
     <artifactId>common</artifactId>
+    <version>${module.common.version}</version>
+    <name>module-common</name>
+    <description>Common module for business module and services module</description>
 
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>1.8</java.version>
-        <maven.test.skip>true</maven.test.skip>
-        <maven.compiler.source>${java.version}</maven.compiler.source>
-        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <project.build.sourceEncoding>${global.project.build.sourceEncoding}</project.build.sourceEncoding>
+        <maven.test.skip>${global.maven.test.skip}</maven.test.skip>
+        <maven.compiler.source>${global.java.version}</maven.compiler.source>
+        <maven.compiler.target>${global.java.version}</maven.compiler.target>
     </properties>
 
     <dependencies>
