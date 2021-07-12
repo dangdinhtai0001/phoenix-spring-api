@@ -34,6 +34,11 @@
             <artifactId>api-services</artifactId>
             <version>0.0.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.phoenix</groupId>
+            <artifactId>business</artifactId>
+            <version>0.0.0</version>
+        </dependency>
     </dependencies>
 
     <build>

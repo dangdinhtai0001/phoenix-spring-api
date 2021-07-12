@@ -51,13 +51,11 @@
             <groupId>org.springframework.session</groupId>
             <artifactId>spring-session-jdbc</artifactId>
         </dependency>
-
         <dependency>
             <groupId>com.phoenix</groupId>
-            <artifactId>common</artifactId>
+            <artifactId>business</artifactId>
             <version>0.0.0</version>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
