@@ -1,9 +1,14 @@
+/*
+ * @Author: Đặng Đình Tài
+ * @Created_date: 7/9/21, 11:10 PM
+ */
+
 package com.phoenix.api.repositories.auth;
 
-import com.phoenix.api.constant.BeanIds;
-import com.phoenix.api.constant.DatabaseConstant;
+import com.phoenix.api.base.constant.BeanIds;
+import com.phoenix.api.base.constant.DatabaseConstant;
 import com.phoenix.api.model.auth.UserPrincipal;
-import com.phoenix.api.repositories.base.AbstractNativeRepository;
+import com.phoenix.api.base.repositories.AbstractNativeRepository;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;

@@ -1,11 +1,16 @@
 /*
+ * @Author: Đặng Đình Tài
+ * @Created_date: 7/9/21, 11:10 PM
+ */
+
+/*
  * @Author Đặng Đình Tài
  * @Date 6/23/21, 3:04 PM
  */
 
 package com.phoenix.api.entrypoint;
 
-import com.phoenix.api.constant.BeanIds;
+import com.phoenix.api.base.constant.BeanIds;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.access.AccessDeniedException;

@@ -1,11 +1,16 @@
 /*
+ * @Author: Đặng Đình Tài
+ * @Created_date: 7/9/21, 11:10 PM
+ */
+
+/*
  * @Author Đặng Đình Tài
  * @Date 6/22/21, 3:44 PM
  */
 
 package com.phoenix.api.filter;
 
-import com.phoenix.api.constant.ApplicationConstant;
+import com.phoenix.api.base.constant.ApplicationConstant;
 import com.phoenix.auth.JwtProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -75,6 +80,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 }
             }
         } catch (Exception e) {
+            e.printStackTrace();
             httpServletResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, e.getMessage());
         }
     }

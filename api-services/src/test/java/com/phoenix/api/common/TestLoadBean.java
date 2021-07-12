@@ -1,11 +1,16 @@
 /*
  * @Author: Đặng Đình Tài
+ * @Created_date: 7/9/21, 11:10 PM
+ */
+
+/*
+ * @Author: Đặng Đình Tài
  * @Created_date: 7/7/21, 9:25 PM
  */
 
 package com.phoenix.api.common;
 
-import com.phoenix.api.constant.BeanIds;
+import com.phoenix.api.base.constant.BeanIds;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

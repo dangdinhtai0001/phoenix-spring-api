@@ -1,3 +1,8 @@
+/*
+ * @Author: Đặng Đình Tài
+ * @Created_date: 7/9/21, 11:10 PM
+ */
+
 DROP database `phoenix`;
 CREATE SCHEMA `phoenix` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci ;
 

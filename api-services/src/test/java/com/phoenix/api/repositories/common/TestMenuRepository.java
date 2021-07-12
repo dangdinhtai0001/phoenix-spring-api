@@ -1,12 +1,15 @@
+/*
+ * @Author: Đặng Đình Tài
+ * @Created_date: 7/9/21, 11:10 PM
+ */
+
 package com.phoenix.api.repositories.common;
 
-import com.phoenix.api.entities.base.BaseEntity;
 import com.phoenix.api.entities.common.MenuEntity;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.List;
 import java.util.Optional;
 
 @SpringBootTest

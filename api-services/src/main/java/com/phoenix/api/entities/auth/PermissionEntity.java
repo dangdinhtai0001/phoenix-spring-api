@@ -1,6 +1,11 @@
+/*
+ * @Author: Đặng Đình Tài
+ * @Created_date: 7/9/21, 11:10 PM
+ */
+
 package com.phoenix.api.entities.auth;
 
-import com.phoenix.api.entities.base.BaseEntity;
+import com.phoenix.api.base.entities.BaseEntity;
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 

@@ -1,5 +1,10 @@
 /*
  * @Author: Đặng Đình Tài
+ * @Created_date: 7/9/21, 11:10 PM
+ */
+
+/*
+ * @Author: Đặng Đình Tài
  * @Created_date: 6/26/21, 11:06 AM
  */
 
@@ -10,7 +15,7 @@
 
 package com.phoenix.api.entities.common;
 
-import com.phoenix.api.entities.base.BaseEntity;
+import com.phoenix.api.base.entities.BaseEntity;
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.stereotype.Component;

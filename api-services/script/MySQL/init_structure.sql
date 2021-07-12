@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.25, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.22, for Win64 (x86_64)
 --
--- Host: localhost    Database: phoenix
+-- Host: 127.0.0.1    Database: phoenix
 -- ------------------------------------------------------
--- Server version	8.0.25
+-- Server version	8.0.22
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -99,7 +99,7 @@ CREATE TABLE `fw_resource` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
   `type` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
-  `description` varchar(255) COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
+  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name_UNIQUE` (`name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
@@ -115,51 +115,14 @@ DROP TABLE IF EXISTS `fw_resource_action`;
 CREATE TABLE `fw_resource_action` (
   `id` int NOT NULL AUTO_INCREMENT,
   `resource_id` int NOT NULL,
-  `action_name` varchar(255) COLLATE utf8mb4_vietnamese_ci NOT NULL,
+  `action_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
   `permission_mask` int NOT NULL,
-  `description` varchar(255) COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
+  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `fw_resource_action_id_uindex` (`id`),
   KEY `fw_resource_action_fw_resource_id_fk` (`resource_id`),
   CONSTRAINT `fw_resource_action_fw_resource_id_fk` FOREIGN KEY (`resource_id`) REFERENCES `fw_resource` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `fw_resource_entry`
---
-
-DROP TABLE IF EXISTS `fw_resource_entry`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `fw_resource_entry` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `resource_identity_id` int NOT NULL,
-  `sid_id` int NOT NULL,
-  `mask` int NOT NULL,
-  `granting` int NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `fw_resource_identity`
---
-
-DROP TABLE IF EXISTS `fw_resource_identity`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `fw_resource_identity` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `resource_id` int NOT NULL,
-  `resource_identity_id` int NOT NULL,
-  `parent_resource` int DEFAULT NULL,
-  `owner_sid` int DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `id_UNIQUE` (`id`),
-  KEY `fw_resource_identity_fw_resource_id_fk` (`resource_id`),
-  CONSTRAINT `fw_resource_identity_fw_resource_id_fk` FOREIGN KEY (`resource_id`) REFERENCES `fw_resource` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -293,6 +256,14 @@ CREATE TABLE `spring_session_attributes` (
   CONSTRAINT `SPRING_SESSION_ATTRIBUTES_FK` FOREIGN KEY (`SESSION_PRIMARY_ID`) REFERENCES `spring_session` (`PRIMARY_ID`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci ROW_FORMAT=DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping events for database 'phoenix'
+--
+
+--
+-- Dumping routines for database 'phoenix'
+--
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -303,4 +274,9 @@ CREATE TABLE `spring_session_attributes` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-07-09 11:51:28
+/*
+ * @Author: Đặng Đình Tài
+ * @Created_date: 7/9/21, 11:10 PM
+ */
+
+-- Dump completed on 2021-07-09 23:08:29

@@ -1,9 +1,14 @@
+/*
+ * @Author: Đặng Đình Tài
+ * @Created_date: 7/9/21, 11:10 PM
+ */
+
 package com.phoenix.api.config;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
-import com.phoenix.api.constant.BeanIds;
-import com.phoenix.api.constant.DatabaseConstant;
+import com.phoenix.api.base.constant.BeanIds;
+import com.phoenix.api.base.constant.DatabaseConstant;
 import com.phoenix.api.entities.auth.PermissionEntity;
 import com.phoenix.api.entities.auth.UserStatusEntity;
 import com.phoenix.api.entities.common.ExceptionEntity;
@@ -23,7 +28,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * Nơi nạp các bean cần thiết cho ứng dụng

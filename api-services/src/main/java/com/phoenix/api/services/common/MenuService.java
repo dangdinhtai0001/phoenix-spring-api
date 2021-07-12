@@ -1,12 +1,16 @@
+/*
+ * @Author: Đặng Đình Tài
+ * @Created_date: 7/9/21, 11:10 PM
+ */
+
 package com.phoenix.api.services.common;
 
-import com.phoenix.api.constant.BeanIds;
+import com.phoenix.api.base.constant.BeanIds;
 import com.phoenix.api.entities.common.ExceptionEntity;
 import com.phoenix.api.entities.common.MenuEntity;
-import com.phoenix.api.repositories.base.AbstractRepository;
-import com.phoenix.api.services.base.AbstractCrudService;
+import com.phoenix.api.base.repositories.AbstractRepository;
+import com.phoenix.api.base.services.AbstractCrudService;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,31 +30,26 @@ public class MenuService extends AbstractCrudService<MenuEntity> {
 
     @Override
     public void preUpdate(MenuEntity object) {
-        System.out.println("Pre update");
 
     }
 
     @Override
     public void preRemove(MenuEntity object) {
-        System.out.println("Pre remove");
 
     }
 
     @Override
     public void afterAdd(MenuEntity object) {
-        System.out.println("after add");
 
     }
 
     @Override
     public void afterUpdate(MenuEntity object) {
-        System.out.println("after update");
 
     }
 
     @Override
     public void afterRemove(MenuEntity object) {
-        System.out.println("after remove");
 
     }
 }

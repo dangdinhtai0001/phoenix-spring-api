@@ -1,6 +1,11 @@
+/*
+ * @Author: Đặng Đình Tài
+ * @Created_date: 7/9/21, 11:10 PM
+ */
+
 package com.phoenix.api.repositories.auth;
 
-import com.phoenix.api.constant.BeanIds;
+import com.phoenix.api.base.constant.BeanIds;
 import com.phoenix.api.entities.auth.PermissionEntity;
 import com.phoenix.others.BitUtil;
 import com.phoenix.structure.Pair;
