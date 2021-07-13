@@ -17,11 +17,11 @@ import java.util.List;
 public class InsertBuilder extends AbstractSqlBuilder implements Serializable {
     private static final long serialVersionUID = 1;
 
-    private String table;
+    private final String table;
 
-    private List<String> columns = new LinkedList<>();
+    private final List<String> columns = new LinkedList<>();
 
-    private List<String> values = new LinkedList<>();
+    private final List<String> values = new LinkedList<>();
 
     /**
      * Constructor.

@@ -8,9 +8,9 @@ package com.phoenix.conversions.base;
 import java.util.Arrays;
 
 public class RomanIntegerConversion {
-    private static int[] allArabianRomanNumbers =
+    private static final int[] allArabianRomanNumbers =
             {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
-    private static String[] allRomanNumbers =
+    private static final String[] allRomanNumbers =
             {"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
 
     /**

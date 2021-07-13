@@ -35,7 +35,7 @@ public class GenericSpecification<T> implements Specification<T> {
         switch (searchCriteria.getSearchOperation()) {
             case EQUALITY:
                 if (arg instanceof String) {
-                    return criteriaBuilder.like(root.<String>get(searchCriteria.getKey()), arg.toString().replace('*', '%'));
+                    return criteriaBuilder.like(root.get(searchCriteria.getKey()), arg.toString().replace('*', '%'));
                 } else if (arg == null) {
                     return criteriaBuilder.isNull(root.get(searchCriteria.getKey()));
                 } else {
@@ -43,7 +43,7 @@ public class GenericSpecification<T> implements Specification<T> {
                 }
             case NOT_EQUAL: {
                 if (arg instanceof String) {
-                    return criteriaBuilder.notLike(root.<String>get(searchCriteria.getKey()), arg.toString().replace('*', '%'));
+                    return criteriaBuilder.notLike(root.get(searchCriteria.getKey()), arg.toString().replace('*', '%'));
                 } else if (arg == null) {
                     return criteriaBuilder.isNotNull(root.get(searchCriteria.getKey()));
                 } else {

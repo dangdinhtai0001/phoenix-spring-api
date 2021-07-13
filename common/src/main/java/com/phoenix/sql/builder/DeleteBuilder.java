@@ -17,7 +17,7 @@ import java.util.List;
 public class DeleteBuilder extends AbstractSqlBuilder implements Serializable {
     private static final long serialVersionUID = 1;
 
-    private String table;
+    private final String table;
 
     private final List<String> wheres = new LinkedList<>();
 

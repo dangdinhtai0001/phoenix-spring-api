@@ -11,7 +11,7 @@ package com.phoenix.sql.builder;
  * SelectBuilder that can be used as a sub-select in a column expression or FROM clause.
  */
 public class SubSelectBuilder extends SelectBuilder {
-    private String alias;
+    private final String alias;
 
     public SubSelectBuilder(String alias) {
         this.alias = alias;

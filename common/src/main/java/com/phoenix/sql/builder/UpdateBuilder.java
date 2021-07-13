@@ -14,11 +14,11 @@ import java.util.List;
 public class UpdateBuilder extends AbstractSqlBuilder implements Serializable {
     private static final long serialVersionUID = 1;
 
-    private String table;
+    private final String table;
 
-    private List<String> sets = new LinkedList<>();
+    private final List<String> sets = new LinkedList<>();
 
-    private List<String> wheres = new LinkedList<>();
+    private final List<String> wheres = new LinkedList<>();
 
     public UpdateBuilder(String table) {
         this.table = table;
