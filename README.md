@@ -1,6 +1,3 @@
-# phoenix-spring-api
-Template for spring boot api
-
 <!--
 *** Thanks for checking out the Best-README-Template. If you have a suggestion
 *** that would make this better, please fork the repo and create a pull request
@@ -35,23 +32,23 @@ Template for spring boot api
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-  <a href="https://github.com/github_username/repo_name">
+  <a href="https://github.com/dangdinhtai0001/phoenix-spring-api">
     <img src="images/logo.png" alt="Logo" width="80" height="80">
   </a>
 
-<h3 align="center">project_title</h3>
+<h3 align="center">Phoenix spring api</h3>
 
   <p align="center">
-    project_description
+    Building a project framework that generates CRUD API.
     <br />
-    <a href="https://github.com/github_username/repo_name"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/dangdinhtai0001/phoenix-spring-api"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/github_username/repo_name">View Demo</a>
+    <a href="">View Demo</a>
     ·
-    <a href="https://github.com/github_username/repo_name/issues">Report Bug</a>
+    <a href="https://github.com/dangdinhtai0001/phoenix-spring-api/issues">Report Bug</a>
     ·
-    <a href="https://github.com/github_username/repo_name/issues">Request Feature</a>
+    <a href="https://github.com/dangdinhtai0001/phoenix-spring-api/issues">Request Feature</a>
   </p>
 </p>
 
@@ -97,9 +94,12 @@ Here's a blank template to get started:
 
 ### Built With
 
-* []()
-* []()
-* []()
+* [Spring boot](https://github.com/spring-projects/spring-boot.git)
+* [Spring security](https://github.com/spring-projects/spring-security.git)
+* [Spring data JPA](https://github.com/spring-projects/spring-data-jpa.git)
+* [MySQL](https://www.mysql.com/)
+* [Maven](https://maven.apache.org/)
+
 
 
 
@@ -110,24 +110,35 @@ To get a local copy up and running follow these simple steps.
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
+You need at least the following to use:
+
+* [Maven](https://maven.apache.org/install.html)
+* [Java JDK from ORACLE](https://www.oracle.com/java/technologies/javase-downloads.html) or higher 
+* [MySQL Database](https://dev.mysql.com/downloads/installer/)
+
+High recommend
+
+You should use java-8 and Intellij.
 
 ### Installation
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/github_username/repo_name.git
+   git clone --branch dev-1.0.0-beta https://github.com/dangdinhtai0001/phoenix-spring-api.git
    ```
-2. Install NPM packages
-   ```sh
-   npm install
-   ```
+2. Create Mysql database
 
+* run `api-services/script/MySQL/create_schema.sql` to create schema.
+* run `api-services/script/MySQL/init_structure.sql` to import data structure.
+* run `api-services/script/MySQL/init_data.sql` to import init data.
 
+3. Run the app using maven
+
+```sh
+mvn spring-boot:run -Dspring-boot.run.profiles=dev
+```
+
+The app will start running at http://localhost:8090 by default.
 
 <!-- USAGE EXAMPLES -->
 ## Usage
@@ -168,34 +179,34 @@ Distributed under the MIT License. See `LICENSE` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email
+Đặng Đình Tài - Email: dangdinhtai0001@gmail.com
 
-Project Link: [https://github.com/github_username/repo_name](https://github.com/github_username/repo_name)
+Project Link: [https://github.com/dangdinhtai0001/phoenix-spring-api](https://github.com/dangdinhtai0001/phoenix-spring-api)
 
 
 
 <!-- ACKNOWLEDGEMENTS -->
 ## Acknowledgements
 
-* []()
-* []()
-* []()
+This repo use source code from 
 
+* [sqlbuilder](https://github.com/jkrasnay/sqlbuilder.git)
+* [TheAlgorithms/Java](https://github.com/TheAlgorithms/Java.git)
 
 
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/github_username/repo.svg?style=for-the-badge
-[contributors-url]: https://github.com/github_username/repo/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/github_username/repo.svg?style=for-the-badge
-[forks-url]: https://github.com/github_username/repo/network/members
-[stars-shield]: https://img.shields.io/github/stars/github_username/repo.svg?style=for-the-badge
-[stars-url]: https://github.com/github_username/repo/stargazers
-[issues-shield]: https://img.shields.io/github/issues/github_username/repo.svg?style=for-the-badge
-[issues-url]: https://github.com/github_username/repo/issues
-[license-shield]: https://img.shields.io/github/license/github_username/repo.svg?style=for-the-badge
-[license-url]: https://github.com/github_username/repo/blob/master/LICENSE.txt
+[contributors-shield]: https://img.shields.io/github/contributors/dangdinhtai0001/phoenix-spring-api.svg?style=for-the-badge
+[contributors-url]: https://github.com/dangdinhtai0001/phoenix-spring-api/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/dangdinhtai0001/phoenix-spring-api.svg?style=for-the-badge
+[forks-url]: https://github.com/dangdinhtai0001/phoenix-spring-api/network/members
+[stars-shield]: https://img.shields.io/github/stars/dangdinhtai0001/phoenix-spring-api.svg?style=for-the-badge
+[stars-url]: https://github.com/dangdinhtai0001/phoenix-spring-api/stargazers
+[issues-shield]: https://img.shields.io/github/issues/dangdinhtai0001/phoenix-spring-api.svg?style=for-the-badge
+[issues-url]: https://github.com/dangdinhtai0001/phoenix-spring-api/issues
+[license-shield]: https://img.shields.io/github/license/dangdinhtai0001/phoenix-spring-api.svg?style=for-the-badge
+[license-url]: https://github.com/dangdinhtai0001/phoenix-spring-api/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/github_username
+[linkedin-url]: https://linkedin.com/in/dangdinhtai0001
