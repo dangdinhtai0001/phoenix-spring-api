@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ @Author: Đặng Đình Tài
+  ~ @Created date: 7/12/21, 4:22 PM
+  -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>spring-api-template</artifactId>
+        <groupId>com.phoenix</groupId>
+        <version>1.0.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>business</artifactId>
+    <version>${module.business.version}</version>
+    <name>module-business</name>
+    <description>Business module for services module</description>
+
+    <properties>
+        <project.build.sourceEncoding>${global.project.build.sourceEncoding}</project.build.sourceEncoding>
+        <maven.test.skip>${global.maven.test.skip}</maven.test.skip>
+        <maven.compiler.source>${global.java.version}</maven.compiler.source>
+        <maven.compiler.target>${global.java.version}</maven.compiler.target>
+
+        <this.module.version>0.0.0</this.module.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.phoenix</groupId>
+            <artifactId>common</artifactId>
+            <version>${module.common.version}</version>
+        </dependency>
+    </dependencies>
+
+</project>

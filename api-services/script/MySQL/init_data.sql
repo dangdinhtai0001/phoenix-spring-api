@@ -71,7 +71,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `fw_resource_action` WRITE;
 /*!40000 ALTER TABLE `fw_resource_action` DISABLE KEYS */;
-INSERT INTO `fw_resource_action` VALUES (1,2,'findAll',2,'T√¨m ki·∫øm t·∫•t c·∫£'),(2,2,'findById',2,'T√¨m ki·∫øm theo id');
+INSERT INTO `fw_resource_action` VALUES (1,2,'findAll',2,'T√¨m ki·∫øm t·∫•t c·∫£'),(2,2,'findById',2,'T√¨m ki·∫øm theo id'),(3,2,'findBy',2,'T√¨m ki·∫øm theo ƒëi·ªÅu ki·ªán');
 /*!40000 ALTER TABLE `fw_resource_action` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -101,7 +101,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `fw_user` WRITE;
 /*!40000 ALTER TABLE `fw_user` DISABLE KEYS */;
-INSERT INTO `fw_user` VALUES (1,'raw','123456',NULL,NULL,NULL,'11803d1c-d1b8-4cb5-a347-b6a2040db125',1,'admin_test','NONE','2021-07-03 22:03:08','NONE','2021-07-09 21:42:00'),(2,'raw','123456',NULL,NULL,NULL,'87bfa4a2-fe64-411d-b7ec-1e42596bda26',1,'guest','NONE','2021-07-09 09:42:01','NONE','2021-07-09 11:43:25');
+INSERT INTO `fw_user` VALUES (1,'raw','123456',NULL,NULL,NULL,'4f380bab-4644-407f-a237-c7d385a2d37f',1,'admin_test','NONE','2021-07-03 22:03:08','NONE','2021-07-10 11:52:06'),(2,'raw','123456',NULL,NULL,NULL,'2bdbd032-ff28-417d-9a3b-3fe64f5df876',1,'guest','NONE','2021-07-09 09:42:01','NONE','2021-07-10 10:37:27');
 /*!40000 ALTER TABLE `fw_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -131,6 +131,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `spring_session` WRITE;
 /*!40000 ALTER TABLE `spring_session` DISABLE KEYS */;
+INSERT INTO `spring_session` VALUES ('03db2a89-7a8d-46cb-aefe-150bf57b2b33','9cd86883-da5d-43eb-a127-0a9f10f14acf',1625892498430,1625894925552,1800,1625896725552,'admin_test');
 /*!40000 ALTER TABLE `spring_session` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -140,6 +141,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `spring_session_attributes` WRITE;
 /*!40000 ALTER TABLE `spring_session_attributes` DISABLE KEYS */;
+INSERT INTO `spring_session_attributes` VALUES ('03db2a89-7a8d-46cb-aefe-150bf57b2b33','SPRING_SECURITY_CONTEXT',_binary '¨\Ì\0sr\0=org.springframework.security.core.context.SecurityContextImpl\0\0\0\0\0\0&\0L\0authenticationt\02Lorg/springframework/security/core/Authentication;xpsr\0Oorg.springframework.security.authentication.UsernamePasswordAuthenticationToken\0\0\0\0\0\0&\0L\0credentialst\0Ljava/lang/Object;L\0	principalq\0~\0xr\0Gorg.springframework.security.authentication.AbstractAuthenticationToken”™(~nGd\0Z\0\rauthenticatedL\0authoritiest\0Ljava/util/Collection;L\0detailsq\0~\0xpsr\0&java.util.Collections$UnmodifiableList¸%1µ\Ïé\0L\0listt\0Ljava/util/List;xr\0,java.util.Collections$UnmodifiableCollectionB\0Ä\À^˜\0L\0cq\0~\0xpsr\0java.util.ArrayListxÅ\“ô\«aù\0I\0sizexp\0\0\0\nw\0\0\0\nsr\0Borg.springframework.security.core.authority.SimpleGrantedAuthority\0\0\0\0\0\0&\0L\0rolet\0Ljava/lang/String;xpt\0\rfw_menu__READsq\0~\0t\03com.phoenix.api.services.common.MenuService__UPDATEsq\0~\0t\02com.phoenix.api.services.common.MenuService__ADMINsq\0~\0t\0fw_menu__CREATEsq\0~\0t\0fw_menu__DELETEsq\0~\0t\01com.phoenix.api.services.common.MenuService__READsq\0~\0t\03com.phoenix.api.services.common.MenuService__CREATEsq\0~\0t\0fw_menu__UPDATEsq\0~\0t\0fw_menu__ADMINsq\0~\0t\03com.phoenix.api.services.common.MenuService__DELETExq\0~\0\rsr\0Horg.springframework.security.web.authentication.WebAuthenticationDetails\0\0\0\0\0\0&\0L\0\rremoteAddressq\0~\0L\0	sessionIdq\0~\0xpt\0	127.0.0.1t\0$9cd86883-da5d-43eb-a127-0a9f10f14acft\0{raw}123456t\0\nadmin_test');
 /*!40000 ALTER TABLE `spring_session_attributes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -160,9 +162,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
-/*
- * @Author: ƒê·∫∑ng ƒê√¨nh T√†i
- * @Created_date: 7/9/21, 11:10 PM
- */
-
--- Dump completed on 2021-07-09 23:08:11
+-- Dump completed on 2021-07-12 22:54:11

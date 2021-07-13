@@ -16,19 +16,20 @@
 package com.phoenix.api.base.services;
 
 import com.phoenix.api.base.entities.BaseEntity;
+import com.phoenix.api.base.repositories.AbstractRepository;
 import com.phoenix.api.base.repositories.GenericSpecificationsBuilder;
 import com.phoenix.api.base.repositories.SearchCriteria;
 import com.phoenix.api.base.repositories.SpecificationFactory;
 import com.phoenix.api.entities.common.ExceptionEntity;
-import com.phoenix.api.base.repositories.AbstractRepository;
-import com.phoenix.api.entities.common.MenuEntity;
 import com.phoenix.reflection.ReflectionUtil;
 import org.springframework.beans.support.PagedListHolder;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 /**
  * @param <T>: Đối tượng Entity để map với bảng trong csdl
@@ -69,7 +70,7 @@ public abstract class AbstractCrudService<T extends BaseEntity> extends Abstract
     }
 
     @Override
-    public Optional<T> add(Map payload) throws RuntimeException, Exception {
+    public Optional<T> add(Map payload) throws Exception {
         T obj = convertPayload(payload);
         preAdd(obj);
         Optional<T> optional = repository.add(obj);
@@ -79,7 +80,7 @@ public abstract class AbstractCrudService<T extends BaseEntity> extends Abstract
     }
 
     @Override
-    public Optional<T> update(Map payload) throws RuntimeException, Exception {
+    public Optional<T> update(Map payload) throws Exception {
         T obj = convertPayload(payload);
         preUpdate(obj);
         Optional<T> optional = repository.update(obj);
@@ -89,7 +90,7 @@ public abstract class AbstractCrudService<T extends BaseEntity> extends Abstract
     }
 
     @Override
-    public Optional<T> remove(Map payload) throws RuntimeException, Exception {
+    public Optional<T> remove(Map payload) throws Exception {
         T obj = convertPayload(payload);
         preRemove(obj);
         repository.remove(obj);
@@ -99,12 +100,12 @@ public abstract class AbstractCrudService<T extends BaseEntity> extends Abstract
     }
 
     @Override
-    public Optional<T> findById(Long id) throws RuntimeException, Exception {
+    public Optional<T> findById(Long id) {
         return repository.findById(id);
     }
 
     @Override
-    public LinkedHashMap findBy(int page, int size, List<SearchCriteria> conditional) throws Exception {
+    public LinkedHashMap findBy(int page, int size, List<SearchCriteria> conditional) {
         PageRequest pageRequest = PageRequest.of(page, size);
 
         GenericSpecificationsBuilder<T> builder = new GenericSpecificationsBuilder<>();

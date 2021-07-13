@@ -25,7 +25,7 @@ public class UserPrincipal implements Serializable {
 
     private Set<String> permissions;
     private List<String> listStatus;
-    private List<String> groups;
+    private final List<String> groups;
 
 
     public UserPrincipal(Long id, String username, String password, String hashAlgorithm, String passwordSalt, int permission, int status, String group) {

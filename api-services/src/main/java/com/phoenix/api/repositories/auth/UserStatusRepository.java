@@ -18,5 +18,5 @@ public interface UserStatusRepository extends JpaRepository<UserStatusEntity, Lo
 
     @Query(value = "select s.id, s.code, s.name, s.description from fw_user_status s order by s.code",
             nativeQuery = true)
-    public List<UserStatusEntity> findAll();
+    List<UserStatusEntity> findAll();
 }

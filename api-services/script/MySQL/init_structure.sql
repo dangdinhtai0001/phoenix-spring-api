@@ -122,7 +122,7 @@ CREATE TABLE `fw_resource_action` (
   UNIQUE KEY `fw_resource_action_id_uindex` (`id`),
   KEY `fw_resource_action_fw_resource_id_fk` (`resource_id`),
   CONSTRAINT `fw_resource_action_fw_resource_id_fk` FOREIGN KEY (`resource_id`) REFERENCES `fw_resource` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -274,9 +274,4 @@ CREATE TABLE `spring_session_attributes` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
-/*
- * @Author: Đặng Đình Tài
- * @Created_date: 7/9/21, 11:10 PM
- */
-
--- Dump completed on 2021-07-09 23:08:29
+-- Dump completed on 2021-07-12 22:53:54

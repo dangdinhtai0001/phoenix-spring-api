@@ -13,10 +13,13 @@ package com.phoenix.reflection;
 import java.lang.reflect.Field;
 import java.util.*;
 
+/**
+ * Class gồm các hàm static hỗ trợ reflection
+ */
 public class ReflectionUtil {
     /**
-     * @param aClass : Class
-     * @return : Mảng chứa tất cả các field của class (Không bao gồm các field của supper class)
+     * @param aClass Class cần xử lí
+     * @return Mảng chứa tất cả các field của class (Không bao gồm các field của supper class)
      */
     public static Field[] getDeclaredFields(Class aClass) {
         return aClass.getDeclaredFields();
@@ -24,7 +27,7 @@ public class ReflectionUtil {
 
     /**
      * @param aClass : Class
-     * @return : Mảng chứa tất cả các field của class (Bbao gồm các field của supper class), dùng đệ quy
+     * @return List chứa tất cả các field của class (Bao gồm các field của supper class), dùng đệ quy
      */
     public static List<Field> getAllFields(Class aClass) {
         if (aClass == null) {
@@ -33,7 +36,7 @@ public class ReflectionUtil {
 
         Field[] fields = aClass.getDeclaredFields();
 
-        LinkedList list = new LinkedList(Arrays.asList(fields));
+        LinkedList<Field> list = new LinkedList<>(Arrays.asList(fields));
 
         list.addAll(getAllFields(aClass.getSuperclass()));
 
@@ -41,9 +44,9 @@ public class ReflectionUtil {
     }
 
     /**
-     * @param name   : tên field cần tìm
-     * @param aClass : Class
-     * @return : Field có tên == name, nếu không tìm thấy trả về null
+     * @param name   tên field cần tìm
+     * @param aClass Class cần xử lí
+     * @return Field có tên == name, nếu không tìm thấy trả về null
      */
     public static Field findFieldByName(String name, Class aClass) {
         List<Field> list = ReflectionUtil.getAllFields(aClass);
@@ -56,12 +59,11 @@ public class ReflectionUtil {
     }
 
     /**
-     * @param fieldName     : Tên field cần set
-     * @param classOfField: Kiểu dữ liệu của field cần set
-     * @param value:        Giá trị muốn set (dạng String)
-     * @param obj:          Instance để set giá trị
-     * @throws NoSuchFieldException:  nếu không tìm thấy field
-     * @throws IllegalAccessException
+     * @param fieldName    Tên field cần set
+     * @param classOfField Kiểu dữ liệu của field cần set
+     * @param value        Giá trị muốn set (dạng String)
+     * @param obj          Instance để set giá trị
+     * @throws NoSuchFieldException nếu không tìm thấy field
      */
     public static void setField(String fieldName, Class classOfField, String value, Object obj) throws NoSuchFieldException, IllegalAccessException {
         Class objClass = obj.getClass();
@@ -91,10 +93,25 @@ public class ReflectionUtil {
 
     }
 
+    /**
+     * @param field Đối tượng {@link Field} cần cập nhật giá trị
+     * @param value giá trị cần set (dạng String)
+     * @param obj   Instance cần cập nhật giá trị
+     * @throws NoSuchFieldException   khi không tìm thấy Filed trong class
+     * @throws IllegalAccessException Khi có lỗi parse String value sang giá trị phù hợp
+     */
     public static void setField(Field field, String value, Object obj) throws NoSuchFieldException, IllegalAccessException {
         setField(field.getName(), field.getType(), value, obj);
     }
 
+    /**
+     * @param map    {@link Map} chứa thông tin của đối tượng cần convert với key => tên trường, value => giá trị của trường đó
+     * @param aClass Class cần convert thành
+     * @return Một instance của aCLass
+     * @throws InstantiationException Khi aClass không có hàm dựng không đối số
+     * @throws IllegalAccessException Khi có lỗi parse String value sang giá trị phù hợp
+     * @throws NoSuchFieldException   khi không tìm thấy Filed trong class
+     */
     public static Object convertMapToObject(Map<String, String> map, Class aClass) throws InstantiationException, IllegalAccessException, NoSuchFieldException {
         Object target = aClass.newInstance();
 
@@ -108,6 +125,13 @@ public class ReflectionUtil {
 
     }
 
+    /**
+     * @param source Instance của aClass cần convert thành map
+     * @param aClass Class của đối tượng cần xử lí
+     * @return Một map chứa thông tin của đối tượng cần convert với key => tên trường, value => giá trị của trường đó
+     * @throws InstantiationException Khi aClass không có hàm dựng không đối số
+     * @throws IllegalAccessException có lỗi lúc lấy giá trị
+     */
     public static Map<String, String> convertObjectToMap(Object source, Class aClass) throws InstantiationException, IllegalAccessException {
         Map<String, String> map = new LinkedHashMap<>();
 
