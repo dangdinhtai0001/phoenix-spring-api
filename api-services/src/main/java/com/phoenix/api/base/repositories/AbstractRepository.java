@@ -1,100 +1,102 @@
 /*
  * @Author: Đặng Đình Tài
- * @Created_date: 7/9/21, 11:10 PM
- */
-
-/*
- * @Author: Đặng Đình Tài
- * @Created_date: 7/9/21, 9:14 PM
- */
-
-/*
- * @Author: Đặng Đình Tài
  * @Created_date: 6/26/21, 12:24 PM
  */
 
 package com.phoenix.api.base.repositories;
 
 import com.phoenix.api.base.entities.BaseEntity;
-import com.phoenix.reflection.ReflectionUtil;
-import com.phoenix.structure.Pair;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.beans.support.PagedListHolder;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
-import java.util.LinkedList;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @param <T> Đối tượng Entity để map với bảng trong csdl
- *            <p>
- *            Là kết hợp của AbstractBaseRepository và AbstractNativeRepository
- *            <p>
- *            Kế thừa AbstractBaseRepository và clone code từ AbstractNativeRepository
+ *            <p> - Định nghĩa các hàm để thực hiện crud trên đối tượng Entity T đã được khai báo</p>
+ *            <p> - Được triển khai sẵn cả native query {@link AbstractNativeRepository}</p>
  */
-public abstract class AbstractRepository<T extends BaseEntity> extends AbstractBaseRepository<T> implements BaseRepository<T>, NativeRepository {
+public abstract class AbstractRepository<T extends BaseEntity> extends AbstractNativeRepository implements BaseRepository<T> {
 
     private final EntityManager entityManager;
 
+    private final Class<T> typeParameterClass;
+
     public AbstractRepository(EntityManager entityManager, Class<T> typeParameterClass) {
-        super(entityManager, typeParameterClass);
+        super(entityManager);
         this.entityManager = entityManager;
+        this.typeParameterClass = typeParameterClass;
+    }
+
+
+    @Override
+    public Iterable<T> findAll() {
+        CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
+        CriteriaQuery<T> criteriaQuery = builder.createQuery(typeParameterClass);
+        Root<T> root = criteriaQuery.from(typeParameterClass);
+        criteriaQuery.select(root);
+        return this.entityManager.createQuery(criteriaQuery).getResultList();
     }
 
     @Override
-    public List executeNativeQuery(String sql, String... params) {
-        Query query = createNativeQuery(sql, params);
-        List<Object[]> result = query.getResultList();
-
-        return result;
-    }
-
-    @Override
-    @Modifying
-    @Transactional
-    public int updateNativeQuery(String sql, String... params) {
-        Query query = createNativeQuery(sql, params);
-        return query.executeUpdate();
-    }
-
-    private Query createNativeQuery(String sql, String... params) {
-        Query query = entityManager.createNativeQuery(sql);
-
-        int index = 1;
-        for (String param : params) {
-            query.setParameter(index++, param);
+    public Optional<T> add(T object) throws Exception {
+        try {
+            this.entityManager.persist(object);
+            return Optional.of(object);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
-        return query;
+        return Optional.empty();
     }
 
     @Override
-    public Object parseResult(Object[] record, List<Pair<String, Class>> params, Class aClass)
-            throws NoSuchFieldException, IllegalAccessException, InstantiationException {
-        Object target = aClass.newInstance();
-        Pair<String, Class> pair;
-        for (int i = 0; i < params.size(); i++) {
-            pair = params.get(i);
-            ReflectionUtil.setField(pair.first(), pair.second(), String.valueOf(record[i]), target);
-        }
-        return target;
+    public Optional<T> update(T object) throws Exception {
+        return Optional.ofNullable(this.entityManager.merge(object));
     }
 
     @Override
-    public List parseResult(List<Object[]> results, List<Pair<String, Class>> params, Class aClass)
-            throws NoSuchFieldException, IllegalAccessException, InstantiationException {
-        Object target;
-        Pair<String, Class> pair;
-        List<Object> list = new LinkedList<>();
-        for (Object[] record : results) {
-            target = aClass.newInstance();
-            for (int i = 0; i < params.size(); i++) {
-                pair = params.get(i);
-                ReflectionUtil.setField(pair.first(), pair.second(), String.valueOf(record[i]), target);
-            }
-            list.add(target);
+    public void remove(T object) {
+        this.entityManager.remove(this.entityManager.merge(object));
+    }
+
+    @Override
+    public Optional<T> findById(Long id) {
+        T entity = entityManager.find(typeParameterClass, id);
+        return Optional.ofNullable(entity);
+    }
+
+    @Override
+    public boolean exists(Long id) {
+        T entity = this.entityManager.find(this.typeParameterClass, id);
+        return entity != null;
+    }
+
+    @Override
+    public Iterable<T> findBySpecification(Specification specification) {
+        CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
+        CriteriaQuery<T> criteriaQuery = builder.createQuery(typeParameterClass);
+        Root<T> root = criteriaQuery.from(typeParameterClass);
+        criteriaQuery.select(root);
+        if (specification != null) {
+            criteriaQuery.where(specification.toPredicate(root, criteriaQuery, builder));
         }
-        return list;
+        return this.entityManager.createQuery(criteriaQuery).getResultList();
+    }
+
+    @Override
+    public PagedListHolder<T> findBySpecificationAndPageRequest(Specification specification, PageRequest pageRequest) {
+        List<T> queryResultList = (List<T>) findBySpecification(specification);
+
+        PagedListHolder page = new PagedListHolder(queryResultList);
+        page.setPageSize(pageRequest.getPageSize()); // number of items per page
+        page.setPage(pageRequest.getPageNumber());      // set to first page
+
+        return page;
     }
 }

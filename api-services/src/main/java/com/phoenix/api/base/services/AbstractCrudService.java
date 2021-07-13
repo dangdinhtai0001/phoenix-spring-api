@@ -99,7 +99,7 @@ public abstract class AbstractCrudService<T extends BaseEntity> extends Abstract
     }
 
     @Override
-    public Optional<T> findById(Long id) throws RuntimeException, Exception {
+    public Optional<T> findById(Long id) {
         return repository.findById(id);
     }
 
