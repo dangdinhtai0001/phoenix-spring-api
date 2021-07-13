@@ -12,6 +12,7 @@ import com.phoenix.api.base.repositories.AbstractNativeRepository;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import java.util.List;
 import java.util.Optional;
 
 @Repository(value = BeanIds.AUTH_REPOSITORY_IMP)
@@ -33,7 +34,8 @@ public class AuthRepositoryImp extends AbstractNativeRepository {
      */
     public Optional<UserPrincipal> findUserByUsername(String username) {
         String sql = DatabaseConstant.FIND_USER_BY_USERNAME;
-        Object[] record = executeNativeQuery(sql, username).get(0);
+        List<Object[]> result = executeNativeQuery(sql, username);
+        Object[] record = result.get(0);
 
         try {
             Long id = Long.parseLong(String.valueOf(record[0]));
