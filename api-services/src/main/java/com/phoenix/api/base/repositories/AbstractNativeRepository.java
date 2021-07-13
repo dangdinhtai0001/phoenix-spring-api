@@ -36,11 +36,10 @@ public abstract class AbstractNativeRepository implements NativeRepository {
     }
 
     @Override
-    public List<Object[]> executeNativeQuery(String sql, String... params) {
+    public List executeNativeQuery(String sql, String... params) {
         Query query = createNativeQuery(sql, params);
-        List<Object[]> result = query.getResultList();
 
-        return result;
+        return query.getResultList();
     }
 
     @Override
@@ -49,17 +48,6 @@ public abstract class AbstractNativeRepository implements NativeRepository {
     public int updateNativeQuery(String sql, String... params) {
         Query query = createNativeQuery(sql, params);
         return query.executeUpdate();
-    }
-
-    private Query createNativeQuery(String sql, String... params) {
-        Query query = entityManager.createNativeQuery(sql);
-
-        int index = 1;
-        for (String param : params) {
-            query.setParameter(index++, param);
-        }
-
-        return query;
     }
 
     @Override
@@ -89,5 +77,21 @@ public abstract class AbstractNativeRepository implements NativeRepository {
             list.add(target);
         }
         return list;
+    }
+
+
+    //    ================================================================
+    //
+    //    ================================================================
+
+    private Query createNativeQuery(String sql, String... params) {
+        Query query = entityManager.createNativeQuery(sql);
+
+        int index = 1;
+        for (String param : params) {
+            query.setParameter(index++, param);
+        }
+
+        return query;
     }
 }

@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * Mặc định cách throw exception.
  *
- * Các controller sẽ tự động response nếu ngoại lệ DefaultHandlerException đc ném ra
+ * <p>Các controller sẽ tự động response nếu ngoại lệ DefaultHandlerException đc ném ra</p
  */
 public abstract class AbstractBaseService {
     private final List<ExceptionEntity> exceptionEntities;
