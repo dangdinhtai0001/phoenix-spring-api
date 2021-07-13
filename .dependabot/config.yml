@@ -1,0 +1,11 @@
+version: 1
+update_configs:
+  - package_manager: "java:maven"
+    directory: "/"
+    update_schedule: "monthly"
+    target_branch: "dev"
+    default_labels:
+      - "dependencies"
+      - "dependabot"
+
+# https://dependabot.com/docs/config-file
