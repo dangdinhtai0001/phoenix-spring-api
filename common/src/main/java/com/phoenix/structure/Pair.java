@@ -1,3 +1,8 @@
+/*
+ * @Author: Đặng Đình Tài
+ * @Created_date: 7/9/21, 11:10 PM
+ */
+
 package com.phoenix.structure;
 
 import com.phoenix.util.HashCode;
@@ -20,6 +25,10 @@ public class Pair<E1, E2> implements Serializable {
     // ========================================
     // Constructors
     // ========================================
+
+
+    public Pair() {
+    }
 
     /**
      * Construct a new pair
@@ -99,5 +108,13 @@ public class Pair<E1, E2> implements Serializable {
         h.addValue(mFirst);
         h.addValue(mSecond);
         return h.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return "Pair{" +
+                "mFirst=" + mFirst +
+                ", mSecond=" + mSecond +
+                '}';
     }
 }

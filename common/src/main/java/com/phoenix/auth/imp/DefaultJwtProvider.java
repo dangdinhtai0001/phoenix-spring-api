@@ -1,3 +1,8 @@
+/*
+ * @Author: Đặng Đình Tài
+ * @Created_date: 7/9/21, 11:10 PM
+ */
+
 package com.phoenix.auth.imp;
 
 import com.phoenix.auth.JwtProvider;
@@ -14,7 +19,7 @@ import java.util.Map;
 public class DefaultJwtProvider implements JwtProvider {
     private String secretKey;
     private SignatureAlgorithm signatureAlgorithm;
-    long ttlMillis;
+    private long ttlMillis;
 
     public DefaultJwtProvider() {
         this.signatureAlgorithm = SignatureAlgorithm.HS256;
@@ -132,14 +137,22 @@ public class DefaultJwtProvider implements JwtProvider {
             Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
             return true;
         } catch (MalformedJwtException ex) {
-            log.error("Invalid JWT token");
+            log.info("Invalid JWT token");
+            throw new MalformedJwtException("Invalid JWT token");
         } catch (ExpiredJwtException ex) {
-            log.error("Expired JWT token");
+            log.info("Expired JWT token");
+            throw new ExpiredJwtException(null, null, "Expired JWT token");
         } catch (UnsupportedJwtException ex) {
-            log.error("Unsupported JWT token");
+            log.info("Unsupported JWT token");
+            throw new UnsupportedJwtException("Unsupported JWT token");
         } catch (IllegalArgumentException ex) {
-            log.error("JWT claims string is empty.");
+            log.info("JWT claims string is empty.");
+            throw new IllegalArgumentException("JWT claims string is empty.");
         }
-        return false;
+    }
+
+    @Override
+    public long getTtlMillis() {
+        return ttlMillis;
     }
 }

@@ -1,3 +1,8 @@
+/*
+ * @Author: Đặng Đình Tài
+ * @Created_date: 7/9/21, 11:10 PM
+ */
+
 package com.phoenix.api.repositories.auth;
 
 import org.junit.jupiter.api.Test;
@@ -21,5 +26,13 @@ public class TestUserRepository {
 
         Optional optional = authRepositoryImp.findUserByUsername("admin_test");
         System.out.println(optional.orElse(null));
+    }
+
+    @Test
+    public void testUpdateRefreshToken() {
+//        Optional optional = userRepository.findByUsername("admin_test");
+
+        int i  = userRepository.updateRefreshTokenByUsername("1234","admin_test");
+        System.out.println(i);
     }
 }

@@ -1,3 +1,8 @@
+/*
+ * @Author: Đặng Đình Tài
+ * @Created_date: 7/9/21, 11:10 PM
+ */
+
 package com.phoenix.searchs.imp;
 
 import com.phoenix.searchs.SearchAlgorithm;
@@ -35,7 +40,7 @@ public class BinarySearch implements SearchAlgorithm {
      * @param right The upper bound
      * @return the location of the key
      */
-    private <T extends Comparable<T>> int search(T array[], T key, int left, int right) {
+    private <T extends Comparable<T>> int search(T[] array, T key, int left, int right) {
         if (right < left) return -1; // this means that the key not found
 
         // find median

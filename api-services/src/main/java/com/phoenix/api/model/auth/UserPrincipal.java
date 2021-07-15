@@ -1,12 +1,19 @@
+/*
+ * @Author: Đặng Đình Tài
+ * @Created_date: 7/9/21, 11:10 PM
+ */
+
 package com.phoenix.api.model.auth;
 
 import lombok.*;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 @ToString
-public class UserPrincipal {
+public class UserPrincipal implements Serializable {
     private Long id;
     private String username;
     private String password;
@@ -16,16 +23,16 @@ public class UserPrincipal {
     private int status;
     private String group;
 
-    private List<String> permissions;
+    private Set<String> permissions;
     private List<String> listStatus;
-    private List<String> groups;
+    private final List<String> groups;
 
 
     public UserPrincipal(Long id, String username, String password, String hashAlgorithm, String passwordSalt, int permission, int status, String group) {
         this.id = id;
         this.username = username;
-        this.password = password;
         this.hashAlgorithm = hashAlgorithm;
+        this.password = "{" + hashAlgorithm + "}" + password;
         this.passwordSalt = passwordSalt;
         this.permission = permission;
         this.status = status;
@@ -98,7 +105,7 @@ public class UserPrincipal {
         return group;
     }
 
-    public List<String> getPermissions() {
+    public Set<String> getPermissions() {
         return permissions;
     }
 
@@ -110,7 +117,7 @@ public class UserPrincipal {
         return groups;
     }
 
-    public void setPermissions(List<String> permissions) {
+    public void setPermissions(Set<String> permissions) {
         this.permissions = permissions;
     }
 

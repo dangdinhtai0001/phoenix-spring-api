@@ -1,3 +1,8 @@
+/*
+ * @Author: Đặng Đình Tài
+ * @Created_date: 7/9/21, 11:10 PM
+ */
+
 package com.phoenix.text;
 
 import java.util.regex.Matcher;
@@ -8,8 +13,18 @@ public class TextMatcher {
     /**
      * Will match dates with dashes, slashes or with spaces (e.g. dd-mm-yyyy dd/mm/yyyy dd mm yyyy), and optional time
      * separated by a space or a dash (e.g. dd-mm-yyyy-hh:mm:ss or dd/mm/yyyy hh:mm:ss).
+     * <p>
+     * Source: J2Team
      */
     private static final String DATE_IN_FORMAT = "^(0?[1-9]|[12][0-9]|3[01])([ \\/\\-])(0?[1-9]|1[012])\\2([0-9][0-9][0-9][0-9])(([ -])([0-1]?[0-9]|2[0-3]):[0-5]?[0-9]:[0-5]?[0-9])?$";
+
+
+    /**
+     * I modified it to take dd/mm/yyyy, dd-mm-yyyy or dd.mm.yyyy
+     * <p>
+     * Source: https://stackoverflow.com/questions/15491894/regex-to-validate-date-format-dd-mm-yyyy-with-leap-year-support
+     */
+    private static final String DATE_IN_FORMAT_WITH_LEAP_YEAR_SP = "^(?:(?:31(\\/|-|\\.)(?:0?[13578]|1[02]))\\1|(?:(?:29|30)(\\/|-|\\.)(?:0?[13-9]|1[0-2])\\2))(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$|^(?:29(\\/|-|\\.)0?2\\3(?:(?:(?:1[6-9]|[2-9]\\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\\d|2[0-8])(\\/|-|\\.)(?:(?:0?[1-9])|(?:1[0-2]))\\4(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$";
 
     /**
      * Match times in 24 hour format
@@ -34,6 +49,10 @@ public class TextMatcher {
         return matchString(DATE_IN_FORMAT, raw);
     }
 
+    public static boolean isDateInFormatWithLeapYearSp(String raw) {
+        return matchString(DATE_IN_FORMAT_WITH_LEAP_YEAR_SP, raw);
+    }
+
     public static boolean isTimeIn24HFormat(String raw) {
         return matchString(TIME_IN_24H_FORMAT, raw);
     }
@@ -42,7 +61,7 @@ public class TextMatcher {
         return matchString(HEX_COLOR_VALUE, raw);
     }
 
-    public static boolean isEmailAddress(String raw){
+    public static boolean isEmailAddress(String raw) {
         return matchString(EMAIL, raw);
     }
 

@@ -1,3 +1,8 @@
+/*
+ * @Author: Đặng Đình Tài
+ * @Created_date: 7/9/21, 11:10 PM
+ */
+
 package com.phoenix.util.imp;
 
 import com.phoenix.util.Count;
@@ -10,7 +15,7 @@ import java.io.Serializable;
 public class DefaultCount implements Serializable, Count {
     private int value;
 
-    DefaultCount(int value) {
+    public DefaultCount(int value) {
         this.value = value;
     }
 
@@ -34,6 +39,11 @@ public class DefaultCount implements Serializable, Count {
         int result = value;
         value = newValue;
         return result;
+    }
+
+    @Override
+    public int get() {
+        return value;
     }
 
     @Override

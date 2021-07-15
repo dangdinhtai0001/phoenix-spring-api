@@ -1,3 +1,8 @@
+/*
+ * @Author: Đặng Đình Tài
+ * @Created_date: 7/9/21, 11:10 PM
+ */
+
 package com.phoenix.auth;
 
 import io.jsonwebtoken.Claims;
@@ -28,4 +33,6 @@ public interface JwtProvider {
     void setTtlMillis(long ttlMillis);
 
     boolean validateToken(String token);
+
+    long getTtlMillis();
 }
