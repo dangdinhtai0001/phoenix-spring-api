@@ -27,6 +27,9 @@ public class ProfileEntity extends BaseEntity {
     @Column(name = "gender")
     private String gender;
 
+    @Column(name = "type")
+    private String type;
+
     @Column(name = "account_id")
     private int accountId;
 }
