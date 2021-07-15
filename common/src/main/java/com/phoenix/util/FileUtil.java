@@ -37,10 +37,9 @@ public class FileUtil {
     public static List<String> getAllFilePathInDirectory(String rootPath) {
         try (Stream<Path> walk = Files.walk(Paths.get(rootPath))) {
             // We want to find only regular files
-            List<String> result = walk.filter(Files::isRegularFile)
-                    .map(x -> x.toString()).collect(Collectors.toList());
 
-            return result;
+            return walk.filter(Files::isRegularFile)
+                    .map(Path::toString).collect(Collectors.toList());
         } catch (IOException e) {
             e.printStackTrace();
             return new LinkedList<>();
