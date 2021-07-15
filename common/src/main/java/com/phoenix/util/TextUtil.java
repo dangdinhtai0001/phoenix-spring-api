@@ -1,9 +1,14 @@
 /*
  * @Author: Đặng Đình Tài
+ * @Created date: 7/15/21, 10:12 AM
+ */
+
+/*
+ * @Author: Đặng Đình Tài
  * @Created_date: 7/9/21, 11:10 PM
  */
 
-package com.phoenix.text;
+package com.phoenix.util;
 
 public class TextUtil {
     /**

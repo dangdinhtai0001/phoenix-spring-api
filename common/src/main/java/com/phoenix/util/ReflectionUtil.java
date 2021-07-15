@@ -1,5 +1,10 @@
 /*
  * @Author: Đặng Đình Tài
+ * @Created date: 7/15/21, 10:12 AM
+ */
+
+/*
+ * @Author: Đặng Đình Tài
  * @Created_date: 7/9/21, 11:10 PM
  */
 
@@ -8,7 +13,7 @@
  * @Created_date: 6/26/21, 4:24 PM
  */
 
-package com.phoenix.reflection;
+package com.phoenix.util;
 
 import java.lang.reflect.Field;
 import java.util.*;

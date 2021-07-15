@@ -12,7 +12,7 @@ package com.phoenix.api.repositories.base;
 
 import com.phoenix.api.entities.common.ExceptionEntity;
 import com.phoenix.api.repositories.common.ExceptionRepositoryImp;
-import com.phoenix.reflection.ReflectionUtil;
+import com.phoenix.util.ReflectionUtil;
 import com.phoenix.structure.Pair;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

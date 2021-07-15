@@ -1,6 +1,6 @@
 /*
  * @Author: Đặng Đình Tài
- * @Created_date: 7/9/21, 11:10 PM
+ * @Created date: 7/15/21, 10:27 AM
  */
 
 package com.phoenix.time;
@@ -29,3 +29,4 @@ public interface TimeProvider {
      */
     void sleep(long ms);
 }
+

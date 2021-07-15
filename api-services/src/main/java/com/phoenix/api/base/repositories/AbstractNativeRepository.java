@@ -15,7 +15,7 @@
 
 package com.phoenix.api.base.repositories;
 
-import com.phoenix.reflection.ReflectionUtil;
+import com.phoenix.util.ReflectionUtil;
 import com.phoenix.structure.Pair;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.transaction.annotation.Transactional;

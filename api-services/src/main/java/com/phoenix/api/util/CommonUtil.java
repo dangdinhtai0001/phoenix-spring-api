@@ -9,7 +9,7 @@ import com.phoenix.api.base.constant.ApplicationConstant;
 import com.phoenix.api.base.constant.DatabaseConstant;
 import com.phoenix.api.entities.auth.PermissionEntity;
 import com.phoenix.api.base.repositories.NativeRepository;
-import com.phoenix.others.BitUtil;
+import com.phoenix.util.BitUtil;
 import com.phoenix.structure.Pair;
 
 import java.util.*;

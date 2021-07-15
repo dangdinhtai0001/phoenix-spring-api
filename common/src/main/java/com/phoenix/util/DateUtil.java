@@ -1,5 +1,10 @@
 /*
  * @Author: Đặng Đình Tài
+ * @Created date: 7/15/21, 10:12 AM
+ */
+
+/*
+ * @Author: Đặng Đình Tài
  * @Created_date: 7/9/21, 11:10 PM
  */
 
@@ -8,7 +13,7 @@
  * @Date 6/24/21, 3:04 PM
  */
 
-package com.phoenix.time;
+package com.phoenix.util;
 
 import java.text.DateFormat;
 import java.text.ParseException;

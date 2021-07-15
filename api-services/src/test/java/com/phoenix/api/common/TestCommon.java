@@ -11,7 +11,7 @@
 package com.phoenix.api.common;
 
 import com.phoenix.api.entities.common.ExceptionEntity;
-import com.phoenix.reflection.ReflectionUtil;
+import com.phoenix.util.ReflectionUtil;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Field;

@@ -7,7 +7,7 @@ package com.phoenix.api.repositories.auth;
 
 import com.phoenix.api.base.constant.BeanIds;
 import com.phoenix.api.entities.auth.PermissionEntity;
-import com.phoenix.others.BitUtil;
+import com.phoenix.util.BitUtil;
 import com.phoenix.structure.Pair;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -5,6 +5,7 @@
 
 package com.phoenix.others;
 
+import com.phoenix.util.BitUtil;
 import org.junit.Test;
 
 public class TestBitUtil {

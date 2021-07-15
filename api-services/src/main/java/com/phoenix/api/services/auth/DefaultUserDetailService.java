@@ -12,7 +12,7 @@ import com.phoenix.api.model.auth.DefaultUserDetails;
 import com.phoenix.api.model.auth.UserPrincipal;
 import com.phoenix.api.repositories.auth.AuthRepositoryImp;
 import com.phoenix.api.util.CommonUtil;
-import com.phoenix.others.BitUtil;
+import com.phoenix.util.BitUtil;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.userdetails.UserDetails;

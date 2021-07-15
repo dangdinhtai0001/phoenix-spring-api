@@ -21,7 +21,7 @@ import com.phoenix.api.base.repositories.GenericSpecificationsBuilder;
 import com.phoenix.api.base.repositories.SearchCriteria;
 import com.phoenix.api.base.repositories.SpecificationFactory;
 import com.phoenix.api.entities.common.ExceptionEntity;
-import com.phoenix.reflection.ReflectionUtil;
+import com.phoenix.util.ReflectionUtil;
 import org.springframework.beans.support.PagedListHolder;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;

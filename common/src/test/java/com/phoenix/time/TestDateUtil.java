@@ -10,6 +10,7 @@
 
 package com.phoenix.time;
 
+import com.phoenix.util.DateUtil;
 import org.junit.Assert;
 import org.junit.Test;
 
