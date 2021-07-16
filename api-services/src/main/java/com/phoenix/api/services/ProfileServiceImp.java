@@ -10,6 +10,7 @@ import com.phoenix.business.domain.Profile;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.LinkedList;
 import java.util.List;
 
 @Service("ProfileServiceImp")
@@ -23,7 +24,12 @@ public class ProfileServiceImp extends AbstractCrudService<ProfileEntity> {
         this.repositoryImp = (ProfileRepositoryImp) repository;
     }
 
-    public Iterable<Profile> findAll() {
-        return this.repositoryImp.findAllProfile();
+    public Iterable<Profile> findAll()  {
+        try {
+            return this.repositoryImp.findAllProfile();
+        } catch (NoSuchFieldException | IllegalAccessException | InstantiationException e) {
+            e.printStackTrace();
+            return new LinkedList<>();
+        }
     }
 }

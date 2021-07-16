@@ -6,16 +6,12 @@ public class Profile {
     private String gender;
     private String account;
     private String password;
-    private ProfileType type;
-
-    public enum ProfileType {
-        STUDENT, TEACHER;
-    }
+    private String type;
 
     public Profile() {
     }
 
-    public Profile(String name, String code, String gender, String account, String password, ProfileType type) {
+    public Profile(String name, String code, String gender, String account, String password, String type) {
         this.name = name;
         this.code = code;
         this.gender = gender;
@@ -64,11 +60,11 @@ public class Profile {
         this.password = password;
     }
 
-    public ProfileType getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(ProfileType type) {
+    public void setType(String type) {
         this.type = type;
     }
 }
