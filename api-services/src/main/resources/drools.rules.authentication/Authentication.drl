@@ -1,0 +1,15 @@
+package drools.rules.profile;
+
+global org.springframework.security.core.Authentication authentication;
+global com.phoenix.business.drools.FilterConditional condition;
+
+dialect  "mvel"
+
+rule "Current user mapping"
+    when
+
+    then
+        condition.setPermitted(true);
+        condition.addConditional(String.format("fu.username = '%s'",authentication.getPrincipal()));
+    end;
+

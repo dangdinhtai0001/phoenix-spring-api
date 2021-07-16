@@ -232,9 +232,10 @@ CREATE TABLE `profile` (
   `code` varchar(255) COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
   `gender` varchar(255) COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
   `name` varchar(255) COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
+  `type` varchar(255) COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `profile_fw_user_id_fk` (`account_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -284,4 +285,4 @@ CREATE TABLE `spring_session_attributes` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-07-15 22:23:19
+-- Dump completed on 2021-07-16 18:32:34

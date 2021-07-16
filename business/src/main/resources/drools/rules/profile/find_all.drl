@@ -11,6 +11,6 @@ rule "Student just find their profile"
         $p :Profile(type == "STUDENT")
     then
         condition.setPermitted(true);
-        condition.addConditional(String.format("p.code = '%s'",$p.getCode()));
+        condition.addConditional(String.format("fu.username = '%s'",$p.getCode()));
     end;
 

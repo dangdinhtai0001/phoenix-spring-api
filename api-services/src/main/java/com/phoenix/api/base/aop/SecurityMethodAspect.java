@@ -15,6 +15,8 @@ import com.phoenix.api.base.component.exception.DefaultHandlerException;
 import com.phoenix.api.base.constant.BeanIds;
 import com.phoenix.api.entities.common.ExceptionEntity;
 import com.phoenix.api.model.auth.DefaultUserDetails;
+import com.phoenix.business.drools.DroolsFactory;
+import com.phoenix.business.drools.FilterConditional;
 import lombok.extern.log4j.Log4j2;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -22,6 +24,10 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.kie.api.io.Resource;
+import org.kie.api.runtime.KieSession;
+import org.kie.internal.io.ResourceFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
@@ -40,6 +46,10 @@ public class SecurityMethodAspect {
 
     private final Multimap<String, String> allResourcePermissionRequirement;
     private final List<ExceptionEntity> listExceptions;
+
+    @Autowired
+    @Qualifier(BeanIds.DROOLS_FACTORY)
+    private DroolsFactory droolsFactory;
 
     public SecurityMethodAspect(
             @Qualifier(BeanIds.ALL_RESOURCE_PERMISSIONS_REQUIRED) Multimap<String, String> allResourcePermissionRequirement,
@@ -75,6 +85,17 @@ public class SecurityMethodAspect {
 
             // todo: làm động số tham số truyền vào
             args[index] = String.format("where fu.username = '%s'", authentication.getPrincipal());
+
+            Resource resource = ResourceFactory.newClassPathResource("drools/rules/authentication/Authentication.drl", getClass());
+            KieSession kieSession = droolsFactory.getKieSession(resource);
+            FilterConditional filterConditional = new FilterConditional();
+
+            kieSession.setGlobal("condition", filterConditional);
+            kieSession.setGlobal("authentication", authentication);
+            kieSession.fireAllRules();
+
+            System.out.println(filterConditional);
+
             return proceedingJoinPoint.proceed(args);
         }
         return proceedingJoinPoint.proceed();

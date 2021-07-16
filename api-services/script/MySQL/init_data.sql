@@ -101,7 +101,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `fw_user` WRITE;
 /*!40000 ALTER TABLE `fw_user` DISABLE KEYS */;
-INSERT INTO `fw_user` VALUES (1,'raw','123456',NULL,NULL,NULL,'4f380bab-4644-407f-a237-c7d385a2d37f',1,'admin_test','NONE','2021-07-03 22:03:08','NONE','2021-07-10 11:52:06'),(2,'raw','123456',NULL,NULL,NULL,'2bdbd032-ff28-417d-9a3b-3fe64f5df876',1,'guest','NONE','2021-07-09 09:42:01','NONE','2021-07-10 10:37:27'),(3,'raw','123456',NULL,NULL,NULL,NULL,1,'teacher','NONE','2021-07-15 16:09:24','NONE','2021-07-15 16:09:24'),(4,'raw','123456',NULL,NULL,NULL,'46089bcc-ece9-4ab2-b27c-a265d05fd127',1,'student','NONE','2021-07-15 16:12:00','NONE','2021-07-15 17:20:58');
+INSERT INTO `fw_user` VALUES (1,'raw','123456',NULL,NULL,NULL,'4f380bab-4644-407f-a237-c7d385a2d37f',1,'admin_test','NONE','2021-07-03 22:03:08','NONE','2021-07-10 11:52:06'),(2,'raw','123456',NULL,NULL,NULL,'2bdbd032-ff28-417d-9a3b-3fe64f5df876',1,'guest','NONE','2021-07-09 09:42:01','NONE','2021-07-10 10:37:27'),(3,'raw','123456',NULL,NULL,NULL,NULL,1,'teacher','NONE','2021-07-15 16:09:24','NONE','2021-07-15 16:09:24'),(4,'raw','123456',NULL,NULL,NULL,'f6e3e7f3-0c91-4703-baa8-8741a86d2a54',1,'student','NONE','2021-07-15 16:12:00','NONE','2021-07-16 09:59:44');
 /*!40000 ALTER TABLE `fw_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -131,6 +131,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `profile` WRITE;
 /*!40000 ALTER TABLE `profile` DISABLE KEYS */;
+INSERT INTO `profile` VALUES (1,4,'3892893349','Agender','Abner Jacmard','STUDENT'),(2,NULL,'7470833285','Male','Lewes Weerdenburg','STUDENT'),(3,NULL,'9378047238','Agender','Ruthi Breeder','STUDENT'),(4,NULL,'3716241237','Bigender','Iago Dewire','STUDENT'),(5,NULL,'5692101602','Genderfluid','Damian Daine','STUDENT'),(6,NULL,'5206160504','Bigender','Casper Neno','STUDENT'),(7,NULL,'1496002571','Male','Merwin Stillmann','STUDENT'),(8,NULL,'9079724386','Genderfluid','Brig Maslen','STUDENT'),(9,NULL,'9869408834','Bigender','Anna Sleet','STUDENT'),(10,NULL,'4633864424','Bigender','Pebrook Donhardt','STUDENT'),(11,NULL,'4869208741','Polygender','Gan Healks','STUDENT'),(12,NULL,'9046114430','Polygender','Dewie Sprouls','STUDENT'),(13,NULL,'0141718080','Non-binary','Todd Giacaponi','STUDENT'),(14,NULL,'6210429734','Male','Sandro Dunsleve','STUDENT'),(15,NULL,'7494351000','Agender','Wynne Bolmann','STUDENT'),(16,NULL,'9335603694','Genderqueer','Kacey Fante','STUDENT'),(17,NULL,'1707196478','Male','Prudi Viney','STUDENT'),(18,NULL,'0159043204','Male','Zenia Itzak','STUDENT'),(19,NULL,'8212290204','Female','Inglebert Allward','STUDENT'),(20,NULL,'3312845866','Polygender','Joly Patience','STUDENT'),(21,NULL,'6792785008','Female','Valera Scamp','TEACHER'),(22,NULL,'0711314888','Polygender','Concettina Muge','TEACHER'),(23,NULL,'0925809306','Non-binary','Brandy Portam','TEACHER'),(24,NULL,'7227939758','Male','Cinnamon McLoughlin','TEACHER'),(25,NULL,'6689643859','Male','Mari Bassil','TEACHER');
 /*!40000 ALTER TABLE `profile` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -140,6 +141,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `spring_session` WRITE;
 /*!40000 ALTER TABLE `spring_session` DISABLE KEYS */;
+INSERT INTO `spring_session` VALUES ('fe4a65eb-f5ca-4545-85e6-27c1da11a2cc','ef731785-fbf7-4644-829c-5562edf562d0',1626434971093,1626435093997,1800,1626436893997,'student');
 /*!40000 ALTER TABLE `spring_session` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -149,6 +151,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `spring_session_attributes` WRITE;
 /*!40000 ALTER TABLE `spring_session_attributes` DISABLE KEYS */;
+INSERT INTO `spring_session_attributes` VALUES ('fe4a65eb-f5ca-4545-85e6-27c1da11a2cc','SPRING_SECURITY_CONTEXT',_binary '¨\Ì\0sr\0=org.springframework.security.core.context.SecurityContextImpl\0\0\0\0\0\0&\0L\0authenticationt\02Lorg/springframework/security/core/Authentication;xpsr\0Oorg.springframework.security.authentication.UsernamePasswordAuthenticationToken\0\0\0\0\0\0&\0L\0credentialst\0Ljava/lang/Object;L\0	principalq\0~\0xr\0Gorg.springframework.security.authentication.AbstractAuthenticationToken”™(~nGd\0Z\0\rauthenticatedL\0authoritiest\0Ljava/util/Collection;L\0detailsq\0~\0xpsr\0&java.util.Collections$UnmodifiableList¸%1µ\Ïé\0L\0listt\0Ljava/util/List;xr\0,java.util.Collections$UnmodifiableCollectionB\0Ä\À^˜\0L\0cq\0~\0xpsr\0java.util.ArrayListxÅ\“ô\«aù\0I\0sizexp\0\0\0w\0\0\0sr\0Borg.springframework.security.core.authority.SimpleGrantedAuthority\0\0\0\0\0\0&\0L\0rolet\0Ljava/lang/String;xpt\02com.phoenix.api.services.ProfileServiceImp__UPDATEsq\0~\0t\00com.phoenix.api.services.ProfileServiceImp__READxq\0~\0\rsr\0Horg.springframework.security.web.authentication.WebAuthenticationDetails\0\0\0\0\0\0&\0L\0\rremoteAddressq\0~\0L\0	sessionIdq\0~\0xpt\0	127.0.0.1t\0$ef731785-fbf7-4644-829c-5562edf562d0t\0{raw}123456t\0student');
 /*!40000 ALTER TABLE `spring_session_attributes` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -161,4 +164,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-07-15 22:23:41
+-- Dump completed on 2021-07-16 18:32:45
