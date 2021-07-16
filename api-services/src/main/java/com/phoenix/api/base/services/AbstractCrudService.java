@@ -52,17 +52,28 @@ public abstract class AbstractCrudService<T extends BaseEntity> extends Abstract
         return (T) ReflectionUtil.convertMapToObject(payload, typeParameterClass);
     }
 
-    public abstract void preAdd(T object);
+    public void preAdd(T object) {
+    }
 
-    public abstract void preUpdate(T object);
 
-    public abstract void preRemove(T object);
+    public void preUpdate(T object) {
+    }
 
-    public abstract void afterAdd(T object);
 
-    public abstract void afterUpdate(T object);
+    public void preRemove(T object) {
+    }
 
-    public abstract void afterRemove(T object);
+
+    public void afterAdd(T object) {
+    }
+
+
+    public void afterUpdate(T object) {
+    }
+
+
+    public void afterRemove(T object) {
+    }
 
     @Override
     public Iterable<T> findAll() {

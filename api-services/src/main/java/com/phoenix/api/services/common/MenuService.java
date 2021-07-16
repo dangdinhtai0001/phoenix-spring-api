@@ -22,34 +22,4 @@ public class MenuService extends AbstractCrudService<MenuEntity> {
             @Qualifier(BeanIds.MENU_REPOSITORY_IMP) AbstractRepository<MenuEntity> repository) {
         super(exceptionEntities, repository, MenuEntity.class);
     }
-
-    @Override
-    public void preAdd(MenuEntity object) {
-        System.out.println("Pre add");
-    }
-
-    @Override
-    public void preUpdate(MenuEntity object) {
-
-    }
-
-    @Override
-    public void preRemove(MenuEntity object) {
-
-    }
-
-    @Override
-    public void afterAdd(MenuEntity object) {
-
-    }
-
-    @Override
-    public void afterUpdate(MenuEntity object) {
-
-    }
-
-    @Override
-    public void afterRemove(MenuEntity object) {
-
-    }
 }
