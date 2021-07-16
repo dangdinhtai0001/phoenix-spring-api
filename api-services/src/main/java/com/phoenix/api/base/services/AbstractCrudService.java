@@ -76,7 +76,7 @@ public abstract class AbstractCrudService<T extends BaseEntity> extends Abstract
     }
 
     @Override
-    public Iterable<T> findAll() {
+    public Iterable findAll() {
         return repository.findAll();
     }
 

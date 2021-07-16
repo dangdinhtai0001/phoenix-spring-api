@@ -35,7 +35,7 @@ import java.util.Optional;
  * @param <T>
  */
 public interface CrudService<T extends BaseEntity> {
-    Iterable<T> findAll();
+    Iterable findAll();
 
     Optional<T> add(Map payload) throws Exception;
 
