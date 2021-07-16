@@ -1,5 +1,7 @@
 package com.phoenix.api.services;
 
+import com.phoenix.api.base.aop.CheckMethodPermission;
+import com.phoenix.api.base.aop.NeedFilter;
 import com.phoenix.api.base.constant.BeanIds;
 import com.phoenix.api.base.repositories.AbstractRepository;
 import com.phoenix.api.base.services.AbstractCrudService;
@@ -24,9 +26,11 @@ public class ProfileServiceImp extends AbstractCrudService<ProfileEntity> {
         this.repositoryImp = (ProfileRepositoryImp) repository;
     }
 
-    public Iterable<Profile> findAll() {
+    @CheckMethodPermission
+    @NeedFilter(indexOfFilterConditionParameter = 0)
+    public Iterable<Profile> findAll(String filterConditional) {
         try {
-            return this.repositoryImp.findAllProfile();
+            return this.repositoryImp.findAllProfile(filterConditional);
         } catch (NoSuchFieldException | IllegalAccessException | InstantiationException e) {
             e.printStackTrace();
             return new LinkedList<>();

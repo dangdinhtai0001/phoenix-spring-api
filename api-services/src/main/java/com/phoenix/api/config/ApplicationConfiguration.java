@@ -18,6 +18,7 @@ import com.phoenix.api.repositories.common.ExceptionRepositoryImp;
 import com.phoenix.api.util.CommonUtil;
 import com.phoenix.auth.JwtProvider;
 import com.phoenix.auth.imp.DefaultJwtProvider;
+import com.phoenix.business.drools.DroolsFactory;
 import com.phoenix.text.HashingText;
 import com.phoenix.util.UUIDFactory;
 import com.phoenix.util.imp.ConcurrentUUIDFactory;
@@ -103,25 +104,6 @@ public class ApplicationConfiguration {
         return (List<PermissionEntity>) permissionRepositoryImp.findAll();
     }
 
-//    @Bean(value = BeanIds.ALL_RESOURCE_PERMISSIONS_REQUIRED)
-//    public LinkedHashMap<String, String> getAllResourcePermissionRequirement() {
-//        List<Object[]> result = permissionRepositoryImp.executeNativeQuery(DatabaseConstant.FW_ALL_RESOURCE_PERMISSIONS_REQUIRED);
-//
-//        LinkedHashMap<String, String> map = new LinkedHashMap<>();
-//
-//        List<String> permissions = new LinkedList<>();
-//        String strPermissions = "";
-//        for (Object[] record : result) {
-//             permissions = CommonUtil.generatePermissions(permissions,
-//                    Integer.parseInt(String.valueOf(record[1])),
-//                    String.valueOf(record[0]), getAllPermissions());
-//            strPermissions = generateStringFromList(permissions, ", ");
-//
-//            map.put(String.valueOf(record[0]), strPermissions);
-//        }
-//        return map;
-//    }
-
     @Bean(value = BeanIds.ALL_RESOURCE_PERMISSIONS_REQUIRED)
     public Multimap<String, String> getAllResourcePermissionRequirement() {
         Multimap<String, String> result = ArrayListMultimap.create();
@@ -140,5 +122,10 @@ public class ApplicationConfiguration {
         }
 
         return result;
+    }
+
+    @Bean(value = BeanIds.DROOLS_FACTORY)
+    public DroolsFactory droolsFactory() {
+        return new DroolsFactory();
     }
 }

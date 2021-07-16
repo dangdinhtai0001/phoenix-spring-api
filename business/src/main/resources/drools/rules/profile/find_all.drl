@@ -6,25 +6,11 @@ global com.phoenix.business.drools.FilterConditional condition;
 
 dialect  "mvel"
 
-rule "Test rule 0"
+rule "Student just find their profile"
     when
-        Profile(type == "TEACHER")
-    then
-        System.out.println("teacher");
-    end;
-
-rule "Test rule 1 teacher"
-    when
-        Profile(type == "TEACHER")
+        $p :Profile(type == "STUDENT")
     then
         condition.setPermitted(true);
-        condition.setPermitted(true);
+        condition.addConditional(String.format("p.code = '%s'",$p.getCode()));
     end;
 
-rule "Test rule 1 student"
-    when
-        Profile(type == "STUDENT")
-    then
-        condition.setPermitted(false);
-        condition.setValue("where clause");
-    end;

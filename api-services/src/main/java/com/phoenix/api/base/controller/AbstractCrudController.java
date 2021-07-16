@@ -32,7 +32,7 @@ import java.util.Map;
  */
 public abstract class AbstractCrudController<T extends BaseEntity> extends AbstractBaseController implements CrudController<T> {
 
-    private final CrudService<T> service;
+    protected final CrudService<T> service;
 
     protected AbstractCrudController(
             CrudService<T> service

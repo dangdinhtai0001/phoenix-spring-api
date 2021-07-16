@@ -16,10 +16,10 @@ public class ProfileRepositoryImp extends AbstractRepository<ProfileEntity> {
         super(entityManager, ProfileEntity.class);
     }
 
-    public Iterable<Profile> findAllProfile() throws NoSuchFieldException, IllegalAccessException, InstantiationException {
+    public Iterable<Profile> findAllProfile(String filterConditional) throws NoSuchFieldException, IllegalAccessException, InstantiationException {
         String sql = "select p.code, p.gender, p.name, p.type, fu.username, fu.password\n" +
                 "from profile p\n" +
-                "         left join fw_user fu on p.account_id = fu.id";
+                "         left join fw_user fu on p.account_id = fu.id " + filterConditional;
 
         List<Object[]> queryResultList = executeNativeQuery(sql);
 

@@ -24,7 +24,7 @@ public class BeanIds {
     public static final String JWT_PROVIDER = "FW_JWT_PROVIDER";
     public static final String JWT_SECRET_KEY = "FW_SECRET_KEY";
     public static final String UUID_Factory = "FW_UUID_Factory";
-    public static final String DROOLS_BEAN_FACTORY = "FW_DROOLS_BEAN_FACTORY";
+    public static final String DROOLS_FACTORY = "FW_DROOLS_BEAN_FACTORY";
 
     // ====================================================
     // controller

@@ -1,15 +1,23 @@
 package com.phoenix.business.drools;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class FilterConditional {
     private boolean isPermitted;
-    private String value;
+    private List<String> conditional;
 
     public FilterConditional() {
+        conditional = new LinkedList<>();
     }
 
-    public FilterConditional(boolean isPermitted, String value) {
+    public FilterConditional(boolean isPermitted, List<String> value) {
         this.isPermitted = isPermitted;
-        this.value = value;
+        this.conditional = value;
+    }
+
+    public void addConditional(String value) {
+        conditional.add(value);
     }
 
     public boolean isPermitted() {
@@ -20,19 +28,19 @@ public class FilterConditional {
         isPermitted = permitted;
     }
 
-    public String getValue() {
-        return value;
+    public List<String> getConditional() {
+        return conditional;
     }
 
-    public void setValue(String value) {
-        this.value = value;
+    public void setConditional(List<String> conditional) {
+        this.conditional = conditional;
     }
 
     @Override
     public String toString() {
         return "FilterConditional{" +
                 "isPermitted=" + isPermitted +
-                ", value='" + value + '\'' +
+                ", conditional=" + conditional +
                 '}';
     }
 }
