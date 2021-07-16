@@ -1,3 +1,30 @@
-package drools.rules;
+package drools.rules.profile;
 
-import com.phoenix.business.domain;
+import com.phoenix.business.domain.Profile;
+
+global com.phoenix.business.drools.FilterConditional condition;
+
+dialect  "mvel"
+
+rule "Test rule 0"
+    when
+        Profile(type == "TEACHER")
+    then
+        System.out.println("teacher");
+    end;
+
+rule "Test rule 1 teacher"
+    when
+        Profile(type == "TEACHER")
+    then
+        condition.setPermitted(true);
+        condition.setPermitted(true);
+    end;
+
+rule "Test rule 1 student"
+    when
+        Profile(type == "STUDENT")
+    then
+        condition.setPermitted(false);
+        condition.setValue("where clause");
+    end;

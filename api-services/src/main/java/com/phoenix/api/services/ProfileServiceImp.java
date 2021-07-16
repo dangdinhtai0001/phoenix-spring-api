@@ -15,7 +15,7 @@ import java.util.List;
 
 @Service("ProfileServiceImp")
 public class ProfileServiceImp extends AbstractCrudService<ProfileEntity> {
-    private ProfileRepositoryImp repositoryImp;
+    private final ProfileRepositoryImp repositoryImp;
 
     protected ProfileServiceImp(
             @Qualifier(BeanIds.ALL_EXCEPTION) List<ExceptionEntity> exceptionEntities,
@@ -24,7 +24,7 @@ public class ProfileServiceImp extends AbstractCrudService<ProfileEntity> {
         this.repositoryImp = (ProfileRepositoryImp) repository;
     }
 
-    public Iterable<Profile> findAll()  {
+    public Iterable<Profile> findAll() {
         try {
             return this.repositoryImp.findAllProfile();
         } catch (NoSuchFieldException | IllegalAccessException | InstantiationException e) {
