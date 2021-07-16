@@ -4,6 +4,9 @@ public class Profile {
     private String name;
     private String code;
     private String gender;
+    private String account;
+    private String password;
+    private ProfileType type;
 
     public enum ProfileType {
         STUDENT, TEACHER;
@@ -12,10 +15,13 @@ public class Profile {
     public Profile() {
     }
 
-    public Profile(String name, String code, String gender) {
+    public Profile(String name, String code, String gender, String account, String password, ProfileType type) {
         this.name = name;
         this.code = code;
         this.gender = gender;
+        this.account = account;
+        this.password = password;
+        this.type = type;
     }
 
     public String getName() {
@@ -40,5 +46,29 @@ public class Profile {
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    public String getAccount() {
+        return account;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public ProfileType getType() {
+        return type;
+    }
+
+    public void setType(ProfileType type) {
+        this.type = type;
     }
 }

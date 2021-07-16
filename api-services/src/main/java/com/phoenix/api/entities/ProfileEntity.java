@@ -31,5 +31,5 @@ public class ProfileEntity extends BaseEntity {
     private String type;
 
     @Column(name = "account_id")
-    private int accountId;
+    private Integer accountId;
 }

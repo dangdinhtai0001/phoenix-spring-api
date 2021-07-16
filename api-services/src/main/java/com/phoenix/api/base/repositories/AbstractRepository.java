@@ -6,6 +6,7 @@
 package com.phoenix.api.base.repositories;
 
 import com.phoenix.api.base.entities.BaseEntity;
+import com.phoenix.business.domain.Profile;
 import org.springframework.beans.support.PagedListHolder;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;

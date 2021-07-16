@@ -76,13 +76,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));
                     SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 
-                    filterChain.doFilter(httpServletRequest, httpServletResponse);
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
             httpServletResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, e.getMessage());
         }
+
+        filterChain.doFilter(httpServletRequest, httpServletResponse);
     }
 
     private String getTokenFromHeader(String header) {

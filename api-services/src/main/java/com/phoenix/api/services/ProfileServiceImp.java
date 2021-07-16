@@ -5,6 +5,8 @@ import com.phoenix.api.base.repositories.AbstractRepository;
 import com.phoenix.api.base.services.AbstractCrudService;
 import com.phoenix.api.entities.ProfileEntity;
 import com.phoenix.api.entities.common.ExceptionEntity;
+import com.phoenix.api.repositories.ProfileRepositoryImp;
+import com.phoenix.business.domain.Profile;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
@@ -12,39 +14,16 @@ import java.util.List;
 
 @Service("ProfileServiceImp")
 public class ProfileServiceImp extends AbstractCrudService<ProfileEntity> {
+    private ProfileRepositoryImp repositoryImp;
+
     protected ProfileServiceImp(
             @Qualifier(BeanIds.ALL_EXCEPTION) List<ExceptionEntity> exceptionEntities,
             @Qualifier("ProfileRepositoryImp") AbstractRepository<ProfileEntity> repository) {
         super(exceptionEntities, repository, ProfileEntity.class);
+        this.repositoryImp = (ProfileRepositoryImp) repository;
     }
 
-    @Override
-    public void preAdd(ProfileEntity object) {
-
-    }
-
-    @Override
-    public void preUpdate(ProfileEntity object) {
-
-    }
-
-    @Override
-    public void preRemove(ProfileEntity object) {
-
-    }
-
-    @Override
-    public void afterAdd(ProfileEntity object) {
-
-    }
-
-    @Override
-    public void afterUpdate(ProfileEntity object) {
-
-    }
-
-    @Override
-    public void afterRemove(ProfileEntity object) {
-
+    public Iterable<Profile> findAll() {
+        return this.repositoryImp.findAllProfile();
     }
 }
