@@ -1,0 +1,59 @@
+{
+  "groups": [
+    {
+      "name": "application",
+      "type": "com.phoenix.api.core.config.ApplicationProperties",
+      "sourceType": "com.phoenix.api.core.config.ApplicationProperties"
+    },
+    {
+      "name": "application.path",
+      "type": "com.phoenix.api.core.config.ApplicationProperties$Path",
+      "sourceType": "com.phoenix.api.core.config.ApplicationProperties",
+      "sourceMethod": "getPath()"
+    },
+    {
+      "name": "application.version",
+      "type": "com.phoenix.api.core.config.ApplicationProperties$Version",
+      "sourceType": "com.phoenix.api.core.config.ApplicationProperties",
+      "sourceMethod": "getVersion()"
+    },
+    {
+      "name": "application.jwt",
+      "type": "com.phoenix.api.core.config.ApplicationProperties$Jwt",
+      "sourceType": "com.phoenix.api.core.config.ApplicationProperties",
+      "sourceMethod": "getJwt()"
+    }
+  ],
+  "properties": [
+    {
+      "name": "application.path.prefix",
+      "type": "java.lang.String",
+      "sourceType": "com.phoenix.api.core.config.ApplicationProperties$Path",
+      "defaultValue": "api"
+    },
+    {
+      "name": "application.version.service",
+      "type": "java.lang.String",
+      "sourceType": "com.phoenix.api.core.config.ApplicationProperties$Version",
+      "defaultValue": "v0"
+    },
+    {
+      "name": "application.version.build",
+      "type": "java.lang.String",
+      "sourceType": "com.phoenix.api.core.config.ApplicationProperties$Version",
+      "defaultValue": "0.0.0"
+    },
+    {
+      "name": "application.jwt.secret",
+      "type": "java.lang.String",
+      "sourceType": "com.phoenix.api.core.config.ApplicationProperties$Jwt",
+      "defaultValue": "T2VLzjTvmjCGDjxP"
+    },
+    {
+      "name": "application.jwt.expired",
+      "type": "java.lang.String",
+      "sourceType": "com.phoenix.api.core.config.ApplicationProperties$Jwt",
+      "defaultValue": 36000000
+    }
+  ]
+}
