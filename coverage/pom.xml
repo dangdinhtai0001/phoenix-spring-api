@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ @Author: Đặng Đình Tài
+  ~ @Created_date: 7/9/21, 11:10 PM
+  -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>com.phoenix</groupId>
+        <artifactId>phoenix-spring-api</artifactId>
+        <version>1.1.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+
+    <artifactId>coverage</artifactId>
+    <version>0.0.0</version>
+    <name>module-coverage</name>
+    <description>Compute aggregated test code coverage</description>
+
+    <properties>
+        <maven.compiler.source>${global.java.version}</maven.compiler.source>
+        <maven.compiler.target>${global.java.version}</maven.compiler.target>
+        <maven.deploy.skip>${global.maven.test.skip}</maven.deploy.skip>
+    </properties>
+
+    <dependencies>
+
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.6</version>
+                <executions>
+                    <execution>
+                        <id>report-aggregate</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>report-aggregate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
