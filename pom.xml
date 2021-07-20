@@ -6,6 +6,8 @@
     <modules>
         <module>coverage</module>
         <module>api-services</module>
+        <module>common</module>
+        <module>business</module>
     </modules>
 
     <parent>
