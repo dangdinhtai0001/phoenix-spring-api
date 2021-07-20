@@ -1,79 +1,156 @@
 package com.phoenix.api.core.repository;
 
-import com.phoenix.util.ReflectionUtil;
-import com.phoenix.structure.Pair;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.transaction.annotation.Transactional;
+import com.phoenix.api.core.entity.BaseEntity;
+import com.phoenix.api.core.exception.RepositoryException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
-import java.util.LinkedList;
+import java.io.Serializable;
 import java.util.List;
+import java.util.Optional;
 
-public abstract class AbstractBaseRepository implements BaseRepository {
-    private final EntityManager entityManager;
+public class AbstractBaseRepository<T extends BaseEntity<ID>, ID extends Serializable> extends AbstractNativeRepository
+        implements BaseRepository<T, ID> {
 
-    public AbstractBaseRepository(EntityManager entityManager) {
-        this.entityManager = entityManager;
+    private final SimpleJpaRepository<T, ID> jpaRepository;
+
+    public AbstractBaseRepository(EntityManager entityManager, Class<T> typeParameterClass) {
+        super(entityManager);
+        jpaRepository = new SimpleJpaRepository<>(typeParameterClass, entityManager);
+    }
+
+    public SimpleJpaRepository<T, ID> getJpaRepository() {
+        return jpaRepository;
     }
 
     @Override
-    public List executeNativeQuery(String sql, String... params) {
-        Query query = createNativeQuery(sql, params);
-
-        return query.getResultList();
+    public long count() {
+        return this.jpaRepository.count();
     }
 
     @Override
-    @Modifying
-    @Transactional
-    public int updateNativeQuery(String sql, String... params) {
-        Query query = createNativeQuery(sql, params);
-        return query.executeUpdate();
+    public long count(Specification<T> spec) {
+        return this.jpaRepository.count(spec);
     }
 
     @Override
-    public Object parseResult(Object[] record, List<Pair<String, Class>> params, Class aClass)
-            throws NoSuchFieldException, IllegalAccessException, InstantiationException {
-        Object target = aClass.newInstance();
-        Pair<String, Class> pair;
-        for (int i = 0; i < params.size(); i++) {
-            pair = params.get(i);
-            ReflectionUtil.setField(pair.first(), pair.second(), String.valueOf(record[i]), target);
-        }
-        return target;
+    public void delete(T entity) throws RepositoryException {
+        this.jpaRepository.delete(entity);
     }
 
     @Override
-    public List parseResult(List<Object[]> results, List<Pair<String, Class>> params, Class aClass)
-            throws NoSuchFieldException, IllegalAccessException, InstantiationException {
-        Object target;
-        Pair<String, Class> pair;
-        List<Object> list = new LinkedList<>();
-        for (Object[] record : results) {
-            target = aClass.newInstance();
-            for (int i = 0; i < params.size(); i++) {
-                pair = params.get(i);
-                ReflectionUtil.setField(pair.first(), pair.second(), String.valueOf(record[i]), target);
-            }
-            list.add(target);
-        }
-        return list;
+    public void deleteAll() {
+        this.jpaRepository.deleteAll();
+    }
+
+    @Override
+    public void deleteAll(Iterable<? extends T> entities) throws RepositoryException {
+        this.jpaRepository.deleteAll(entities);
+    }
+
+    @Override
+    public void deleteAllById(Iterable<? extends ID> ids) {
+        this.jpaRepository.deleteAllById(ids);
+    }
+
+    @Override
+    public void deleteAllByIdInBatch(Iterable<ID> ids) {
+        this.jpaRepository.deleteAllByIdInBatch(ids);
+    }
+
+    @Override
+    public void deleteAllInBatch() {
+        this.jpaRepository.deleteAllInBatch();
+    }
+
+    @Override
+    public void deleteAllInBatch(Iterable<T> entities) {
+        this.jpaRepository.deleteAllInBatch(entities);
+    }
+
+    @Override
+    public void deleteById(ID id) throws RepositoryException {
+        this.jpaRepository.deleteById(id);
+    }
+
+    @Override
+    public boolean existsById(ID id) throws RepositoryException {
+        return this.jpaRepository.existsById(id);
+    }
+
+    @Override
+    public List<T> findAll() {
+        return this.jpaRepository.findAll();
+    }
+
+    @Override
+    public Page<T> findAll(Pageable pageable) {
+        return this.jpaRepository.findAll(pageable);
+    }
+
+    @Override
+    public List<T> findAll(Sort sort) {
+        return this.jpaRepository.findAll(sort);
+    }
+
+    @Override
+    public List<T> findAll(Specification<T> spec) {
+        return this.jpaRepository.findAll(spec);
+    }
+
+    @Override
+    public Page<T> findAll(Specification<T> spec, Pageable pageable) {
+        return this.jpaRepository.findAll(spec, pageable);
+    }
+
+    @Override
+    public List<T> findAll(Specification<T> spec, Sort sort) {
+        return this.jpaRepository.findAll(spec, sort);
+    }
+
+    @Override
+    public List<T> findAllById(Iterable<ID> ids) throws RepositoryException {
+        return this.jpaRepository.findAllById(ids);
+    }
+
+    @Override
+    public Optional<T> findById(ID id) throws RepositoryException {
+        return this.jpaRepository.findById(id);
+    }
+
+    @Override
+    public Optional<T> findOne(Specification<T> spec) {
+        return this.jpaRepository.findOne(spec);
+    }
+
+    @Override
+    public T getById(ID id) {
+        return this.jpaRepository.getById(id);
+    }
+
+    @Override
+    public <S extends T> S save(S entity) {
+        return this.jpaRepository.save(entity);
+    }
+
+    @Override
+    public <S extends T> S saveAndFlush(S entity) {
+        return this.jpaRepository.saveAndFlush(entity);
+    }
+
+    @Override
+    public <S extends T> List<S> saveAllAndFlush(Iterable<S> entities) {
+        return this.jpaRepository.saveAllAndFlush(entities);
+    }
+
+    @Override
+    public void flush() {
+        this.jpaRepository.flush();
     }
 
 
-    //    ================================================================
-    //
-    //    ================================================================
-
-    private Query createNativeQuery(String sql, String... params) {
-        Query query = entityManager.createNativeQuery(sql);
-
-        int index = 1;
-        for (String param : params) {
-            query.setParameter(index++, param);
-        }
-
-        return query;
-    }
 }
