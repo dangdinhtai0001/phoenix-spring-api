@@ -4,9 +4,10 @@ import com.phoenix.api.core.entity.BaseEntity;
 import com.phoenix.api.core.model.SearchCriteria;
 import org.springframework.http.ResponseEntity;
 
+import java.io.Serializable;
 import java.util.List;
 
-public interface CrudController<T extends BaseEntity<ID>, ID> {
+public interface CrudController<T extends BaseEntity<ID>, ID extends Serializable> {
     ResponseEntity add(T entity) throws Exception;
 
     ResponseEntity addAll(List<T> entities) throws Exception;

@@ -8,6 +8,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -23,7 +24,7 @@ import java.util.Date;
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
-public abstract class AuditEntity<U, ID> extends BaseEntity<ID> {
+public abstract class AuditEntity<U, ID extends Serializable> extends BaseEntity<ID> {
     @CreatedBy
     @Column(name = "CREATED_BY", columnDefinition = "varchar(50) default 'NONE'")
     protected U createdBy;

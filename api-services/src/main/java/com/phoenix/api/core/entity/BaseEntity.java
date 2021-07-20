@@ -14,7 +14,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @ToString
-public abstract class BaseEntity<T> implements Serializable {
+public abstract class BaseEntity<T extends Serializable> implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private T id;

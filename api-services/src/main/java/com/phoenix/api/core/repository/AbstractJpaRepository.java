@@ -9,10 +9,11 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import javax.transaction.Transaction;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
-public abstract class AbstractJpaRepository<T extends BaseEntity<ID>, ID>
+public abstract class AbstractJpaRepository<T extends BaseEntity<ID>, ID extends Serializable>
         extends AbstractBaseRepository implements JpaRepository<T, ID> {
 
     private final EntityManager entityManager;

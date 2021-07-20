@@ -7,10 +7,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.transaction.Transactional;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
-public interface JpaRepository<T extends BaseEntity<ID>, ID> {
+public interface JpaRepository<T extends BaseEntity<ID>, ID extends Serializable> {
 
     Optional<T> add(T entity) throws Exception;
 
