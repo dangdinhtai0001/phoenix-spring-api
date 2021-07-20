@@ -1,4 +1,4 @@
-package com.phoenix.api.core.repository;
+package com.phoenix.api.core.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

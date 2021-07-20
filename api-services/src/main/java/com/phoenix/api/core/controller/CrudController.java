@@ -1,7 +1,7 @@
 package com.phoenix.api.core.controller;
 
 import com.phoenix.api.core.entity.BaseEntity;
-import com.phoenix.api.core.repository.SearchCriteria;
+import com.phoenix.api.core.model.SearchCriteria;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
