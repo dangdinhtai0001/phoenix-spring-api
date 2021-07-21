@@ -18,7 +18,8 @@ public class InSpecification<T> extends AbstractSpecification<T> {
     }
 
     @Override
-    public Predicate toPredicate(@Nullable Root<T> root,@Nullable CriteriaQuery<?> query,@Nullable CriteriaBuilder cb) {
+    public Predicate toPredicate(@Nullable Root<T> root, @Nullable CriteriaQuery<?> query,
+                                 @Nullable CriteriaBuilder criteriaBuilder) {
         From from = getRoot(property, root);
         String field = getProperty(property);
         return from.get(field).in(values);

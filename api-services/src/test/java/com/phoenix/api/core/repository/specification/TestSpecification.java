@@ -3,6 +3,7 @@ package com.phoenix.api.core.repository.specification;
 import com.phoenix.api.base.constant.BeanIds;
 import com.phoenix.api.base.entities.ExceptionEntity;
 import com.phoenix.api.base.repositories.ExceptionRepositoryImp;
+import com.phoenix.api.core.model.SearchOperation;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -20,7 +21,16 @@ public class TestSpecification {
     @Test
     public void testFindWithLikeSpec() {
         Specification<ExceptionEntity> specification = Specifications.<ExceptionEntity>and()
-                .like( "code_", "%1%")
+                .like("code", "%A%")
+                .build();
+
+        System.out.println(exceptionRepositoryImp.findAll(specification));
+    }
+
+    @Test
+    public void testFindWithEqualSpec() {
+        Specification<ExceptionEntity> specification = Specifications.<ExceptionEntity>and()
+                .eq("code", "AUTH_001")
                 .build();
 
         System.out.println(exceptionRepositoryImp.findAll(specification));
