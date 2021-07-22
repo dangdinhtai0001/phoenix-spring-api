@@ -11,13 +11,13 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
-public class BasePage<T> {
+public class BasePagination<T> {
     private int pageIndex;
     private long pageSize;
     private long totalItems;
     private List<T> items;
 
-    public BasePage(Page<T> page) {
+    public BasePagination(Page<T> page) {
         setPageIndex(page.getNumber());
         setPageSize(page.getSize());
         setTotalItems(page.getTotalElements());

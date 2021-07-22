@@ -2,6 +2,8 @@ package com.phoenix.api.core.service;
 
 import com.phoenix.api.base.entities.ExceptionEntity;
 import com.phoenix.api.core.exception.ServiceException;
+import com.phoenix.api.core.model.SearchCriteria;
+import com.phoenix.api.core.repository.specification.PredicateBuilder;
 import org.springframework.http.HttpStatus;
 
 import java.util.List;
@@ -25,5 +27,49 @@ public class AbstractBaseService implements BaseService {
                 .stream()
                 .filter(exceptionEntity -> code.equals(exceptionEntity.getCode()))
                 .findFirst().orElse(null);
+    }
+
+    @Override
+    public PredicateBuilder getPredicateBuilderFromSearchCriteria(PredicateBuilder predicate, List<SearchCriteria> conditions) {
+        for (SearchCriteria criteria : conditions) {
+            switch (criteria.getSearchOperation()) {
+                case BETWEEN:
+                    predicate.between(criteria.getKey(), criteria.getArguments().get(0), criteria.getArguments().get(1));
+                    break;
+                case EQUAL:
+                    predicate.eq(criteria.getKey(), criteria.getArguments().get(0));
+                    break;
+                case GREATER_THAN_OR_EQUAL:
+                    predicate.ge(criteria.getKey(), (Comparable<?>) criteria.getArguments().get(0));
+                    break;
+                case GREATER_THAN:
+                    predicate.gt(criteria.getKey(), (Comparable<?>) criteria.getArguments().get(0));
+                    break;
+                case IN:
+                    predicate.in(criteria.getKey(), criteria.getArguments());
+                    break;
+                case LESS_THAN_OR_EQUAL:
+                    predicate.le(criteria.getKey(), (Comparable<?>) criteria.getArguments().get(0));
+                    break;
+                case LIKE:
+                    predicate.like(criteria.getKey(), String.valueOf(criteria.getArguments().get(0)));
+                    break;
+                case LESS_THAN:
+                    predicate.lt(criteria.getKey(), (Comparable<?>) criteria.getArguments().get(0));
+                    break;
+                case NOT_EQUAL:
+                    predicate.ne(criteria.getKey(), criteria.getArguments().get(0));
+                    break;
+                case NOT_IN:
+                    predicate.notIn(criteria.getKey(), criteria.getArguments());
+                    break;
+                case NOT_LIKE:
+                    predicate.notLike(criteria.getKey(), String.valueOf(criteria.getArguments().get(0)));
+                    break;
+            }
+
+        }
+
+        return predicate;
     }
 }

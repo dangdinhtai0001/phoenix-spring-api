@@ -3,11 +3,16 @@ package com.phoenix.api.core.repository;
 import com.phoenix.api.base.constant.BeanIds;
 import com.phoenix.api.base.entities.ExceptionEntity;
 import com.phoenix.api.base.repositories.ExceptionRepositoryImp;
+import com.phoenix.api.core.model.BasePagination;
+import com.phoenix.api.core.repository.specification.Sorts;
 import com.phoenix.common.structure.Pair;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.lang.reflect.InvocationTargetException;
@@ -45,6 +50,26 @@ public class TestAbstractRepository {
         params.add(new Pair<>("message", String.class));
 //        params.add(new Pair<>("httpCode", Integer.class));
 
-        System.out.println(exceptionRepositoryImp.parseResult(list, params,ExceptionEntity.class));
+        System.out.println(exceptionRepositoryImp.parseResult(list, params, ExceptionEntity.class));
+    }
+
+    @Test
+    public void testFindWithSort() {
+        Sort sort = Sort.by(Sort.Direction.DESC, "httpCode", "code");
+        List<ExceptionEntity> entities = exceptionRepositoryImp.findAll(sort);
+
+        for (ExceptionEntity entity : entities) {
+            System.out.println(entity);
+        }
+    }
+
+    @Test
+    public void testFindWithPage() {
+        Page<ExceptionEntity> entities = exceptionRepositoryImp.findAll(PageRequest.of(2,1));
+        BasePagination<ExceptionEntity> pagination = new BasePagination<>(entities);
+
+        for (ExceptionEntity entity : pagination.getItems()) {
+            System.out.println(entity);
+        }
     }
 }
