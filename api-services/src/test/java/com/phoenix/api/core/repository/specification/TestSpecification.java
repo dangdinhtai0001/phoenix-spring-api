@@ -35,4 +35,18 @@ public class TestSpecification {
 
         System.out.println(exceptionRepositoryImp.findAll(specification));
     }
+
+    @Test
+    public void testFindWithMultiSpec() {
+        Specification<ExceptionEntity> specification = Specifications.<ExceptionEntity>and()
+                .like("code", "%2%")
+                .gt("id", 1)
+                .build()
+                .or(Specifications.<ExceptionEntity>and()
+                        .like("code", "%3%")
+                        .gt("id", 1)
+                        .build());
+
+        System.out.println(exceptionRepositoryImp.findAll(specification));
+    }
 }

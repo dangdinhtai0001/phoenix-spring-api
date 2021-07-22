@@ -14,6 +14,5 @@ import java.util.List;
 public class SearchCriteria {
     private String key;
     private SearchOperation searchOperation;
-    private boolean isOrOperation;
     private List<Object> arguments;
 }
