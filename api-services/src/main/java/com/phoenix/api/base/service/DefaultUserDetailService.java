@@ -1,18 +1,40 @@
 package com.phoenix.api.base.service;
 
 import com.phoenix.api.base.constant.BeanIds;
+import com.phoenix.api.base.model.DefaultUserDetails;
+import com.phoenix.api.base.model.UserPrincipal;
+import com.phoenix.api.base.repositories.UserRepositoryImp;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service(BeanIds.DEFAULT_USER_DETAIL_SERVICES)
 @Log4j2
 public class DefaultUserDetailService implements UserDetailsService {
 
+    private final UserRepositoryImp userRepositoryImp;
+
+    public DefaultUserDetailService(
+            @Qualifier(BeanIds.USER_REPOSITORY_IMP) UserRepositoryImp userRepositoryImp) {
+        this.userRepositoryImp = userRepositoryImp;
+    }
+
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-       return null;
+        Optional<UserPrincipal> optional = userRepositoryImp.findUserPrincipalByUsername(username);
+
+        if (!optional.isPresent()) {
+            throw new UsernameNotFoundException("Couldn't find a matching user username in the database for: " + username);
+        }
+
+        UserPrincipal userPrincipal = optional.get();
+
+        return new DefaultUserDetails(userPrincipal);
     }
 }
