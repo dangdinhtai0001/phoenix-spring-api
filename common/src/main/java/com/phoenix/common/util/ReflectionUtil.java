@@ -81,7 +81,7 @@ public class ReflectionUtil {
         }
 
         if (field == null) {
-            throw new NoSuchFieldException();
+            throw new NoSuchFieldException(String.format("Can't find field: %s of class: ", fieldName, classOfField.getSimpleName()));
         }
 
         field.setAccessible(true);
