@@ -3,7 +3,7 @@ package com.phoenix.api.core.exception;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
-public class ServiceException extends Exception{
+public class ApplicationException extends Exception{
     //========================================================================
     //========== Property
     //========================================================================
@@ -13,55 +13,55 @@ public class ServiceException extends Exception{
     //========================================================================
     //========== Constructor
     //========================================================================
-    public ServiceException(String code, String resource) {
+    public ApplicationException(String code, String resource) {
         this.code = code;
     }
 
-    public ServiceException(String message, String code, String resource) {
+    public ApplicationException(String message, String code, String resource) {
         super(message);
         this.code = code;
     }
 
-    public ServiceException(String message, Throwable cause, String code, String resource) {
+    public ApplicationException(String message, Throwable cause, String code, String resource) {
         super(message, cause);
         this.code = code;
     }
 
-    public ServiceException(Throwable cause, String code, String resource) {
+    public ApplicationException(Throwable cause, String code, String resource) {
         super(cause);
         this.code = code;
     }
 
-    public ServiceException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace, String code, String resource) {
+    public ApplicationException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace, String code, String resource) {
         super(message, cause, enableSuppression, writableStackTrace);
         this.code = code;
     }
 
-    public ServiceException(String code, String resource, HttpStatus httpStatus) {
+    public ApplicationException(String code, String resource, HttpStatus httpStatus) {
         this.code = code;
         this.httpStatus = httpStatus;
     }
 
-    public ServiceException(String message, String code, String resource, HttpStatus httpStatus) {
+    public ApplicationException(String message, String code, String resource, HttpStatus httpStatus) {
         super(message);
         this.code = code;
         this.httpStatus = httpStatus;
     }
 
-    public ServiceException(String message, Throwable cause, String code, String resource, HttpStatus httpStatus) {
+    public ApplicationException(String message, Throwable cause, String code, String resource, HttpStatus httpStatus) {
         super(message, cause);
         this.code = code;
         this.httpStatus = httpStatus;
     }
 
-    public ServiceException(Throwable cause, String code, String resource, HttpStatus httpStatus) {
+    public ApplicationException(Throwable cause, String code, String resource, HttpStatus httpStatus) {
         super(cause);
         this.code = code;
         this.httpStatus = httpStatus;
     }
 
-    public ServiceException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace,
-                                   String code, String resource, HttpStatus httpStatus) {
+    public ApplicationException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace,
+                                String code, String resource, HttpStatus httpStatus) {
         super(message, cause, enableSuppression, writableStackTrace);
         this.code = code;
         this.httpStatus = httpStatus;

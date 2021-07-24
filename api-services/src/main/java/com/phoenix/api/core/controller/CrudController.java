@@ -21,6 +21,4 @@ public interface CrudController {
     ResponseEntity findBy(List<SearchCriteria> conditions, int page, int size);
 
     ResponseEntity count(List<SearchCriteria> conditions);
-
-
 }

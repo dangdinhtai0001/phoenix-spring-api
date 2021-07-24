@@ -2,17 +2,15 @@ package com.phoenix.api.base.controller;
 
 import com.phoenix.api.base.constant.BeanIds;
 import com.phoenix.api.base.service.AuthService;
-import com.phoenix.api.base.service.imp.AuthServiceImp;
 import com.phoenix.api.core.controller.AbstractBaseController;
-import com.phoenix.api.core.exception.ServiceException;
+import com.phoenix.api.core.exception.ApplicationException;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.security.Principal;
 import java.util.Map;
 
 @RestController("AuthController")
@@ -26,7 +24,13 @@ public class AuthController extends AbstractBaseController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody Map loginRequest, HttpSession session) throws ServiceException {
+    public ResponseEntity login(@RequestBody Map loginRequest, HttpSession session) throws ApplicationException {
         return sendResponse(authService.login(loginRequest, session));
     }
+
+    @GetMapping("/profile")
+    public ResponseEntity findProfile(HttpServletRequest request) {
+        return sendResponse(authService.findProfile(request));
+    }
+
 }

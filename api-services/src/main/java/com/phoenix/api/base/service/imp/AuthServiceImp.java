@@ -5,7 +5,7 @@ import com.phoenix.api.base.constant.BeanIds;
 import com.phoenix.api.base.entities.ExceptionEntity;
 import com.phoenix.api.base.repositories.UserRepositoryImp;
 import com.phoenix.api.base.service.AuthService;
-import com.phoenix.api.core.exception.ServiceException;
+import com.phoenix.api.core.exception.ApplicationException;
 import com.phoenix.api.core.service.AbstractBaseService;
 import com.phoenix.common.auth.JwtProvider;
 import com.phoenix.common.time.TimeProvider;
@@ -21,10 +21,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.security.Principal;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Log4j2
 @Service(BeanIds.AUTH_SERVICES)
@@ -50,7 +53,7 @@ public class AuthServiceImp extends AbstractBaseService implements AuthService {
     }
 
     @Override
-    public LinkedHashMap<String, String> login(Map loginRequest, HttpSession session) throws ServiceException {
+    public LinkedHashMap<String, String> login(Map loginRequest, HttpSession session) throws ApplicationException {
         try {
             //LinkedHashMap loginRequest = (LinkedHashMap) payload;
 
@@ -81,18 +84,23 @@ public class AuthServiceImp extends AbstractBaseService implements AuthService {
             token.put("session_id", session.getId());
             token.put("expires_in", String.valueOf((now + jwtProvider.getTtlMillis())));
 
-            userRepository.updateRefreshTokenByUsername(refreshToken, username);
+            int result = userRepository.updateRefreshTokenByUsername(refreshToken, username);
+
+            if (result < 0) {
+                log.error(String.format("An error occurred while saving the refresh token update for the account: %s", username));
+                throw getApplicationException("DB_001");
+            }
 
             return token;
         } catch (BadCredentialsException e) {
             log.error(e.getMessage());
-            throw getServiceException("AUTH_001");
+            throw getApplicationException("AUTH_001");
         } catch (LockedException e) {
             log.error(e.getMessage());
-            throw getServiceException("AUTH_002");
+            throw getApplicationException("AUTH_002");
         } catch (AccountExpiredException e) {
             log.error(e.getMessage());
-            throw getServiceException("AUTH_003");
+            throw getApplicationException("AUTH_003");
         }
     }
 
@@ -104,5 +112,13 @@ public class AuthServiceImp extends AbstractBaseService implements AuthService {
     @Override
     public ResponseEntity refreshToken(Map refreshTokenRequest, HttpSession session) {
         return null;
+    }
+
+    @Override
+    public Optional findProfile(HttpServletRequest request) {
+        Principal principal = request.getUserPrincipal();
+        String username = principal.getName();
+
+        return userRepository.findUserProfileByUsername(username);
     }
 }

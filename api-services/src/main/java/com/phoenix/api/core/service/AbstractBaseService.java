@@ -1,7 +1,7 @@
 package com.phoenix.api.core.service;
 
 import com.phoenix.api.base.entities.ExceptionEntity;
-import com.phoenix.api.core.exception.ServiceException;
+import com.phoenix.api.core.exception.ApplicationException;
 import com.phoenix.api.core.model.SearchCriteria;
 import com.phoenix.api.core.repository.specification.PredicateBuilder;
 import org.springframework.http.HttpStatus;
@@ -15,10 +15,10 @@ public class AbstractBaseService implements BaseService {
         this.exceptionEntities = exceptionEntities;
     }
 
-    public ServiceException getServiceException(String code) {
+    public ApplicationException getApplicationException(String code) {
         ExceptionEntity exceptionEntity = findExceptionByCode(code);
 
-        return new ServiceException(exceptionEntity.getMessage(), code, this.getClass().getName(),
+        return new ApplicationException(exceptionEntity.getMessage(), code, this.getClass().getName(),
                 HttpStatus.valueOf(exceptionEntity.getHttpCode()));
     }
 

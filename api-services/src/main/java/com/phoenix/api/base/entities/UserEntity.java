@@ -31,7 +31,7 @@ public class UserEntity extends AuditEntity<String, Long> {
     @Column(name = "HASH_ALGORITHM")
     private String hashAlgorithm;
 
-    @Column(name = "STATUS")
+    @Column(name = "STATUS_ID")
     private Integer status;
 
     @Column(name = "PASSWORD_REMINDER_TOKEN")
