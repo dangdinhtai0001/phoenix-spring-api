@@ -59,7 +59,6 @@ public class UserRepositoryImp extends AbstractBaseRepository<UserEntity, Long> 
     @Transactional
     public int updateRefreshTokenByUsername(String refreshToken, String username) {
         String sql = "update fw_user set refresh_token = ? where username = ?";
-
         return updateNativeQuery(sql, refreshToken, username);
     }
 
@@ -87,6 +86,5 @@ public class UserRepositoryImp extends AbstractBaseRepository<UserEntity, Long> 
         }
 
         return Optional.ofNullable(user);
-
     }
 }

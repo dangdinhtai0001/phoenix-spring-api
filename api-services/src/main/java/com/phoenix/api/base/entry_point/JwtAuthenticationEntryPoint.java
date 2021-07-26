@@ -27,20 +27,21 @@ public class JwtAuthenticationEntryPoint extends BaseEntryPoint implements Authe
     @Override
     public void commence(HttpServletRequest httpServletRequest,
                          HttpServletResponse httpServletResponse,
-                         AuthenticationException e) throws IOException, ServletException {
+                         AuthenticationException e) throws IOException {
         handle(httpServletRequest, httpServletResponse, e);
     }
 
     @Override
     protected void handle(HttpServletRequest httpServletRequest,
                           HttpServletResponse httpServletResponse,
-                          Exception e) throws IOException, ServletException {
+                          Exception e) throws IOException {
         log.error(DEFAULT_ERROR_MESSAGE);
 
         if (httpServletRequest.getAttribute("javax.servlet.error.exception") != null) {
             Throwable throwable = (Throwable) httpServletRequest.getAttribute("javax.servlet.error.exception");
             resolver.resolveException(httpServletRequest, httpServletResponse, null, (Exception) throwable);
         }
+
         httpServletResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, DEFAULT_ERROR_MESSAGE);
     }
 }
