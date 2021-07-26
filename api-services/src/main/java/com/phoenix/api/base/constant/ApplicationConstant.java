@@ -16,5 +16,5 @@ public class ApplicationConstant {
     public static final String PERMISSION_SPERATE = "__";
 
     public static final String[] PUBLIC_URLS_MATCHER = {
-            "/**/ping", "/**/login", "/common/ping"};
+            "/**/ping", "/**/login", "/common/ping", "/auth/refresh"};
 }

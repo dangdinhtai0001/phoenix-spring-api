@@ -33,4 +33,9 @@ public class AuthController extends AbstractBaseController {
         return sendResponse(authService.findProfile(request));
     }
 
+    @PostMapping("/refresh")
+    public ResponseEntity refreshToken(@RequestBody Map refreshTokenRequest, HttpSession session) throws ApplicationException {
+        return sendResponse(authService.refreshToken(refreshTokenRequest, session));
+    }
+
 }

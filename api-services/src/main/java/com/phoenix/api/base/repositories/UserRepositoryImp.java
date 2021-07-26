@@ -20,15 +20,17 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository(BeanIds.USER_REPOSITORY_IMP)
+@PersistenceContext(unitName = "default")
 public class UserRepositoryImp extends AbstractBaseRepository<UserEntity, Long> {
-    @PersistenceContext
-    private final EntityManager entityManager;
 
-    public UserRepositoryImp(EntityManager entityManager) {
+    public UserRepositoryImp( EntityManager entityManager) {
         super(entityManager, UserEntity.class);
-        this.entityManager = entityManager;
     }
 
+    /**
+     * @param username Tài khoản cần tìm kiếm
+     * @return Optional của UserPrincipal có username cần tìm, optional empty nếu không tìm thấy
+     */
     public Optional<UserPrincipal> findUserPrincipalByUsername(String username) {
         String sql = "select u.id, u.username, u.password, u.hash_algorithm,  u.password_salt, fus.name status from fw_user " +
                 "u left join fw_user_status fus on u.status_id = fus.id where u.username = ?";
@@ -86,5 +88,16 @@ public class UserRepositoryImp extends AbstractBaseRepository<UserEntity, Long> 
         }
 
         return Optional.ofNullable(user);
+    }
+
+    public Optional findRefreshTokenByUsername(String username) {
+        String sql = "select refresh_token from fw_user where username = ?";
+        List queryResult = executeNativeQuery(sql, username);
+
+        if (queryResult.isEmpty()) {
+            return Optional.empty();
+        }
+
+        return Optional.ofNullable(queryResult.get(0));
     }
 }

@@ -6,6 +6,7 @@ import com.phoenix.api.core.model.SearchCriteria;
 import com.phoenix.api.core.repository.specification.PredicateBuilder;
 
 import java.util.List;
+import java.util.Map;
 
 public interface BaseService {
     ApplicationException getApplicationException(String code);
@@ -13,4 +14,6 @@ public interface BaseService {
     ExceptionEntity findExceptionByCode(String code);
 
     PredicateBuilder getPredicateBuilderFromSearchCriteria(PredicateBuilder predicate, List<SearchCriteria> conditions);
+
+    String getRequestBodyByKey(Map requestBody, String key);
 }

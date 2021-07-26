@@ -7,6 +7,7 @@ import com.phoenix.api.core.repository.specification.PredicateBuilder;
 import org.springframework.http.HttpStatus;
 
 import java.util.List;
+import java.util.Map;
 
 public class AbstractBaseService implements BaseService {
     private final List<ExceptionEntity> exceptionEntities;
@@ -71,5 +72,15 @@ public class AbstractBaseService implements BaseService {
         }
 
         return predicate;
+    }
+
+    @Override
+    public String getRequestBodyByKey(Map requestBody, String key) {
+        Object value = requestBody.get(key);
+
+        if (value != null) {
+            return String.valueOf(value);
+        }
+        return null;
     }
 }

@@ -57,8 +57,8 @@ public class AuthServiceImp extends AbstractBaseService implements AuthService {
         try {
             //LinkedHashMap loginRequest = (LinkedHashMap) payload;
 
-            String username = String.valueOf(loginRequest.get("username"));
-            String password = String.valueOf(loginRequest.get("password"));
+            String username = getRequestBodyByKey(loginRequest, "username");
+            String password = getRequestBodyByKey(loginRequest, "password");
 
             UsernamePasswordAuthenticationToken authenticationToken =
                     new UsernamePasswordAuthenticationToken(username, password);
@@ -69,29 +69,8 @@ public class AuthServiceImp extends AbstractBaseService implements AuthService {
             SecurityContextHolder.getContext().setAuthentication(authentication);
             Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-            Claims claims = new DefaultClaims();
-            claims.setSubject(username);
+            return generateToken(username, session);
 
-            String accessToken = jwtProvider.generateToken(claims);
-            String refreshToken = String.valueOf(uuidFactory.generateRandomUuid());
-            TimeProvider timeProvider = new SystemTimeProvider();
-            long now = timeProvider.getTime();
-
-            LinkedHashMap<String, String> token = new LinkedHashMap<>();
-            token.put("access_token", accessToken);
-            token.put("refresh_token", refreshToken);
-            token.put("token_type", ApplicationConstant.JWT_TOKEN_TYPE);
-            token.put("session_id", session.getId());
-            token.put("expires_in", String.valueOf((now + jwtProvider.getTtlMillis())));
-
-            int result = userRepository.updateRefreshTokenByUsername(refreshToken, username);
-
-            if (result < 0) {
-                log.error(String.format("An error occurred while saving the refresh token update for the account: %s", username));
-                throw getApplicationException("DB_001");
-            }
-
-            return token;
         } catch (BadCredentialsException e) {
             log.error(e.getMessage());
             throw getApplicationException("AUTH_001");
@@ -110,8 +89,29 @@ public class AuthServiceImp extends AbstractBaseService implements AuthService {
     }
 
     @Override
-    public ResponseEntity refreshToken(Map refreshTokenRequest, HttpSession session) {
-        return null;
+    public LinkedHashMap<String, String> refreshToken(Map refreshTokenRequest, HttpSession session) throws ApplicationException {
+        String refreshToken = getRequestBodyByKey(refreshTokenRequest, "refresh_token");
+        String username = getRequestBodyByKey(refreshTokenRequest, "username");
+
+        if (refreshToken == null || username == null) {
+            log.error(("Bad request"));
+            throw getApplicationException("COM_001");
+        }
+
+        Optional<String> refreshTokenOptional = userRepository.findRefreshTokenByUsername(username);
+        String oldRefreshToken = refreshTokenOptional.orElse(null);
+
+        if (oldRefreshToken == null) {
+            log.error(String.format("Can't find user with username: %s", username));
+            throw getApplicationException("AUTH_001");
+        }
+
+        if (refreshToken.equals(oldRefreshToken)) {
+            return generateToken(username, session);
+        } else {
+            log.error(String.format("Invalid JWT refresh token with username: %s", username));
+            throw getApplicationException("AUTH_005");
+        }
     }
 
     @Override
@@ -120,5 +120,35 @@ public class AuthServiceImp extends AbstractBaseService implements AuthService {
         String username = principal.getName();
 
         return userRepository.findUserProfileByUsername(username);
+    }
+
+
+    //-----------------------------------------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------------------------------------
+
+    private LinkedHashMap<String, String> generateToken(String username, HttpSession session) throws ApplicationException {
+        Claims claims = new DefaultClaims();
+        claims.setSubject(username);
+
+        String accessToken = jwtProvider.generateToken(claims);
+        String refreshToken = String.valueOf(uuidFactory.generateRandomUuid());
+        TimeProvider timeProvider = new SystemTimeProvider();
+        long now = timeProvider.getTime();
+
+        LinkedHashMap<String, String> token = new LinkedHashMap<>();
+        token.put("access_token", accessToken);
+        token.put("refresh_token", refreshToken);
+        token.put("token_type", ApplicationConstant.JWT_TOKEN_TYPE);
+        token.put("session_id", session.getId());
+        token.put("expires_in", String.valueOf((now + jwtProvider.getTtlMillis())));
+
+        int result = userRepository.updateRefreshTokenByUsername(refreshToken, username);
+
+        if (result < 0) {
+            log.error(String.format("An error occurred while saving the refresh token update for the account: %s", username));
+            throw getApplicationException("DB_001");
+        }
+
+        return token;
     }
 }

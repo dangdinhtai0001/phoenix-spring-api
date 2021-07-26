@@ -28,8 +28,15 @@ public class TestUserRepository {
     }
 
     @Test
-    public void testFindUserPrincipal() throws NoSuchFieldException, InvocationTargetException, IllegalAccessException, InstantiationException, NoSuchMethodException {
+    public void testFindUserPrincipal() {
         Optional<UserPrincipal> optional = userRepositoryImp.findUserPrincipalByUsername("test1");
+
+        System.out.println(optional.orElse(null));
+    }
+
+    @Test
+    public void findRefreshTokenByUsername(){
+        Optional<String> optional = userRepositoryImp.findRefreshTokenByUsername("user1");
 
         System.out.println(optional.orElse(null));
     }

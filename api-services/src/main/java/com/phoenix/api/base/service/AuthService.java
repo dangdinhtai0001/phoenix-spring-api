@@ -14,7 +14,7 @@ public interface AuthService {
 
     ResponseEntity logout(Map logoutRequest, HttpSession session);
 
-    ResponseEntity refreshToken(Map refreshTokenRequest, HttpSession session);
+    LinkedHashMap<String, String> refreshToken(Map refreshTokenRequest, HttpSession session) throws ApplicationException;
 
     Optional findProfile(HttpServletRequest request);
 }
