@@ -7,7 +7,6 @@
         <module>coverage</module>
         <module>api-services</module>
         <module>common</module>
-        <module>business</module>
     </modules>
 
     <parent>
@@ -34,7 +33,6 @@
 
         <!--        module version-->
         <module.common.version>0.1.1</module.common.version>
-        <module.business.version>0.0.0</module.business.version>
         <module.services.version>0.4.0</module.services.version>
         <module.root.version>0.0.0</module.root.version>
         <!--        module version-->

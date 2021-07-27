@@ -110,8 +110,8 @@
         </dependency>
         <dependency>
             <groupId>com.phoenix</groupId>
-            <artifactId>business</artifactId>
-            <version>0.0.0</version>
+            <artifactId>common</artifactId>
+            <version>${module.common.version}</version>
         </dependency>
 
         <!--        modules-->

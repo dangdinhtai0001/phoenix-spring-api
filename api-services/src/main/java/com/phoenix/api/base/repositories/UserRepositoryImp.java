@@ -4,7 +4,7 @@ import com.phoenix.api.base.constant.BeanIds;
 import com.phoenix.api.base.entities.UserEntity;
 import com.phoenix.api.base.model.UserPrincipal;
 import com.phoenix.api.core.repository.AbstractBaseRepository;
-import com.phoenix.business.domain.User;
+import com.phoenix.api.business.model.User;
 import com.phoenix.common.structure.Pair;
 import com.phoenix.common.util.DateUtil;
 import org.springframework.data.jpa.repository.Modifying;

@@ -1,4 +1,4 @@
-package com.phoenix.business.domain;
+package com.phoenix.api.business.model;
 
 
 import java.util.Date;
