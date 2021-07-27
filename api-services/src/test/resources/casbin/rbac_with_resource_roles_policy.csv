@@ -1,0 +1,7 @@
+p, gStudent, gData1, read
+p, gTeacher, gData2, read
+
+g, alice, gStudent
+g, bob, gTeacher
+g2, subject_1, gData1
+g2, subject_2, gData2
