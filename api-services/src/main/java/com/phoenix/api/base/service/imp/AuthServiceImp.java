@@ -57,8 +57,8 @@ public class AuthServiceImp extends AbstractBaseService implements AuthService {
         try {
             //LinkedHashMap loginRequest = (LinkedHashMap) payload;
 
-            String username = getRequestBodyByKey(loginRequest, "username");
-            String password = getRequestBodyByKey(loginRequest, "password");
+            String username = getPropertyOfRequestBodyByKey(loginRequest, "username");
+            String password = getPropertyOfRequestBodyByKey(loginRequest, "password");
 
             UsernamePasswordAuthenticationToken authenticationToken =
                     new UsernamePasswordAuthenticationToken(username, password);
@@ -90,8 +90,8 @@ public class AuthServiceImp extends AbstractBaseService implements AuthService {
 
     @Override
     public LinkedHashMap<String, String> refreshToken(Map refreshTokenRequest, HttpSession session) throws ApplicationException {
-        String refreshToken = getRequestBodyByKey(refreshTokenRequest, "refresh_token");
-        String username = getRequestBodyByKey(refreshTokenRequest, "username");
+        String refreshToken = getPropertyOfRequestBodyByKey(refreshTokenRequest, "refresh_token");
+        String username = getPropertyOfRequestBodyByKey(refreshTokenRequest, "username");
 
         if (refreshToken == null || username == null) {
             log.error(("Bad request"));
