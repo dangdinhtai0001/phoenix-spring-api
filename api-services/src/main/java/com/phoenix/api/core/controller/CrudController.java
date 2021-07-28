@@ -3,22 +3,21 @@ package com.phoenix.api.core.controller;
 import com.phoenix.api.core.model.SearchCriteria;
 import org.springframework.http.ResponseEntity;
 
+import java.util.Collection;
 import java.util.List;
 
 public interface CrudController {
-    ResponseEntity add(Object entity);
+    ResponseEntity create(Object entity);
 
-    ResponseEntity addAll(List entities);
+    ResponseEntity createAll(Collection entities);
 
     ResponseEntity update(Object entity);
 
     ResponseEntity delete(Object entity);
 
-    ResponseEntity deleteById(Object id);
+    ResponseEntity deleteAll(Collection entities);
 
-    ResponseEntity deleteAllById(List ids);
+    ResponseEntity findByCondition(List<SearchCriteria> conditions, int pageOffset, int pageSize);
 
-    ResponseEntity findBy(List<SearchCriteria> conditions, int page, int size);
-
-    ResponseEntity count(List<SearchCriteria> conditions);
+    ResponseEntity countByCondition(List<SearchCriteria> conditions);
 }
