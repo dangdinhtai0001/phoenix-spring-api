@@ -52,7 +52,7 @@ public class UserController extends AbstractDefaultController {
     }
 
     @Override
-    public ResponseEntity findByCondition(List<SearchCriteria> conditions, int pageOffset, int pageSize) {
+    public ResponseEntity findByCondition(List<SearchCriteriaRequest> conditions, int pageOffset, int pageSize) {
         return null;
     }
 

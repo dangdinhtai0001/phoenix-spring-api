@@ -34,7 +34,7 @@ public abstract class AbstractDefaultController extends AbstractBaseController i
 
     @Override
     @GetMapping("/find-by")
-    public abstract ResponseEntity findByCondition(List<SearchCriteria> conditions, int pageOffset, int pageSize);
+    public abstract ResponseEntity findByCondition(List<SearchCriteriaRequest> conditions, int pageOffset, int pageSize);
 
     @Override
     @GetMapping("/count")

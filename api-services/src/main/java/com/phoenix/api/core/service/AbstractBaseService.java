@@ -3,11 +3,13 @@ package com.phoenix.api.core.service;
 import com.phoenix.api.base.entities.ExceptionEntity;
 import com.phoenix.api.core.exception.ApplicationException;
 import com.phoenix.api.core.model.SearchCriteria;
+import com.phoenix.api.core.model.SearchCriteriaRequest;
 import com.phoenix.api.core.repository.specification.PredicateBuilder;
 import org.springframework.http.HttpStatus;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public abstract class AbstractBaseService implements BaseService {
     private final List<ExceptionEntity> exceptionEntities;
@@ -134,6 +136,11 @@ public abstract class AbstractBaseService implements BaseService {
         }
 
         return clause.toString();
+    }
+
+    @Override
+    public List<SearchCriteria> getListOfSearchCriteria(List<SearchCriteriaRequest> listConditionRequests){
+        return listConditionRequests.stream().map(SearchCriteriaRequest::getSearchCriteria).collect(Collectors.toList());
     }
 
     /**

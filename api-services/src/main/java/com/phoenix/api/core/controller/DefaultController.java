@@ -19,7 +19,7 @@ public interface DefaultController {
 
     ResponseEntity deleteAll(Collection entities);
 
-    ResponseEntity findByCondition(List<SearchCriteria> conditions, int pageOffset, int pageSize);
+    ResponseEntity findByCondition(List<SearchCriteriaRequest> conditions, int pageOffset, int pageSize);
 
     ResponseEntity countByCondition(LinkedList<SearchCriteriaRequest> conditions);
 }

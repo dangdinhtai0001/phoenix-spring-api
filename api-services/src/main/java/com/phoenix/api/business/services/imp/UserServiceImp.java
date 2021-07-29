@@ -26,13 +26,13 @@ public class UserServiceImp extends AbstractBaseService implements UserService {
     }
 
     @Override
-    public List<User> findByCondition(List<SearchCriteria> conditions, int pageOffset, int pageSize) {
+    public List<User> findByCondition(List<SearchCriteriaRequest> conditions, int pageOffset, int pageSize) {
         return null;
     }
 
     @Override
     public long countByCondition(List<SearchCriteriaRequest> listConditionRequests) {
-        List<SearchCriteria> conditions = listConditionRequests.stream().map(SearchCriteriaRequest::getSearchCriteria).collect(Collectors.toList());
+        List<SearchCriteria> conditions = getListOfSearchCriteria(listConditionRequests);
         String condition = getConditionClauseFromSearchCriteria(conditions);
         return userRepository.countByCondition(" where " + condition);
     }
