@@ -1,12 +1,14 @@
 package com.phoenix.api.core.controller;
 
 import com.phoenix.api.core.model.SearchCriteria;
+import com.phoenix.api.core.model.SearchCriteriaRequest;
 import org.springframework.http.ResponseEntity;
 
 import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 
-public interface CrudController {
+public interface DefaultController {
     ResponseEntity create(Object entity);
 
     ResponseEntity createAll(Collection entities);
@@ -19,5 +21,5 @@ public interface CrudController {
 
     ResponseEntity findByCondition(List<SearchCriteria> conditions, int pageOffset, int pageSize);
 
-    ResponseEntity countByCondition(List<SearchCriteria> conditions);
+    ResponseEntity countByCondition(LinkedList<SearchCriteriaRequest> conditions);
 }

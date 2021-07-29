@@ -2,7 +2,7 @@ package com.phoenix.api.base.repository;
 
 import com.phoenix.api.base.entities.UserEntity;
 import com.phoenix.api.base.model.UserPrincipal;
-import com.phoenix.api.base.repositories.UserRepositoryImp;
+import com.phoenix.api.base.repositories.imp.UserRepositoryImp;
 import com.phoenix.api.core.repository.specification.Specifications;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +10,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.test.context.ActiveProfiles;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.Optional;
 
 @SpringBootTest

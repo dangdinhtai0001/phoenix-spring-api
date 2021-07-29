@@ -3,7 +3,7 @@ package com.phoenix.api.base.service;
 import com.phoenix.api.base.constant.BeanIds;
 import com.phoenix.api.base.model.DefaultUserDetails;
 import com.phoenix.api.base.model.UserPrincipal;
-import com.phoenix.api.base.repositories.UserRepositoryImp;
+import com.phoenix.api.base.repositories.imp.UserRepositoryImp;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,7 +20,7 @@ public class DefaultUserDetailService implements UserDetailsService {
     private final UserRepositoryImp userRepositoryImp;
 
     public DefaultUserDetailService(
-            @Qualifier(BeanIds.USER_REPOSITORY_IMP) UserRepositoryImp userRepositoryImp) {
+            @Qualifier(BeanIds.BASE_USER_REPOSITORY_IMP) UserRepositoryImp userRepositoryImp) {
         this.userRepositoryImp = userRepositoryImp;
     }
 

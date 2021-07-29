@@ -25,7 +25,9 @@ public class BeanIds {
     public static final String DEFAULT_USER_DETAIL_SERVICES = "FW_DEFAULT_USER_DETAIL_SERVICES";
     public static final String AUTH_SERVICES = "FW_AUTH_SERVICES";
     public static final String MENU_SERVICES = "FW_MENU_SERVICES";
-    public static final String PERMISSION_EVALUATOR = "FW_PERMISSION_EVALUATOR";
+
+
+    public static final String USER_SERVICES = "FW_USER_SERVICES";
 
     // ====================================================
     // Repository
@@ -33,10 +35,13 @@ public class BeanIds {
     public static final String SPECIFICATION_FACTORY = "FW_SPECIFICATION_FACTORY";
     public static final String AUTH_REPOSITORY_IMP = "FW_AUTH_REPOSITORY_IMP";
     public static final String USER_STATUS_REPOSITORY = "FW_USER_STATUS_REPOSITORY";
-    public static final String USER_REPOSITORY_IMP = "FW_USER_REPOSITORY_IMP";
+    public static final String BASE_USER_REPOSITORY_IMP = "FW_USER_REPOSITORY_IMP";
     public static final String EXCEPTION_REPOSITORY_IMP = "FW_EXCEPTION_REPOSITORY_IMP";
     public static final String MENU_REPOSITORY_IMP = "FW_MENU_REPOSITORY_IMP";
     public static final String PERMISSION_REPOSITORY_IMP = "FW_PERMISSION_REPOSITORY_IMP";
+
+
+    public static final String USER_REPOSITORY_IMP = "USER_REPOSITORY_IMP";
 
 
     //====================================================

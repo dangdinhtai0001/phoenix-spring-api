@@ -1,17 +1,17 @@
-package com.phoenix.api.base.repositories;
+package com.phoenix.api.base.repositories.imp;
 
 import com.phoenix.api.base.constant.BeanIds;
 import com.phoenix.api.base.entities.UserEntity;
 import com.phoenix.api.base.model.UserPrincipal;
-import com.phoenix.api.core.repository.AbstractBaseRepository;
+import com.phoenix.api.base.repositories.UserRepository;
 import com.phoenix.api.business.model.User;
+import com.phoenix.api.core.repository.AbstractBaseRepository;
 import com.phoenix.common.structure.Pair;
 import com.phoenix.common.util.DateUtil;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
@@ -19,9 +19,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
-@Repository(BeanIds.USER_REPOSITORY_IMP)
-@PersistenceContext(unitName = "default")
-public class UserRepositoryImp extends AbstractBaseRepository<UserEntity, Long> {
+@Repository(BeanIds.BASE_USER_REPOSITORY_IMP)
+public class UserRepositoryImp extends AbstractBaseRepository<UserEntity, Long> implements UserRepository {
 
     public UserRepositoryImp( EntityManager entityManager) {
         super(entityManager, UserEntity.class);

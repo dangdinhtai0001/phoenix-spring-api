@@ -2,7 +2,7 @@ package com.phoenix.api.core.repository.specification;
 
 import com.phoenix.api.base.constant.BeanIds;
 import com.phoenix.api.base.entities.ExceptionEntity;
-import com.phoenix.api.base.repositories.ExceptionRepositoryImp;
+import com.phoenix.api.base.repositories.imp.ExceptionRepositoryImp;
 import com.phoenix.api.core.model.SearchCriteria;
 import com.phoenix.api.core.model.SearchOperation;
 import org.junit.jupiter.api.Test;

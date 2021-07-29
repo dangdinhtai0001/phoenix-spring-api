@@ -2,7 +2,7 @@ package com.phoenix.api.base.config;
 
 import com.phoenix.api.base.constant.BeanIds;
 import com.phoenix.api.base.entities.ExceptionEntity;
-import com.phoenix.api.base.repositories.ExceptionRepositoryImp;
+import com.phoenix.api.base.repositories.imp.ExceptionRepositoryImp;
 import com.phoenix.common.auth.JwtProvider;
 import com.phoenix.common.auth.imp.DefaultJwtProvider;
 import com.phoenix.common.text.HashingText;

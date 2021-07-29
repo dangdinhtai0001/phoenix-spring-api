@@ -1,4 +1,4 @@
-package com.phoenix.api.base.repositories;
+package com.phoenix.api.base.repositories.imp;
 
 import com.phoenix.api.base.constant.BeanIds;
 import com.phoenix.api.base.entities.ExceptionEntity;

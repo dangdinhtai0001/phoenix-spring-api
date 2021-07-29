@@ -1,14 +1,16 @@
 package com.phoenix.api.core.controller;
 
 import com.phoenix.api.core.model.SearchCriteria;
+import com.phoenix.api.core.model.SearchCriteriaRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 
-public abstract class AbstractCrudController extends AbstractBaseController implements CrudController {
+public abstract class AbstractDefaultController extends AbstractBaseController implements DefaultController {
 
     @Override
     @PostMapping("/create")
@@ -36,5 +38,5 @@ public abstract class AbstractCrudController extends AbstractBaseController impl
 
     @Override
     @GetMapping("/count")
-    public abstract ResponseEntity countByCondition(List<SearchCriteria> conditions);
+    public abstract ResponseEntity countByCondition(LinkedList<SearchCriteriaRequest> conditions);
 }

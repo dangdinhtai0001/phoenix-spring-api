@@ -15,6 +15,11 @@
 
 package com.phoenix.common.util;
 
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
+import com.phoenix.common.structure.Pair;
+import org.checkerframework.checker.nullness.qual.Nullable;
+
 import java.lang.reflect.Field;
 import java.util.*;
 
@@ -153,5 +158,20 @@ public class ReflectionUtil {
         }
 
         return map;
+    }
+
+    public static List<Pair<String, Class>> getFieldAsPairList(Class aClass, String... properties) {
+        List<Field> allFields = getAllFields(aClass);
+        List<Pair<String, Class>> result = new LinkedList<>();
+
+
+        for (String property : properties) {
+            for (Field field : allFields) {
+                if (field.getName().equals(property)) {
+                    result.add(new Pair<>(field.getName(), field.getType()));
+                }
+            }
+        }
+        return result;
     }
 }

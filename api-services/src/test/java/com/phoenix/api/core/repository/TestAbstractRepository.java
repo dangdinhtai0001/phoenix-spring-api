@@ -2,9 +2,8 @@ package com.phoenix.api.core.repository;
 
 import com.phoenix.api.base.constant.BeanIds;
 import com.phoenix.api.base.entities.ExceptionEntity;
-import com.phoenix.api.base.repositories.ExceptionRepositoryImp;
+import com.phoenix.api.base.repositories.imp.ExceptionRepositoryImp;
 import com.phoenix.api.core.model.BasePagination;
-import com.phoenix.api.core.repository.specification.Sorts;
 import com.phoenix.common.structure.Pair;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;

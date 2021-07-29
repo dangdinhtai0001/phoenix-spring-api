@@ -5,7 +5,7 @@ import com.phoenix.api.core.model.SearchCriteria;
 import java.util.Collection;
 import java.util.List;
 
-public interface CrudService {
+public interface DefaultService {
     Object create(Object entity);
 
     List createAll(Collection entities);

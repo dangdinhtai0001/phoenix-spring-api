@@ -20,4 +20,10 @@ public class SearchCriteria {
         this.searchOperation = searchOperation;
         this.arguments = Arrays.asList(arguments);
     }
+
+    public SearchCriteria(String key, String searchOperation, Object... arguments) {
+        this.key = key;
+        this.searchOperation = SearchOperation.valueOf(searchOperation);
+        this.arguments = Arrays.asList(arguments);
+    }
 }

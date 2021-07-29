@@ -3,7 +3,7 @@ package com.phoenix.api.base.service.imp;
 import com.phoenix.api.base.constant.ApplicationConstant;
 import com.phoenix.api.base.constant.BeanIds;
 import com.phoenix.api.base.entities.ExceptionEntity;
-import com.phoenix.api.base.repositories.UserRepositoryImp;
+import com.phoenix.api.base.repositories.imp.UserRepositoryImp;
 import com.phoenix.api.base.service.AuthService;
 import com.phoenix.api.core.exception.ApplicationException;
 import com.phoenix.api.core.service.AbstractBaseService;
@@ -41,7 +41,7 @@ public class AuthServiceImp extends AbstractBaseService implements AuthService {
             @Qualifier(BeanIds.JWT_PROVIDER) JwtProvider jwtProvider,
             @Qualifier(BeanIds.UUID_Factory) UUIDFactory uuidFactory,
             @Qualifier(BeanIds.DEFAULT_AUTHENTICATION_MANAGER) AuthenticationManager authenticationManager,
-            @Qualifier(BeanIds.USER_REPOSITORY_IMP) UserRepositoryImp userRepository,
+            @Qualifier(BeanIds.BASE_USER_REPOSITORY_IMP) UserRepositoryImp userRepository,
             @Qualifier(BeanIds.ALL_EXCEPTION) List<ExceptionEntity> exceptionEntities
     ) {
         super(exceptionEntities);

@@ -89,6 +89,10 @@ public abstract class AbstractBaseService implements BaseService {
 
     @Override
     public String getConditionClauseFromSearchCriteria(List<SearchCriteria> conditions) {
+        if(conditions == null || conditions.isEmpty()){
+            return "1=1";
+        }
+
         StringBuilder clause = new StringBuilder();
 
         for (SearchCriteria criteria : conditions) {
