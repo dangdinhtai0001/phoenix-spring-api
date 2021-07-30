@@ -97,6 +97,8 @@ public class ReflectionUtil {
             field.set(obj, Long.parseLong(value));
         } else if (double.class.equals(classOfField) || Double.class.equals(classOfField)) {
             field.set(obj, Double.parseDouble(value));
+        } else if (Date.class.equals(classOfField)) {
+            field.set(obj, DateUtil.convertString2Date(value, DateUtil.DEFAULT_DATE_FORMAT));
         } else {
             field.set(obj, classOfField.cast(value));
         }

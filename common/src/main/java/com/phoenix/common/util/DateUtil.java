@@ -21,6 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class DateUtil {
+    public static final String DEFAULT_DATE_FORMAT = "yyyy-MM-dd";
 
     /**
      * @param strDate : String cần convert
