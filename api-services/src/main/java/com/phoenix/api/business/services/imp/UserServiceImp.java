@@ -5,14 +5,15 @@ import com.phoenix.api.base.entities.ExceptionEntity;
 import com.phoenix.api.business.model.User;
 import com.phoenix.api.business.repository.UserRepository;
 import com.phoenix.api.business.services.UserService;
+import com.phoenix.api.core.exception.SearchCriteriaException;
 import com.phoenix.api.core.model.SearchCriteria;
 import com.phoenix.api.core.model.SearchCriteriaRequest;
 import com.phoenix.api.core.service.AbstractBaseService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service(BeanIds.USER_SERVICES)
 public class UserServiceImp extends AbstractBaseService implements UserService {
@@ -26,14 +27,16 @@ public class UserServiceImp extends AbstractBaseService implements UserService {
     }
 
     @Override
-    public List<User> findByCondition(List<SearchCriteriaRequest> conditions, int pageOffset, int pageSize) {
-        return null;
+    public List<User> findByCondition(List<SearchCriteriaRequest> listConditionRequests, int pageOffset, int pageSize)
+            throws SearchCriteriaException, NoSuchFieldException, InvocationTargetException, IllegalAccessException,
+            InstantiationException, NoSuchMethodException {
+        List<SearchCriteria> conditions = getListOfSearchCriteria(listConditionRequests);
+        return userRepository.findByCondition(conditions);
     }
 
     @Override
-    public long countByCondition(List<SearchCriteriaRequest> listConditionRequests) {
+    public long countByCondition(List<SearchCriteriaRequest> listConditionRequests) throws SearchCriteriaException {
         List<SearchCriteria> conditions = getListOfSearchCriteria(listConditionRequests);
-        String condition = getConditionClauseFromSearchCriteria(conditions);
-        return userRepository.countByCondition(" where " + condition);
+        return userRepository.countByCondition(conditions);
     }
 }

@@ -3,14 +3,17 @@ package com.phoenix.api.business.controller;
 import com.phoenix.api.base.constant.BeanIds;
 import com.phoenix.api.business.services.UserService;
 import com.phoenix.api.core.controller.AbstractDefaultController;
+import com.phoenix.api.core.exception.SearchCriteriaException;
 import com.phoenix.api.core.model.SearchCriteria;
 import com.phoenix.api.core.model.SearchCriteriaRequest;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
@@ -52,12 +55,15 @@ public class UserController extends AbstractDefaultController {
     }
 
     @Override
-    public ResponseEntity findByCondition(List<SearchCriteriaRequest> conditions, int pageOffset, int pageSize) {
-        return null;
+    public ResponseEntity findByCondition(@RequestBody(required = false) List<SearchCriteriaRequest> listConditionRequests,
+                                          @RequestParam(name = "offset") int pageOffset,
+                                          @RequestParam(name = "size") int pageSize) throws SearchCriteriaException,
+            NoSuchFieldException, InvocationTargetException, IllegalAccessException, InstantiationException, NoSuchMethodException {
+        return sendResponse(userService.findByCondition(listConditionRequests, pageOffset, pageSize));
     }
 
     @Override
-    public ResponseEntity countByCondition(@RequestBody(required = false) LinkedList<SearchCriteriaRequest> listConditionRequests) {
+    public ResponseEntity countByCondition(@RequestBody(required = false) LinkedList<SearchCriteriaRequest> listConditionRequests) throws SearchCriteriaException {
         return sendResponse(userService.countByCondition(listConditionRequests));
     }
 }

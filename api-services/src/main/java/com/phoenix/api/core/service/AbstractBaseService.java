@@ -2,6 +2,7 @@ package com.phoenix.api.core.service;
 
 import com.phoenix.api.base.entities.ExceptionEntity;
 import com.phoenix.api.core.exception.ApplicationException;
+import com.phoenix.api.core.exception.SearchCriteriaException;
 import com.phoenix.api.core.model.SearchCriteria;
 import com.phoenix.api.core.model.SearchCriteriaRequest;
 import com.phoenix.api.core.repository.specification.PredicateBuilder;
@@ -90,9 +91,9 @@ public abstract class AbstractBaseService implements BaseService {
     }
 
     @Override
-    public String getConditionClauseFromSearchCriteria(List<SearchCriteria> conditions) {
-        if(conditions == null || conditions.isEmpty()){
-            return "1=1";
+    public String getConditionClauseFromSearchCriteria(List<SearchCriteria> conditions) throws SearchCriteriaException {
+        if (conditions == null || conditions.isEmpty()) {
+            return "";
         }
 
         StringBuilder clause = new StringBuilder();
@@ -107,7 +108,8 @@ public abstract class AbstractBaseService implements BaseService {
             switch (criteria.getSearchOperation()) {
 
                 case BETWEEN:
-                    handleSearchCriteriaWithTwoArguments(clause, criteria);
+//                    handleSearchCriteriaWithTwoArguments(clause, criteria);
+                    handleSearchCriteria(clause, criteria, 2);
                     break;
                 //--------------------------------------
                 case EQUAL:
@@ -118,12 +120,14 @@ public abstract class AbstractBaseService implements BaseService {
                 case LESS_THAN:
                 case NOT_EQUAL:
                 case NOT_LIKE:
-                    handleSearchCriteriaWithOneArgument(clause, criteria);
+//                    handleSearchCriteriaWithOneArgument(clause, criteria);
+                    handleSearchCriteria(clause, criteria, 1);
                     break;
                 //--------------------------------------
                 case IN:
                 case NOT_IN:
-                    handleSearchCriteriaWithListArguments(clause, criteria);
+//                    handleSearchCriteriaWithListArguments(clause, criteria);
+                    handleSearchCriteria(clause, criteria, 3);
                     break;
                 default:
                     break;
@@ -139,7 +143,10 @@ public abstract class AbstractBaseService implements BaseService {
     }
 
     @Override
-    public List<SearchCriteria> getListOfSearchCriteria(List<SearchCriteriaRequest> listConditionRequests){
+    public List<SearchCriteria> getListOfSearchCriteria(List<SearchCriteriaRequest> listConditionRequests) {
+        if (listConditionRequests == null || listConditionRequests.isEmpty()) {
+            return null;
+        }
         return listConditionRequests.stream().map(SearchCriteriaRequest::getSearchCriteria).collect(Collectors.toList());
     }
 
@@ -147,6 +154,7 @@ public abstract class AbstractBaseService implements BaseService {
      * @param clause   StringBuilder build where clause
      * @param criteria SearchCriteria need to handle
      */
+    @Deprecated
     private void handleSearchCriteriaWithOneArgument(StringBuilder clause, SearchCriteria criteria) {
         clause.append(criteria.getSearchOperation().getSign());
         clause.append(" ");
@@ -164,6 +172,7 @@ public abstract class AbstractBaseService implements BaseService {
      * @param clause   StringBuilder build where clause
      * @param criteria SearchCriteria need to handle
      */
+    @Deprecated
     private void handleSearchCriteriaWithTwoArguments(StringBuilder clause, SearchCriteria criteria) {
         clause.append(criteria.getSearchOperation().getSign());
         clause.append(" ");
@@ -191,6 +200,7 @@ public abstract class AbstractBaseService implements BaseService {
      * @param clause   StringBuilder build where clause
      * @param criteria SearchCriteria need to handle
      */
+    @Deprecated
     private void handleSearchCriteriaWithListArguments(StringBuilder clause, SearchCriteria criteria) {
         clause.append(criteria.getSearchOperation().getSign());
         clause.append(" (");
@@ -209,5 +219,44 @@ public abstract class AbstractBaseService implements BaseService {
         }
 
         clause.append(")");
+    }
+
+
+    private void handleSearchCriteria(StringBuilder clause, SearchCriteria criteria, int type) throws SearchCriteriaException {
+        clause.append(criteria.getSearchOperation().getSign());
+        clause.append(" ");
+
+        if (type == 1) {
+            if (criteria.getArguments().size() != 1) {
+                throw new SearchCriteriaException("Configuration error of expression");
+            }
+            clause.append(" ? ");
+        }
+
+        if (type == 2) {
+            if (criteria.getArguments().size() != 2) {
+                throw new SearchCriteriaException("Configuration error of expression");
+            }
+            clause.append(" ? AND ?");
+        }
+
+        if (type == 3) {
+            if (criteria.getArguments().isEmpty()) {
+                throw new SearchCriteriaException("Configuration error of expression");
+            }
+
+            clause.append(" (");
+
+            int size = criteria.getArguments().size();
+            for (int i = 0; i < size; i++) {
+                if (i == size - 1) {
+                    clause.append(" ? ");
+                } else {
+                    clause.append(" ? ,");
+                }
+            }
+
+            clause.append(")");
+        }
     }
 }

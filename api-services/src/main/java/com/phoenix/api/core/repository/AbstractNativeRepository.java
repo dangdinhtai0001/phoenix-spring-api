@@ -1,5 +1,7 @@
 package com.phoenix.api.core.repository;
 
+import com.phoenix.api.core.exception.SearchCriteriaException;
+import com.phoenix.api.core.model.SearchCriteria;
 import com.phoenix.common.structure.Pair;
 import com.phoenix.common.util.ReflectionUtil;
 
@@ -10,7 +12,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedList;
 import java.util.List;
 
-public class AbstractNativeRepository implements NativeRepository {
+public abstract class AbstractNativeRepository implements NativeRepository {
     private final EntityManager entityManager;
 
     public AbstractNativeRepository(EntityManager entityManager) {
@@ -18,7 +20,7 @@ public class AbstractNativeRepository implements NativeRepository {
     }
 
     @Override
-    public List executeNativeQuery(String sql, String... params) {
+    public List executeNativeQuery(String sql, Object... params) {
         Query query = createNativeQuery(sql, params);
         return query.getResultList();
     }
@@ -62,18 +64,122 @@ public class AbstractNativeRepository implements NativeRepository {
         return list;
     }
 
+    @Override
+    public String getConditionClauseFromSearchCriteria(List<SearchCriteria> conditions) throws SearchCriteriaException {
+        if (conditions == null || conditions.isEmpty()) {
+            return " 1 = 1";
+        }
+
+        StringBuilder clause = new StringBuilder();
+
+        for (SearchCriteria criteria : conditions) {
+            if (clause.length() > 0) {
+                clause.append(" AND ");
+            }
+            clause.append(criteria.getKey());
+            clause.append(" ");
+
+            switch (criteria.getSearchOperation()) {
+
+                case BETWEEN:
+//                    handleSearchCriteriaWithTwoArguments(clause, criteria);
+                    handleSearchCriteria(clause, criteria, 2);
+                    break;
+                //--------------------------------------
+                case EQUAL:
+                case GREATER_THAN_OR_EQUAL:
+                case GREATER_THAN:
+                case LESS_THAN_OR_EQUAL:
+                case LIKE:
+                case LESS_THAN:
+                case NOT_EQUAL:
+                case NOT_LIKE:
+//                    handleSearchCriteriaWithOneArgument(clause, criteria);
+                    handleSearchCriteria(clause, criteria, 1);
+                    break;
+                //--------------------------------------
+                case IN:
+                case NOT_IN:
+//                    handleSearchCriteriaWithListArguments(clause, criteria);
+                    handleSearchCriteria(clause, criteria, 3);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        if (clause.length() > 0) {
+            clause.insert(0, "( ");
+            clause.append(" )");
+        }
+
+        return clause.toString();
+    }
+
+    @Override
+    public List<Object> getParameterFromSearchCriteria(List<SearchCriteria> conditions) {
+        List<Object> list = new LinkedList<>();
+
+        if (conditions == null) {
+            return list;
+        }
+
+        for (SearchCriteria criteria : conditions) {
+            list.addAll(criteria.getArguments());
+        }
+        return list;
+    }
+
     //    ================================================================
     //
     //    ================================================================
 
-    private Query createNativeQuery(String sql, String... params) {
+    private Query createNativeQuery(String sql, Object... params) {
         Query query = entityManager.createNativeQuery(sql);
 
         int index = 1;
-        for (String param : params) {
+        for (Object param : params) {
             query.setParameter(index++, param);
         }
 
         return query;
+    }
+
+    private void handleSearchCriteria(StringBuilder clause, SearchCriteria criteria, int type) throws SearchCriteriaException {
+        clause.append(criteria.getSearchOperation().getSign());
+        clause.append(" ");
+
+        if (type == 1) {
+            if (criteria.getArguments().size() != 1) {
+                throw new SearchCriteriaException("Configuration error of expression");
+            }
+            clause.append(" ? ");
+        }
+
+        if (type == 2) {
+            if (criteria.getArguments().size() != 2) {
+                throw new SearchCriteriaException("Configuration error of expression");
+            }
+            clause.append(" ? AND ?");
+        }
+
+        if (type == 3) {
+            if (criteria.getArguments().isEmpty()) {
+                throw new SearchCriteriaException("Configuration error of expression");
+            }
+
+            clause.append(" (");
+
+            int size = criteria.getArguments().size();
+            for (int i = 0; i < size; i++) {
+                if (i == size - 1) {
+                    clause.append(" ? ");
+                } else {
+                    clause.append(" ? ,");
+                }
+            }
+
+            clause.append(")");
+        }
     }
 }

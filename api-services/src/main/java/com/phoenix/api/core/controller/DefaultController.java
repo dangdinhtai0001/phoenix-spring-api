@@ -1,9 +1,11 @@
 package com.phoenix.api.core.controller;
 
+import com.phoenix.api.core.exception.SearchCriteriaException;
 import com.phoenix.api.core.model.SearchCriteria;
 import com.phoenix.api.core.model.SearchCriteriaRequest;
 import org.springframework.http.ResponseEntity;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
@@ -19,7 +21,7 @@ public interface DefaultController {
 
     ResponseEntity deleteAll(Collection entities);
 
-    ResponseEntity findByCondition(List<SearchCriteriaRequest> conditions, int pageOffset, int pageSize);
+    ResponseEntity findByCondition(List<SearchCriteriaRequest> conditions, int pageOffset, int pageSize) throws SearchCriteriaException, NoSuchFieldException, InvocationTargetException, IllegalAccessException, InstantiationException, NoSuchMethodException;
 
-    ResponseEntity countByCondition(LinkedList<SearchCriteriaRequest> conditions);
+    ResponseEntity countByCondition(LinkedList<SearchCriteriaRequest> conditions) throws SearchCriteriaException;
 }
