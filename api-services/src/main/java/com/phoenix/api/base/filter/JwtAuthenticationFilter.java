@@ -2,6 +2,9 @@ package com.phoenix.api.base.filter;
 
 import com.phoenix.api.base.constant.ApplicationConstant;
 import com.phoenix.common.auth.JwtProvider;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.UnsupportedJwtException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -68,11 +71,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     filterChain.doFilter(httpServletRequest, httpServletResponse);
                 }
             }
+        } catch (MalformedJwtException | ExpiredJwtException | UnsupportedJwtException | IllegalArgumentException e) {
+            logger.warn(e.getMessage());
+            httpServletResponse.addHeader("Exception", e.getMessage());
+            httpServletResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, e.getMessage());
         } catch (Exception e) {
 //            e.printStackTrace();
             logger.warn(e.getMessage());
             httpServletResponse.addHeader("Exception", e.getMessage());
-            httpServletResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, e.getMessage());
+            httpServletResponse.sendError(HttpServletResponse.SC_FOUND, e.getMessage());
         }
     }
 
