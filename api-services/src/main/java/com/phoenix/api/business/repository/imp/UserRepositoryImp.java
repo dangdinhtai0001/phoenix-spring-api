@@ -5,6 +5,7 @@ import com.phoenix.api.business.model.User;
 import com.phoenix.api.business.repository.UserRepository;
 import com.phoenix.api.core.exception.SearchCriteriaException;
 import com.phoenix.api.core.model.BasePagination;
+import com.phoenix.api.core.model.OrderBy;
 import com.phoenix.api.core.model.SearchCriteria;
 import com.phoenix.api.core.repository.AbstractNativeRepository;
 import com.phoenix.common.structure.Pair;
@@ -35,14 +36,17 @@ public class UserRepositoryImp extends AbstractNativeRepository implements UserR
     }
 
     @Override
-    public BasePagination findByCondition(List<SearchCriteria> searchCriteriaList, int pageOffset, int pageSize)
+    public BasePagination findByCondition(List<SearchCriteria> searchCriteriaList, int pageOffset, int pageSize, OrderBy oderBy)
             throws SearchCriteriaException, NoSuchFieldException, InvocationTargetException, IllegalAccessException, InstantiationException, NoSuchMethodException {
         //Get Condition String from list SearchCriteria
         String condition = getConditionClauseFromSearchCriteria(searchCriteriaList);
 
+        // Get order by clause
+        String order = getOderByClause(oderBy);
+
         // Define sql and total sql
         String sql = "select fu.id, p.name, p.date_of_birth, p.gender, p.phone_number, p.avatar, fu.username " +
-                "from fw_user fu left join profile p on fu.id = p.USER_ID where " + condition;
+                "from fw_user fu left join profile p on fu.id = p.USER_ID where " + condition + order;
         String totalSql = "select count(*) from fw_user fu left join profile p on fu.id = p.USER_ID where " + condition;
 
         // Get list param for query

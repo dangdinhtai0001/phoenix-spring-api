@@ -88,7 +88,7 @@ public class TestAbstractRepository {
         int pageOffset = 1;
         int pageSize = 2;
 
-        BasePagination users = userRepositoryImp.findByCondition(searchCriteriaList, pageOffset, pageSize);
+        BasePagination users = userRepositoryImp.findByCondition(searchCriteriaList, pageOffset, pageSize, null);
 
         System.out.println(users.getItems());
     }

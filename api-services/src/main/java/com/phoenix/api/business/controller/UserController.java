@@ -60,9 +60,12 @@ public class UserController extends AbstractBaseController implements DefaultCon
     @GetMapping("/find-by")
     public ResponseEntity findByCondition(@RequestBody(required = false) List<SearchCriteriaRequest> listConditionRequests,
                                           @RequestParam(name = "offset") int pageOffset,
-                                          @RequestParam(name = "size") int pageSize) throws SearchCriteriaException,
+                                          @RequestParam(name = "size") int pageSize,
+                                          @RequestParam(name = "order") List<String> orderByKeys,
+                                          @RequestParam(name = "direction") String direction
+    ) throws SearchCriteriaException,
             NoSuchFieldException, InvocationTargetException, IllegalAccessException, InstantiationException, NoSuchMethodException {
-        return sendResponse(userService.findByCondition(listConditionRequests, pageOffset, pageSize));
+        return sendResponse(userService.findByCondition(listConditionRequests, pageOffset, pageSize, orderByKeys, direction));
     }
 
     @Override

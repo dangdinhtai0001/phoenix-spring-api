@@ -2,13 +2,10 @@ package com.phoenix.api.business.services.imp;
 
 import com.phoenix.api.base.constant.BeanIds;
 import com.phoenix.api.base.entities.ExceptionEntity;
-import com.phoenix.api.business.model.User;
 import com.phoenix.api.business.repository.UserRepository;
 import com.phoenix.api.business.services.UserService;
 import com.phoenix.api.core.exception.SearchCriteriaException;
-import com.phoenix.api.core.model.BasePagination;
-import com.phoenix.api.core.model.SearchCriteria;
-import com.phoenix.api.core.model.SearchCriteriaRequest;
+import com.phoenix.api.core.model.*;
 import com.phoenix.api.core.service.AbstractBaseService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -28,11 +25,14 @@ public class UserServiceImp extends AbstractBaseService implements UserService {
     }
 
     @Override
-    public BasePagination findByCondition(List<SearchCriteriaRequest> listConditionRequests, int pageOffset, int pageSize)
+    public BasePagination findByCondition(List<SearchCriteriaRequest> listConditionRequests, int pageOffset, int pageSize,
+                                          List<String> orderByKeys, String direction)
             throws SearchCriteriaException, NoSuchFieldException, InvocationTargetException, IllegalAccessException,
             InstantiationException, NoSuchMethodException {
         List<SearchCriteria> conditions = getListOfSearchCriteria(listConditionRequests);
-        return userRepository.findByCondition(conditions, pageOffset, pageSize);
+        OrderBy orderBy = new OrderByRequest(orderByKeys, direction).getOderBy();
+
+        return userRepository.findByCondition(conditions, pageOffset, pageSize, orderBy);
     }
 
     @Override

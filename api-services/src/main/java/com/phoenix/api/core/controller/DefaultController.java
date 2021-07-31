@@ -21,7 +21,8 @@ public interface DefaultController {
 
     ResponseEntity deleteAll(Collection entities);
 
-    ResponseEntity findByCondition(List<SearchCriteriaRequest> conditions, int pageOffset, int pageSize) throws SearchCriteriaException, NoSuchFieldException, InvocationTargetException, IllegalAccessException, InstantiationException, NoSuchMethodException;
+    ResponseEntity findByCondition(List<SearchCriteriaRequest> conditions, int pageOffset, int pageSize, List<String> orderByKeys, String direction)
+            throws SearchCriteriaException, NoSuchFieldException, InvocationTargetException, IllegalAccessException, InstantiationException, NoSuchMethodException;
 
     ResponseEntity countByCondition(LinkedList<SearchCriteriaRequest> conditions) throws SearchCriteriaException;
 }
