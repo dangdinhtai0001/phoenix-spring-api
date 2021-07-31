@@ -2,6 +2,7 @@ package com.phoenix.api.core.repository;
 
 import com.phoenix.api.core.exception.SearchCriteriaException;
 import com.phoenix.api.core.model.BasePagination;
+import com.phoenix.api.core.model.OrderBy;
 import com.phoenix.api.core.model.SearchCriteria;
 import com.phoenix.common.structure.Pair;
 import com.phoenix.common.util.ReflectionUtil;
@@ -69,9 +70,9 @@ public abstract class AbstractNativeRepository implements NativeRepository {
     }
 
     /**
-     * @param conditions
-     * @return
-     * @throws SearchCriteriaException
+     * @param conditions Danh sách các SearchCriteria định nghĩa các biểu thức điều kiện
+     * @return Chuỗi String điều kiện where
+     * @throws SearchCriteriaException Khi thông tin định nghĩa biểu thức điều kiện lỗi
      */
     @Override
     public String getConditionClauseFromSearchCriteria(List<SearchCriteria> conditions) throws SearchCriteriaException {
@@ -125,6 +126,10 @@ public abstract class AbstractNativeRepository implements NativeRepository {
         return clause.toString();
     }
 
+    /**
+     * @param conditions Danh sách các SearchCriteria định nghĩa các biểu thức điều kiện
+     * @return List các parameter của các biểu thức điều kiện
+     */
     @Override
     public List<Object> getParameterFromSearchCriteria(List<SearchCriteria> conditions) {
         List<Object> list = new LinkedList<>();
@@ -139,26 +144,50 @@ public abstract class AbstractNativeRepository implements NativeRepository {
         return list;
     }
 
-    //    ================================================================
-    //
-    //    ================================================================
+    @Override
+    public String getOderByClause(OrderBy order) {
+        if (order.getKeys() == null || order.getKeys().isEmpty()) {
+            return "";
+        }
+        StringBuilder clause = new StringBuilder();
+        clause.append(" ORDER BY ");
 
-    private Query createNativeQuery(String sql, Object... params) {
-        Query query = entityManager.createNativeQuery(sql);
-
-        int index = 1;
-        for (Object param : params) {
-            query.setParameter(index++, param);
+        int size = order.getKeys().size();
+        for (int i = 0; i < size; i++) {
+            if (i == size - 1) {
+                clause.append(order.getKeys().get(i));
+            } else {
+                clause.append(order.getKeys().get(i));
+                clause.append(", ");
+            }
         }
 
-        return query;
+        clause.append(" ");
+        clause.append(order.getDirection());
+
+        return clause.toString();
     }
 
-    public BasePagination executeNativeQuery(Class aClass, PageRequest pageRequest, String totalSql, String sql, Object... params) throws NoSuchFieldException, InvocationTargetException, IllegalAccessException, InstantiationException, NoSuchMethodException {
+    /**
+     * @param aClass      Class để parse kết quả lệnh query
+     * @param pageRequest Định nghĩa pageIndex + pageSize
+     * @param totalSql    Lệnh sql để tìm tổng số bản ghi
+     * @param sql         Lệnh sql để tìm dữ liệu
+     * @param params      Tham số của native query
+     * @return BasePagination
+     * @throws NoSuchFieldException      Xem {@link ReflectionUtil} (set Field)
+     * @throws InvocationTargetException Xem {@link ReflectionUtil} (set Field)
+     * @throws IllegalAccessException    Xem {@link ReflectionUtil} (set Field)
+     * @throws InstantiationException    Xem {@link ReflectionUtil} (set Field)
+     * @throws NoSuchMethodException     Xem {@link ReflectionUtil} (set Field)
+     */
+    @Override
+    public BasePagination executeNativeQuery(Class aClass, PageRequest pageRequest, String totalSql, String sql, Object... params)
+            throws NoSuchFieldException, InvocationTargetException, IllegalAccessException, InstantiationException, NoSuchMethodException {
         Query query;
-        if(params.length == 0){
+        if (params.length == 0) {
             query = createNativeQuery(sql);
-        }else {
+        } else {
             query = createNativeQuery(sql, params);
         }
 
@@ -184,17 +213,51 @@ public abstract class AbstractNativeRepository implements NativeRepository {
         Query queryTotal = createNativeQuery(totalSql, params);
         String countResult;
         try {
-            countResult =  String.valueOf(queryTotal.getSingleResult());
+            countResult = String.valueOf(queryTotal.getSingleResult());
         } catch (NullPointerException e) {
             countResult = "0";
         }
         long total = Long.parseLong(countResult);
 
+        // Create result
         Page page = new PageImpl(list, pageRequest, total);
 
         return new BasePagination(page);
     }
 
+
+    //    ================================================================
+    //
+    //    ================================================================
+
+    /**
+     * @param sql    Lệnh sql
+     * @param params Parameters của lệnh
+     * @return {@link Query}
+     */
+    private Query createNativeQuery(String sql, Object... params) {
+        Query query = entityManager.createNativeQuery(sql);
+
+        int index = 1;
+        for (Object param : params) {
+            query.setParameter(index++, param);
+        }
+
+        return query;
+    }
+
+
+    /**
+     * @param clause   String builder để tạo mệnh đề điều kiện
+     * @param criteria SearchCriteria định nghĩa biểu thức điều kiện
+     * @param type     Bao gồm 3 type:
+     *                 <ul>
+     *                 <li> 1: Criteria 1 tham số</li>
+     *                 <li> 2: Criteria 2 tham số</li>
+     *                 <li> 3: Criteria 1 list tham số</li>
+     *                 </ul>
+     * @throws SearchCriteriaException Khi thông tin định nghĩa biểu thức điều kiện lỗi
+     */
     private void handleSearchCriteria(StringBuilder clause, SearchCriteria criteria, int type) throws SearchCriteriaException {
         clause.append(criteria.getSearchOperation().getSign());
         clause.append(" ");

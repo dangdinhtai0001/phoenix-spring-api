@@ -1,8 +1,11 @@
 package com.phoenix.api.core.repository;
 
 import com.phoenix.api.core.exception.SearchCriteriaException;
+import com.phoenix.api.core.model.BasePagination;
+import com.phoenix.api.core.model.OrderBy;
 import com.phoenix.api.core.model.SearchCriteria;
 import com.phoenix.common.structure.Pair;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,4 +28,9 @@ public interface NativeRepository {
     String getConditionClauseFromSearchCriteria(List<SearchCriteria> conditions) throws SearchCriteriaException;
 
     List<Object> getParameterFromSearchCriteria(List<SearchCriteria> conditions);
+
+    String getOderByClause(OrderBy order);
+
+    BasePagination executeNativeQuery(Class aClass, PageRequest pageRequest, String totalSql, String sql, Object... params)
+            throws NoSuchFieldException, InvocationTargetException, IllegalAccessException, InstantiationException, NoSuchMethodException;
 }

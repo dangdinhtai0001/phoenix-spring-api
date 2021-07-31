@@ -6,6 +6,8 @@ import com.phoenix.api.base.repositories.imp.ExceptionRepositoryImp;
 import com.phoenix.api.business.model.User;
 import com.phoenix.api.business.repository.imp.UserRepositoryImp;
 import com.phoenix.api.core.model.BasePagination;
+import com.phoenix.api.core.model.OrderBy;
+import com.phoenix.api.core.model.OrderByRequest;
 import com.phoenix.api.core.model.SearchCriteria;
 import com.phoenix.common.structure.Pair;
 import org.junit.jupiter.api.Test;
@@ -89,5 +91,19 @@ public class TestAbstractRepository {
         BasePagination users = userRepositoryImp.findByCondition(searchCriteriaList, pageOffset, pageSize);
 
         System.out.println(users.getItems());
+    }
+
+    @Test
+    public void testCreateOrderBy() throws Exception {
+        List<String> keys = new LinkedList<>();
+        keys.add("id");
+        keys.add("code_");
+
+        OrderByRequest orderByRequest = new OrderByRequest(keys, "ASC");
+
+        OrderBy orderBy = orderByRequest.getOderBy();
+        String orderByClause = userRepositoryImp.getOderByClause(orderBy);
+
+        System.out.println(orderByClause);
     }
 }
