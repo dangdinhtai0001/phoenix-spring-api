@@ -17,8 +17,6 @@ public interface BaseService {
 
     PredicateBuilder getPredicateBuilderFromSearchCriteria(PredicateBuilder predicate, List<SearchCriteria> conditions);
 
-    String getConditionClauseFromSearchCriteria( List<SearchCriteria> conditions) throws SearchCriteriaException;
-
     String getPropertyOfRequestBodyByKey(Map requestBody, String key);
 
     List<SearchCriteria> getListOfSearchCriteria(List<SearchCriteriaRequest> listConditionRequests);

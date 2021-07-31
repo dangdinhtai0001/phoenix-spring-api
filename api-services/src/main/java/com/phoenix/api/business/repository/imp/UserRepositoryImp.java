@@ -4,10 +4,12 @@ import com.phoenix.api.base.constant.BeanIds;
 import com.phoenix.api.business.model.User;
 import com.phoenix.api.business.repository.UserRepository;
 import com.phoenix.api.core.exception.SearchCriteriaException;
+import com.phoenix.api.core.model.BasePagination;
 import com.phoenix.api.core.model.SearchCriteria;
 import com.phoenix.api.core.repository.AbstractNativeRepository;
 import com.phoenix.common.structure.Pair;
 import com.phoenix.common.util.ReflectionUtil;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -33,18 +35,21 @@ public class UserRepositoryImp extends AbstractNativeRepository implements UserR
     }
 
     @Override
-    public List<User> findByCondition(List<SearchCriteria> searchCriteriaList) throws SearchCriteriaException,
-            NoSuchFieldException, InvocationTargetException, IllegalAccessException, InstantiationException, NoSuchMethodException {
+    public BasePagination findByCondition(List<SearchCriteria> searchCriteriaList, int pageOffset, int pageSize)
+            throws SearchCriteriaException, NoSuchFieldException, InvocationTargetException, IllegalAccessException, InstantiationException, NoSuchMethodException {
+        //Get Condition String from list SearchCriteria
         String condition = getConditionClauseFromSearchCriteria(searchCriteriaList);
+
+        // Define sql and total sql
         String sql = "select fu.id, p.name, p.date_of_birth, p.gender, p.phone_number, p.avatar, fu.username " +
                 "from fw_user fu left join profile p on fu.id = p.USER_ID where " + condition;
+        String totalSql = "select count(*) from fw_user fu left join profile p on fu.id = p.USER_ID where " + condition;
+
+        // Get list param for query
         List<Object> conditions = getParameterFromSearchCriteria(searchCriteriaList);
 
-        List<Object[]> queryResult = executeNativeQuery(sql, conditions.toArray());
-
-        List<Pair<String, Class>> params = ReflectionUtil.getFieldAsPairList(User.class,
-                "id", "name", "dateOfBirth", "gender", "phoneNumber", "avatar", "username");
-
-        return parseResult(queryResult, params, User.class);
+        PageRequest pageRequest = PageRequest.of(pageOffset, pageSize);
+//        return parseResult(queryResult, params, User.class);
+        return executeNativeQuery(User.class, pageRequest, totalSql, sql, conditions.toArray());
     }
 }

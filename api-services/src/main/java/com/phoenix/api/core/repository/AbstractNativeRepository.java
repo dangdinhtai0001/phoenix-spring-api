@@ -1,9 +1,13 @@
 package com.phoenix.api.core.repository;
 
 import com.phoenix.api.core.exception.SearchCriteriaException;
+import com.phoenix.api.core.model.BasePagination;
 import com.phoenix.api.core.model.SearchCriteria;
 import com.phoenix.common.structure.Pair;
 import com.phoenix.common.util.ReflectionUtil;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -64,6 +68,11 @@ public abstract class AbstractNativeRepository implements NativeRepository {
         return list;
     }
 
+    /**
+     * @param conditions
+     * @return
+     * @throws SearchCriteriaException
+     */
     @Override
     public String getConditionClauseFromSearchCriteria(List<SearchCriteria> conditions) throws SearchCriteriaException {
         if (conditions == null || conditions.isEmpty()) {
@@ -143,6 +152,47 @@ public abstract class AbstractNativeRepository implements NativeRepository {
         }
 
         return query;
+    }
+
+    public BasePagination executeNativeQuery(Class aClass, PageRequest pageRequest, String totalSql, String sql, Object... params) throws NoSuchFieldException, InvocationTargetException, IllegalAccessException, InstantiationException, NoSuchMethodException {
+        Query query;
+        if(params.length == 0){
+            query = createNativeQuery(sql);
+        }else {
+            query = createNativeQuery(sql, params);
+        }
+
+        int pageNumber = pageRequest.getPageNumber();
+        int pageSize = pageRequest.getPageSize();
+
+        query.setFirstResult((pageNumber) * pageSize);
+        query.setMaxResults(pageSize);
+
+        List resultList;
+        try {
+            resultList = query.getResultList();
+        } catch (NullPointerException e) {
+            resultList = new LinkedList();
+        }
+
+        //parse result
+        List<Pair<String, Class>> parseParams = ReflectionUtil.getFieldAsPairList(aClass,
+                "id", "name", "dateOfBirth", "gender", "phoneNumber", "avatar", "username");
+        List list = parseResult(resultList, parseParams, aClass);
+
+        // find total
+        Query queryTotal = createNativeQuery(totalSql, params);
+        String countResult;
+        try {
+            countResult =  String.valueOf(queryTotal.getSingleResult());
+        } catch (NullPointerException e) {
+            countResult = "0";
+        }
+        long total = Long.parseLong(countResult);
+
+        Page page = new PageImpl(list, pageRequest, total);
+
+        return new BasePagination(page);
     }
 
     private void handleSearchCriteria(StringBuilder clause, SearchCriteria criteria, int type) throws SearchCriteriaException {

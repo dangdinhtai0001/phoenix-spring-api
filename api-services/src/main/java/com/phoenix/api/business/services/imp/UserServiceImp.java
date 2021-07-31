@@ -6,6 +6,7 @@ import com.phoenix.api.business.model.User;
 import com.phoenix.api.business.repository.UserRepository;
 import com.phoenix.api.business.services.UserService;
 import com.phoenix.api.core.exception.SearchCriteriaException;
+import com.phoenix.api.core.model.BasePagination;
 import com.phoenix.api.core.model.SearchCriteria;
 import com.phoenix.api.core.model.SearchCriteriaRequest;
 import com.phoenix.api.core.service.AbstractBaseService;
@@ -27,11 +28,11 @@ public class UserServiceImp extends AbstractBaseService implements UserService {
     }
 
     @Override
-    public List<User> findByCondition(List<SearchCriteriaRequest> listConditionRequests, int pageOffset, int pageSize)
+    public BasePagination findByCondition(List<SearchCriteriaRequest> listConditionRequests, int pageOffset, int pageSize)
             throws SearchCriteriaException, NoSuchFieldException, InvocationTargetException, IllegalAccessException,
             InstantiationException, NoSuchMethodException {
         List<SearchCriteria> conditions = getListOfSearchCriteria(listConditionRequests);
-        return userRepository.findByCondition(conditions);
+        return userRepository.findByCondition(conditions, pageOffset, pageSize);
     }
 
     @Override

@@ -3,7 +3,10 @@ package com.phoenix.api.core.repository;
 import com.phoenix.api.base.constant.BeanIds;
 import com.phoenix.api.base.entities.ExceptionEntity;
 import com.phoenix.api.base.repositories.imp.ExceptionRepositoryImp;
+import com.phoenix.api.business.model.User;
+import com.phoenix.api.business.repository.imp.UserRepositoryImp;
 import com.phoenix.api.core.model.BasePagination;
+import com.phoenix.api.core.model.SearchCriteria;
 import com.phoenix.common.structure.Pair;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +18,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -25,6 +29,11 @@ public class TestAbstractRepository {
     @Autowired
     @Qualifier(BeanIds.EXCEPTION_REPOSITORY_IMP)
     private ExceptionRepositoryImp exceptionRepositoryImp;
+
+    @Autowired
+    @Qualifier(BeanIds.USER_REPOSITORY_IMP)
+    private UserRepositoryImp userRepositoryImp;
+    ;
 
     @Test
     public void testFindAll() {
@@ -63,11 +72,22 @@ public class TestAbstractRepository {
 
     @Test
     public void testFindWithPage() {
-        Page<ExceptionEntity> entities = exceptionRepositoryImp.findAll(PageRequest.of(2,1));
+        Page<ExceptionEntity> entities = exceptionRepositoryImp.findAll(PageRequest.of(2, 1));
         BasePagination<ExceptionEntity> pagination = new BasePagination<>(entities);
 
         for (ExceptionEntity entity : pagination.getItems()) {
             System.out.println(entity);
         }
+    }
+
+    @Test
+    public void testNativeQueryWithPage() throws Exception {
+        List<SearchCriteria> searchCriteriaList = new LinkedList<>();
+        int pageOffset = 1;
+        int pageSize = 2;
+
+        BasePagination users = userRepositoryImp.findByCondition(searchCriteriaList, pageOffset, pageSize);
+
+        System.out.println(users.getItems());
     }
 }
