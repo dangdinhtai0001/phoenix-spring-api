@@ -69,11 +69,7 @@ public abstract class AbstractNativeRepository implements NativeRepository {
         return list;
     }
 
-    /**
-     * @param conditions Danh sách các SearchCriteria định nghĩa các biểu thức điều kiện
-     * @return Chuỗi String điều kiện where
-     * @throws SearchCriteriaException Khi thông tin định nghĩa biểu thức điều kiện lỗi
-     */
+
     @Override
     public String getConditionClauseFromSearchCriteria(List<SearchCriteria> conditions) throws SearchCriteriaException {
         if (conditions == null || conditions.isEmpty()) {
@@ -126,10 +122,7 @@ public abstract class AbstractNativeRepository implements NativeRepository {
         return clause.toString();
     }
 
-    /**
-     * @param conditions Danh sách các SearchCriteria định nghĩa các biểu thức điều kiện
-     * @return List các parameter của các biểu thức điều kiện
-     */
+
     @Override
     public List<Object> getParameterFromSearchCriteria(List<SearchCriteria> conditions) {
         List<Object> list = new LinkedList<>();
@@ -168,19 +161,7 @@ public abstract class AbstractNativeRepository implements NativeRepository {
         return clause.toString();
     }
 
-    /**
-     * @param aClass      Class để parse kết quả lệnh query
-     * @param pageRequest Định nghĩa pageIndex + pageSize
-     * @param totalSql    Lệnh sql để tìm tổng số bản ghi
-     * @param sql         Lệnh sql để tìm dữ liệu
-     * @param params      Tham số của native query
-     * @return BasePagination
-     * @throws NoSuchFieldException      Xem {@link ReflectionUtil} (set Field)
-     * @throws InvocationTargetException Xem {@link ReflectionUtil} (set Field)
-     * @throws IllegalAccessException    Xem {@link ReflectionUtil} (set Field)
-     * @throws InstantiationException    Xem {@link ReflectionUtil} (set Field)
-     * @throws NoSuchMethodException     Xem {@link ReflectionUtil} (set Field)
-     */
+
     @Override
     public BasePagination executeNativeQuery(Class aClass, PageRequest pageRequest, String totalSql, String sql, Object... params)
             throws NoSuchFieldException, InvocationTargetException, IllegalAccessException, InstantiationException, NoSuchMethodException {
