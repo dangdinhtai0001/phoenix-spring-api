@@ -1,6 +1,5 @@
 package com.phoenix.api.core.exception;
 
-import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
 public class ApplicationException extends Exception{
@@ -13,55 +12,55 @@ public class ApplicationException extends Exception{
     //========================================================================
     //========== Constructor
     //========================================================================
-    public ApplicationException(String code, String resource) {
+    public ApplicationException(String code) {
         this.code = code;
     }
 
-    public ApplicationException(String message, String code, String resource) {
+    public ApplicationException(String message, String code) {
         super(message);
         this.code = code;
     }
 
-    public ApplicationException(String message, Throwable cause, String code, String resource) {
+    public ApplicationException(String message, Throwable cause, String code) {
         super(message, cause);
         this.code = code;
     }
 
-    public ApplicationException(Throwable cause, String code, String resource) {
+    public ApplicationException(Throwable cause, String code) {
         super(cause);
         this.code = code;
     }
 
-    public ApplicationException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace, String code, String resource) {
+    public ApplicationException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace, String code) {
         super(message, cause, enableSuppression, writableStackTrace);
         this.code = code;
     }
 
-    public ApplicationException(String code, String resource, HttpStatus httpStatus) {
+    public ApplicationException(String code, HttpStatus httpStatus) {
         this.code = code;
         this.httpStatus = httpStatus;
     }
 
-    public ApplicationException(String message, String code, String resource, HttpStatus httpStatus) {
+    public ApplicationException(String message, String code, HttpStatus httpStatus) {
         super(message);
         this.code = code;
         this.httpStatus = httpStatus;
     }
 
-    public ApplicationException(String message, Throwable cause, String code, String resource, HttpStatus httpStatus) {
+    public ApplicationException(String message, Throwable cause, String code, HttpStatus httpStatus) {
         super(message, cause);
         this.code = code;
         this.httpStatus = httpStatus;
     }
 
-    public ApplicationException(Throwable cause, String code, String resource, HttpStatus httpStatus) {
+    public ApplicationException(Throwable cause, String code, HttpStatus httpStatus) {
         super(cause);
         this.code = code;
         this.httpStatus = httpStatus;
     }
 
     public ApplicationException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace,
-                                String code, String resource, HttpStatus httpStatus) {
+                                String code, HttpStatus httpStatus) {
         super(message, cause, enableSuppression, writableStackTrace);
         this.code = code;
         this.httpStatus = httpStatus;

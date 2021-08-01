@@ -25,7 +25,7 @@ public abstract class AbstractBaseService implements BaseService {
     public ApplicationException getApplicationException(String code) {
         ExceptionEntity exceptionEntity = findExceptionByCode(code);
 
-        return new ApplicationException(exceptionEntity.getMessage(), code, this.getClass().getName(),
+        return new ApplicationException(exceptionEntity.getMessage(), code,
                 HttpStatus.valueOf(exceptionEntity.getHttpCode()));
     }
 

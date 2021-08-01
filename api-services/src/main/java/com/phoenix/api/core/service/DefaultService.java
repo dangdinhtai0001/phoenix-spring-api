@@ -1,24 +1,23 @@
 package com.phoenix.api.core.service;
 
+import com.phoenix.api.core.exception.ApplicationException;
+import com.phoenix.api.core.model.BasePagination;
 import com.phoenix.api.core.model.SearchCriteria;
+import com.phoenix.api.core.model.SearchCriteriaRequest;
 
 import java.util.Collection;
 import java.util.List;
 
 public interface DefaultService {
-    Object create(Object entity);
+    Object create(Object entity) throws ApplicationException;
 
-    List createAll(Collection entities);
+    Object update(Object entity) throws ApplicationException;
 
-    Object update(Object entity);
+    void delete(Object entity) throws ApplicationException;
 
-    void delete(Object entity);
+    void deleteAll(Collection entities) throws ApplicationException;
 
-    void deleteAll(Collection entities);
+    BasePagination findByCondition(List<SearchCriteriaRequest> conditions, int pageOffset, int pageSize, List<String> orderByKeys, String direction) throws ApplicationException;
 
-    List findByCondition(List<SearchCriteria> conditions, int pageOffset, int pageSize);
-
-    long countByCondition(List<SearchCriteria> conditions);
-
-
+    long countByCondition(List<SearchCriteriaRequest> listConditionRequests) throws ApplicationException;
 }

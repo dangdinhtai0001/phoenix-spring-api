@@ -1,5 +1,6 @@
 package com.phoenix.api.core.controller;
 
+import com.phoenix.api.core.exception.ApplicationException;
 import com.phoenix.api.core.exception.SearchCriteriaException;
 import com.phoenix.api.core.model.SearchCriteria;
 import com.phoenix.api.core.model.SearchCriteriaRequest;
@@ -22,7 +23,7 @@ public interface DefaultController {
     ResponseEntity deleteAll(Collection entities);
 
     ResponseEntity findByCondition(List<SearchCriteriaRequest> conditions, int pageOffset, int pageSize, List<String> orderByKeys, String direction)
-            throws SearchCriteriaException, NoSuchFieldException, InvocationTargetException, IllegalAccessException, InstantiationException, NoSuchMethodException;
+            throws ApplicationException;
 
-    ResponseEntity countByCondition(LinkedList<SearchCriteriaRequest> conditions) throws SearchCriteriaException;
+    ResponseEntity countByCondition(LinkedList<SearchCriteriaRequest> conditions) throws ApplicationException;
 }
