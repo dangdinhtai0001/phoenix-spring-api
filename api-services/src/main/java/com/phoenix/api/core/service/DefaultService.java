@@ -17,7 +17,8 @@ public interface DefaultService {
 
     void deleteAll(Collection entities) throws ApplicationException;
 
-    BasePagination findByCondition(List<SearchCriteriaRequest> conditions, int pageOffset, int pageSize, List<String> orderByKeys, String direction) throws ApplicationException;
+    BasePagination findByCondition(List<SearchCriteriaRequest> conditions, int pageOffset, int pageSize,
+                                   List<String> orderByKeys, String direction) throws ApplicationException;
 
     long countByCondition(List<SearchCriteriaRequest> listConditionRequests) throws ApplicationException;
 }

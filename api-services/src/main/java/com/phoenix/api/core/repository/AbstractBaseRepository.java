@@ -13,7 +13,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
-public class AbstractBaseRepository<T extends BaseEntity<ID>, ID extends Serializable> extends AbstractNativeRepository
+public abstract class AbstractBaseRepository<T extends BaseEntity<ID>, ID extends Serializable> extends AbstractNativeRepository
         implements BaseRepository<T, ID> {
 
     private final SimpleJpaRepository<T, ID> jpaRepository;
