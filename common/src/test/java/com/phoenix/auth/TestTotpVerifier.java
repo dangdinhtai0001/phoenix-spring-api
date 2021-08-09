@@ -28,8 +28,8 @@ public class TestTotpVerifier {
         long currentBucket = Math.floorDiv(new SystemTimeProvider().getTime(), period);
         String code = generator.generate(secret, currentBucket);
 
-        System.out.println(generator.generate(secret,currentBucket));
-        System.out.println(verifier.isValidCode(secret,code));
+        System.out.println(generator.generate(secret, currentBucket));
+        System.out.println(verifier.isValidCode(secret, code));
 
     }
 

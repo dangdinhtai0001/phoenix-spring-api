@@ -323,7 +323,7 @@ public class HashCode {
     }
 
     private int setVal(long l) {
-        mVal = (int)(l ^ (l>>>32));
+        mVal = (int) (l ^ (l >>> 32));
         return mVal;
     }
 
@@ -345,7 +345,7 @@ public class HashCode {
         } else if (obj == null || obj.getClass() != getClass()) {
             return false;
         }
-        HashCode h = (HashCode)obj;
+        HashCode h = (HashCode) obj;
         return (h.hashCode() == hashCode());
     }
 

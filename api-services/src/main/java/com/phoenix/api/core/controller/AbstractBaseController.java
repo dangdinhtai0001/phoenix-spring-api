@@ -1,10 +1,8 @@
 package com.phoenix.api.core.controller;
 
 import com.phoenix.api.core.exception.ApplicationException;
-import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.util.LinkedHashMap;

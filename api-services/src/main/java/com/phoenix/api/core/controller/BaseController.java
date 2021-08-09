@@ -5,5 +5,6 @@ import org.springframework.http.ResponseEntity;
 
 public interface BaseController {
     ResponseEntity handleException(ApplicationException exception);
+
     ResponseEntity sendResponse(Object response);
 }

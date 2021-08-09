@@ -31,7 +31,7 @@ public class TestTextMatcher {
         list.add("30/02/2021");
 
         for (String s : list) {
-            System.out.println(String.format("String: %s, validate: %s",s, TextMatcher.isDateInFormat(s)));
+            System.out.println(String.format("String: %s, validate: %s", s, TextMatcher.isDateInFormat(s)));
         }
     }
 
@@ -48,7 +48,7 @@ public class TestTextMatcher {
 
 
         for (String s : list) {
-            System.out.println(String.format("String: %s, validate: %s",s, TextMatcher.isTimeIn24HFormat(s)));
+            System.out.println(String.format("String: %s, validate: %s", s, TextMatcher.isTimeIn24HFormat(s)));
         }
     }
 
@@ -65,7 +65,7 @@ public class TestTextMatcher {
 
 
         for (String s : list) {
-            System.out.println(String.format("String: %s, validate: %s",s, TextMatcher.isHexColor(s)));
+            System.out.println(String.format("String: %s, validate: %s", s, TextMatcher.isHexColor(s)));
         }
     }
 

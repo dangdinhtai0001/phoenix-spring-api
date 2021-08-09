@@ -4,7 +4,10 @@ import com.phoenix.api.core.entity.BaseEntity;
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "FW_EXCEPTION")
@@ -13,7 +16,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString(callSuper=true)
+@ToString(callSuper = true)
 public class ExceptionEntity extends BaseEntity<Long> {
     @Column(name = "CODE_")
     private String code;

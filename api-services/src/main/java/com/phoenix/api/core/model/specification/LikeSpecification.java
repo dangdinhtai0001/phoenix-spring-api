@@ -1,13 +1,7 @@
 package com.phoenix.api.core.model.specification;
 
-import com.phoenix.api.base.entities.ExceptionEntity;
-
 import javax.annotation.Nullable;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.From;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 
 public class LikeSpecification<T> extends AbstractSpecification<T> {
     private final String property;

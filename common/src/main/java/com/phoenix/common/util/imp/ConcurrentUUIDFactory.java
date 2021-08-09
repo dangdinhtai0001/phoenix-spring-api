@@ -18,7 +18,7 @@ public class ConcurrentUUIDFactory implements UUIDFactory {
     @Override
     public UUID generateRandomUuid() {
         final Random rnd = ThreadLocalRandom.current();
-        long mostSig  = rnd.nextLong();
+        long mostSig = rnd.nextLong();
         long leastSig = rnd.nextLong();
 
         // Identify this as a version 4 UUID, that is one based on a random value.

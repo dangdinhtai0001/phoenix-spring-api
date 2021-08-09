@@ -3,12 +3,11 @@ package com.phoenix.api.core.model.specification;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.util.StringUtils;
 
-import java.io.Serializable;
-import java.util.Objects;
-
 import javax.persistence.criteria.From;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
+import java.io.Serializable;
+import java.util.Objects;
 
 abstract class AbstractSpecification<T> implements Specification<T>, Serializable {
     public String getProperty(String property) {

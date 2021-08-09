@@ -15,10 +15,7 @@
 
 package com.phoenix.common.util;
 
-import com.google.common.base.Predicate;
-import com.google.common.collect.Iterables;
 import com.phoenix.common.structure.Pair;
-import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.lang.reflect.Field;
 import java.util.*;

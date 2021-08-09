@@ -2,7 +2,6 @@ package com.phoenix.api.core.repository;
 
 import com.phoenix.api.core.entity.BaseEntity;
 import com.phoenix.api.core.exception.RepositoryException;
-import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;

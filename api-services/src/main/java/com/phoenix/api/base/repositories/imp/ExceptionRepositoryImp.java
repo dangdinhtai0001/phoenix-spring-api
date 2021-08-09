@@ -6,7 +6,6 @@ import com.phoenix.api.core.repository.AbstractBaseRepository;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 @Repository(BeanIds.EXCEPTION_REPOSITORY_IMP)
 public class ExceptionRepositoryImp extends AbstractBaseRepository<ExceptionEntity, Long> {

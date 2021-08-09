@@ -21,7 +21,7 @@ public class TestRomanIntegerConversion {
         list.add("XXXXXX");
 
         for (String str : list) {
-            System.out.println(String.format("Roman: %s, int: %d",str, RomanIntegerConversion.Roman2Integer(str)));
+            System.out.println(String.format("Roman: %s, int: %d", str, RomanIntegerConversion.Roman2Integer(str)));
         }
     }
 
@@ -44,7 +44,7 @@ public class TestRomanIntegerConversion {
         list.add(1804);
 
         for (Integer i : list) {
-            System.out.println(String.format("Int: %d, Roman: %s",i, RomanIntegerConversion.integer2Roman(i)));
+            System.out.println(String.format("Int: %d, Roman: %s", i, RomanIntegerConversion.integer2Roman(i)));
         }
     }
 }

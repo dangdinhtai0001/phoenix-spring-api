@@ -13,10 +13,8 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Field;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 @Service(BeanIds.FILTER_METADATA_SERVICES)
 public class FilterMetadataServiceImp extends AbstractBaseService implements FilterMetadataService {

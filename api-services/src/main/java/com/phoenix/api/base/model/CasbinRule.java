@@ -2,7 +2,6 @@ package com.phoenix.api.base.model;
 
 import lombok.*;
 
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 

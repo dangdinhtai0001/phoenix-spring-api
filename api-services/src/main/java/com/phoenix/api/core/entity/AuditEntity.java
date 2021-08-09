@@ -1,4 +1,5 @@
 package com.phoenix.api.core.entity;
+
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedBy;

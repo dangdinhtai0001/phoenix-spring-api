@@ -1,11 +1,7 @@
 package com.phoenix.api.core.model.specification;
 
 import javax.annotation.Nullable;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.From;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import java.util.Collection;
 
 public class NotInSpecification<T> extends AbstractSpecification<T> {
@@ -18,7 +14,7 @@ public class NotInSpecification<T> extends AbstractSpecification<T> {
     }
 
     @Override
-    public Predicate toPredicate(@Nullable Root<T> root,@Nullable CriteriaQuery<?> query,@Nullable CriteriaBuilder cb) {
+    public Predicate toPredicate(@Nullable Root<T> root, @Nullable CriteriaQuery<?> query, @Nullable CriteriaBuilder cb) {
         From from = getRoot(property, root);
         String field = getProperty(property);
         return from.get(field).in(values).not();

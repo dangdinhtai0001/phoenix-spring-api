@@ -8,8 +8,6 @@ import com.phoenix.api.core.model.BasePagination;
 import com.phoenix.api.core.model.OrderBy;
 import com.phoenix.api.core.model.SearchCriteria;
 import com.phoenix.api.core.repository.AbstractNativeRepository;
-import com.phoenix.common.structure.Pair;
-import com.phoenix.common.util.ReflectionUtil;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;
 

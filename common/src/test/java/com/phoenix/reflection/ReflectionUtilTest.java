@@ -21,6 +21,7 @@ public class ReflectionUtilTest extends TestCase {
     public void testGetField() {
         System.out.println(ReflectionUtil.getDeclaredFields(DefaultCount.class)[0]);
     }
+
     public void testGetAllField() {
         System.out.println(ReflectionUtil.getAllFields(DefaultCount.class).get(0));
     }
@@ -37,7 +38,7 @@ public class ReflectionUtilTest extends TestCase {
 
         String value = "1";
         Class aClass1 = int.class;
-        Pair<String, Class> pair = new Pair(value,aClass1);
+        Pair<String, Class> pair = new Pair(value, aClass1);
 
         System.out.println(aClass1.cast(value));
     }

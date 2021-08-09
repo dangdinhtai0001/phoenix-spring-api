@@ -1,14 +1,14 @@
 package com.phoenix.api.base.entities;
 
 import com.phoenix.api.core.entity.AuditEntity;
-
-import javax.persistence.Column;
-import java.util.Date;
-
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
+import javax.persistence.Table;
+import java.util.Date;
 
 @Entity
 @Table(name = "FW_USER")

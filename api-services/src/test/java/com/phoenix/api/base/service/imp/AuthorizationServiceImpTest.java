@@ -2,7 +2,6 @@ package com.phoenix.api.base.service.imp;
 
 import com.phoenix.api.base.service.AuthorizationService;
 import org.casbin.jcasbin.main.Enforcer;
-import org.casbin.jcasbin.model.Model;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

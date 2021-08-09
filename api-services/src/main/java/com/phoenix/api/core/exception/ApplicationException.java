@@ -2,7 +2,7 @@ package com.phoenix.api.core.exception;
 
 import org.springframework.http.HttpStatus;
 
-public class ApplicationException extends Exception{
+public class ApplicationException extends Exception {
     //========================================================================
     //========== Property
     //========================================================================

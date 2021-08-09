@@ -8,7 +8,7 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
-public class AbstractSimpleController extends  AbstractBaseController implements DefaultController{
+public class AbstractSimpleController extends AbstractBaseController implements DefaultController {
     @Override
     public ResponseEntity create(Object entity) {
         return null;

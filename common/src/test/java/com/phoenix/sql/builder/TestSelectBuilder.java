@@ -116,7 +116,6 @@ public class TestSelectBuilder {
                 .orderBy("1");
 
 
-
         System.out.println(selectBuilder.build());
 
 

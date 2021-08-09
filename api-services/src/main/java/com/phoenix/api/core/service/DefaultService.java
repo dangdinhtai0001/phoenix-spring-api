@@ -2,7 +2,6 @@ package com.phoenix.api.core.service;
 
 import com.phoenix.api.core.exception.ApplicationException;
 import com.phoenix.api.core.model.BasePagination;
-import com.phoenix.api.core.model.SearchCriteria;
 import com.phoenix.api.core.model.SearchCriteriaRequest;
 
 import java.util.Collection;

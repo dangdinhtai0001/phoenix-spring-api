@@ -34,7 +34,7 @@ public class TestUserRepository {
     }
 
     @Test
-    public void findRefreshTokenByUsername(){
+    public void findRefreshTokenByUsername() {
         Optional<String> optional = userRepositoryImp.findRefreshTokenByUsername("user1");
 
         System.out.println(optional.orElse(null));

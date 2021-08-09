@@ -11,7 +11,6 @@
 package com.phoenix.common.util;
 
 import java.util.Arrays;
-import java.util.stream.Collectors;
 
 public class BitUtil {
     public static int[] convertDecimal2BitArray(int decimal) {

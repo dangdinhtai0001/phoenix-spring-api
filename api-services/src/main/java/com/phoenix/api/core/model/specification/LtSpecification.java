@@ -1,11 +1,7 @@
 package com.phoenix.api.core.model.specification;
 
 import javax.annotation.Nullable;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.From;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 
 public class LtSpecification<T> extends AbstractSpecification<T> {
     private final String property;
@@ -17,7 +13,7 @@ public class LtSpecification<T> extends AbstractSpecification<T> {
     }
 
     @Override
-    public Predicate toPredicate(@Nullable Root<T> root,@Nullable CriteriaQuery<?> query, CriteriaBuilder cb) {
+    public Predicate toPredicate(@Nullable Root<T> root, @Nullable CriteriaQuery<?> query, CriteriaBuilder cb) {
         From from = getRoot(property, root);
         String field = getProperty(property);
         return cb.lessThan(from.get(field), compare);

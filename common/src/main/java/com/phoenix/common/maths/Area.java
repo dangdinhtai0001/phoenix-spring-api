@@ -21,8 +21,8 @@ public class Area {
      *
      * @param radius radius of sphere
      * @return surface area of given sphere
-     *
-     *  - https://www.quora.com/Why-is-the-formula-for-surface-area-of-a-sphere-4-pi-r-2-and-why-is-volume-frac-4-3-pi-r-3
+     * <p>
+     * - https://www.quora.com/Why-is-the-formula-for-surface-area-of-a-sphere-4-pi-r-2-and-why-is-volume-frac-4-3-pi-r-3
      */
     public static double surfaceAreaSphere(double radius) {
         return 4 * Math.PI * radius * radius;
@@ -32,7 +32,7 @@ public class Area {
      * Calculate the area of a rectangle
      *
      * @param length length of rectangle
-     * @param width width of rectangle
+     * @param width  width of rectangle
      * @return area of given rectangle
      */
     public static double surfaceAreaRectangle(double length, double width) {
@@ -52,7 +52,7 @@ public class Area {
     /**
      * Calculate the area of a triangle
      *
-     * @param base base of triangle
+     * @param base   base of triangle
      * @param height height of triangle
      * @return area of given triangle
      */
@@ -63,7 +63,7 @@ public class Area {
     /**
      * Calculate the area of a parallelogram
      *
-     * @param base base of parallelogram
+     * @param base   base of parallelogram
      * @param height height of parallelogram
      * @return area of given parallelogram
      */
@@ -74,8 +74,8 @@ public class Area {
     /**
      * Calculate the area of a trapezium
      *
-     * @param base1 upper base of trapezium
-     * @param base2 bottom base of trapezium
+     * @param base1  upper base of trapezium
+     * @param base2  bottom base of trapezium
      * @param height height of trapezium
      * @return area of given trapezium
      */

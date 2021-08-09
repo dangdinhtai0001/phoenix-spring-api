@@ -14,7 +14,7 @@ import java.util.UUID;
 public class UUIDFactoryTest {
 
     @Test
-    public void testConcurrentUUIDFactory(){
+    public void testConcurrentUUIDFactory() {
         UUIDFactory uuidFactory = new ConcurrentUUIDFactory();
         UUID uuid = uuidFactory.generateRandomUuid();
 

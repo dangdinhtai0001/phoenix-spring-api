@@ -14,7 +14,7 @@ import org.junit.Test;
 public class JwtProviderTest {
 
     @Test
-    public void testGenerateTokenWithoutPayload(){
+    public void testGenerateTokenWithoutPayload() {
         JwtProvider jwtProvider = new DefaultJwtProvider();
 
         String token = jwtProvider.generateToken(null);
@@ -24,8 +24,8 @@ public class JwtProviderTest {
 
 
     @Test
-    public void testGenerateTokenClaim(){
-        Claims  claims = new DefaultClaims();
+    public void testGenerateTokenClaim() {
+        Claims claims = new DefaultClaims();
         claims.put("claim-key", "claim_value");
 
         JwtProvider jwtProvider = new DefaultJwtProvider();

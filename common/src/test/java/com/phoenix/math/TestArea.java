@@ -10,7 +10,7 @@ import org.junit.Test;
 
 public class TestArea {
     @Test
-    public void testCalculateArea(){
+    public void testCalculateArea() {
         /* test cube */
         assert Double.compare(Area.surfaceAreaCube(1), 6.0) == 0;
 

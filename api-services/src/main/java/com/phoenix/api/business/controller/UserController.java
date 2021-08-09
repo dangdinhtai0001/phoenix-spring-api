@@ -5,13 +5,11 @@ import com.phoenix.api.business.services.UserService;
 import com.phoenix.api.core.controller.AbstractBaseController;
 import com.phoenix.api.core.controller.DefaultController;
 import com.phoenix.api.core.exception.ApplicationException;
-import com.phoenix.api.core.exception.SearchCriteriaException;
 import com.phoenix.api.core.model.SearchCriteriaRequest;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
@@ -64,13 +62,13 @@ public class UserController extends AbstractBaseController implements DefaultCon
                                           @RequestParam(name = "size") int pageSize,
                                           @RequestParam(name = "order") List<String> orderByKeys,
                                           @RequestParam(name = "direction") String direction
-    ) throws  ApplicationException {
+    ) throws ApplicationException {
         return sendResponse(userService.findByCondition(listConditionRequests, pageOffset, pageSize, orderByKeys, direction));
     }
 
     @Override
     @GetMapping("/count")
-    public ResponseEntity countByCondition(@RequestBody(required = false) LinkedList<SearchCriteriaRequest> listConditionRequests)throws  ApplicationException{
+    public ResponseEntity countByCondition(@RequestBody(required = false) LinkedList<SearchCriteriaRequest> listConditionRequests) throws ApplicationException {
         return sendResponse(userService.countByCondition(listConditionRequests));
     }
 }

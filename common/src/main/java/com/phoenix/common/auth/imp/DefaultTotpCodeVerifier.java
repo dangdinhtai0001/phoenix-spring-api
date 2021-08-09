@@ -7,8 +7,8 @@ package com.phoenix.common.auth.imp;
 
 import com.phoenix.common.auth.TotpCodeGenerator;
 import com.phoenix.common.auth.TotpCodeVerifier;
-import com.phoenix.common.time.TimeProvider;
 import com.phoenix.common.exceptions.TotpCodeGenerationException;
+import com.phoenix.common.time.TimeProvider;
 
 public class DefaultTotpCodeVerifier implements TotpCodeVerifier {
     // ------------------------------------------------------------

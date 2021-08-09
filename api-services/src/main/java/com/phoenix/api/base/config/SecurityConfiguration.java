@@ -3,10 +3,10 @@ package com.phoenix.api.base.config;
 
 import com.phoenix.api.base.constant.ApplicationConstant;
 import com.phoenix.api.base.constant.BeanIds;
-import com.phoenix.api.base.filter.JwtAuthenticationFilter;
-import com.phoenix.api.base.model.RawPasswordEncoder;
 import com.phoenix.api.base.entry_point.DefaultAccessDeniedEntryPoint;
 import com.phoenix.api.base.entry_point.JwtAuthenticationEntryPoint;
+import com.phoenix.api.base.filter.JwtAuthenticationFilter;
+import com.phoenix.api.base.model.RawPasswordEncoder;
 import com.phoenix.common.auth.JwtProvider;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -18,7 +18,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.*;
+import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 

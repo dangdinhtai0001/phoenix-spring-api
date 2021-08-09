@@ -22,7 +22,7 @@ import java.util.Optional;
 @Repository(BeanIds.BASE_USER_REPOSITORY_IMP)
 public class UserRepositoryImp extends AbstractBaseRepository<UserEntity, Long> implements UserRepository {
 
-    public UserRepositoryImp( EntityManager entityManager) {
+    public UserRepositoryImp(EntityManager entityManager) {
         super(entityManager, UserEntity.class);
     }
 
