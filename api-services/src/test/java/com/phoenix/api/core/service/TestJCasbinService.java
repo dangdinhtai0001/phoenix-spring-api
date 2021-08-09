@@ -3,21 +3,30 @@ package com.phoenix.api.core.service;
 import org.casbin.jcasbin.main.Enforcer;
 import org.casbin.jcasbin.model.Model;
 import org.junit.jupiter.api.Test;
+import org.springframework.util.ResourceUtils;
 
+import java.io.*;
 import java.util.LinkedList;
 import java.util.List;
 
 public class TestJCasbinService {
     @Test
-    public void testInitEnforcement() {
+    public void testInitEnforcement() throws IOException {
         Model model = new Model();
 
-        initModel(model);
+        //initModel(model);
+        initModelFromFile(model);
         initPolicies(model);
 
         Enforcer enforcer = new Enforcer(model);
 
         System.out.println(enforcer.enforce("alice", "data1", "read"));
+    }
+
+    @Test
+    public void testReadModelFile() throws IOException {
+        System.out.println(getModelContext());
+
     }
 
     //---------------------------------------------------------------------
@@ -31,16 +40,35 @@ public class TestJCasbinService {
         model.addDef("m", "m", "g(r.sub, p.sub) && g2(r.obj, p.obj) && r.act == p.act");
     }
 
+    private String getModelContext() throws IOException {
+        File file = ResourceUtils.getFile("classpath:casbin/rbac_with_resource_roles_model.conf");
+        InputStream inputStream = new FileInputStream(file);
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+        StringBuilder stringBuilder = new StringBuilder();
+
+        String line;
+        while ((line = bufferedReader.readLine()) != null) {
+            stringBuilder.append(line).append(System.lineSeparator());
+        }
+
+        return stringBuilder.toString();
+    }
+
+
+    private void initModelFromFile(Model model) throws IOException {
+        String modelContext = getModelContext();
+        model.loadModelFromText(modelContext);
+//        model.loadModel("F:\\PROJECT\\Project2\\github\\phoenix-spring-api-v2\\api-services\\src\\main\\resources\\casbin\\rbac_model.conf");
+    }
+
     private void initPolicies(Model model) {
 
         model.addPolicy("p", "p", getRule("alice", "data1", "read"));
         model.addPolicy("p", "p", getRule("bob", "data2", "write"));
-        model.addPolicy("p", "p", getRule("data_group_admin", "data_group", "write"));
+        model.addPolicy("p", "p", getRule("data2_admin", "data2", "read"));
+        model.addPolicy("p", "p", getRule("data2_admin", "data2", "write"));
 
-        model.addPolicy("g", "g", getRule("alice", "data_group_admin"));
-
-        model.addPolicy("g", "g2", getRule("data1", "data_group"));
-        model.addPolicy("g", "g2", getRule("data2", "data_group"));
+        model.addPolicy("g", "g", getRule("alice", "data2_admin"));
 
     }
 
