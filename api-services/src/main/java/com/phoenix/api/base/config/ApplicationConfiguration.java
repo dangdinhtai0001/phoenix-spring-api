@@ -42,11 +42,18 @@ public class ApplicationConfiguration {
         this.authorizationService = authorizationService;
     }
 
+    /**
+     * @return Enforcer của casbin dùng để xác định quyền của subject đối với object
+     */
     @Bean(BeanIds.AUTHORIZATION_ENFORCE)
     public Enforcer createAuthorizationEnforcer() {
         log.info("Creating authorization enforcer");
         Model model = authorizationService.loadModelFromPath(authorizationModelPath);
-        return new Enforcer(model);
+        Enforcer enforcer = new Enforcer(model);
+        enforcer.setAutoNotifyDispatcher(false);
+        enforcer.enableAutoSave(false);
+        enforcer.enableLog(false);
+        return enforcer;
     }
 
     /**
