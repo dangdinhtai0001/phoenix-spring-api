@@ -29,7 +29,56 @@ public class TestJCasbinService {
 
     }
 
+    @Test
+    public void testRBACModel() throws IOException {
+        Model model = new Model();
+        String modelText = getModelText();
+
+        model.loadModelFromText(modelText);
+
+//        model.addPolicy("p", "p", getRule("TEACHER", "UserServiceImp", "countByCondition"));
+//        model.addPolicy("g", "g", getRule("admin", "TEACHER"));
+//        model.addPolicy("p", "p", getRule("alice", "data1", "read"));
+//        model.addPolicy("p", "p", getRule("bob", "data2", "write"));
+//        model.addPolicy("p", "p", getRule("data2_admin", "data2", "read"));
+//        model.addPolicy("p", "p", getRule("data2_admin", "data2", "write"));
+//        model.addPolicy("g", "g", getRule("alice", "data2_admin"));
+
+
+        Enforcer enforcer = new Enforcer(model);
+
+        enforcer.addPolicy("alice", "data1", "read");
+        enforcer.addPolicy("bob", "data2", "write");
+        enforcer.addPolicy("data2_admin", "data2", "read");
+        enforcer.addPolicy("data2_admin", "data2", "write");
+        enforcer.addGroupingPolicy("alice", "data2_admin");
+
+        System.out.println(enforcer.getPermissionsForUser("alice"));
+
+//        enforcer.enforce("admin", "UserServiceImp", "countByCondition");
+//        enforcer.enforce("user", "UserServiceImp", "countByCondition");
+        enforcer.enforce("alice", "data2", "read");
+        enforcer.enforce("bob", "data2", "read");
+    }
+
     //---------------------------------------------------------------------
+
+    private String getModelText() throws IOException {
+        return "[request_definition]\n" +
+                "r = sub, obj, act\n" +
+                "\n" +
+                "[policy_definition]\n" +
+                "p = sub, obj, act\n" +
+                "\n" +
+                "[role_definition]\n" +
+                "g = _, _\n" +
+                "\n" +
+                "[policy_effect]\n" +
+                "e = some(where (p.eft == allow))\n" +
+                "\n" +
+                "[matchers]\n" +
+                "m = g(r.sub, p.sub) && r.obj == p.obj && r.act == p.act";
+    }
 
     private void initModel(Model model) {
         model.addDef("r", "r", "sub, obj, act");

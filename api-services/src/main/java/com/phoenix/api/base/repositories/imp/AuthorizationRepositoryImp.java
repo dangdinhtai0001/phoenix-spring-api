@@ -22,11 +22,11 @@ public class AuthorizationRepositoryImp extends AbstractNativeRepository impleme
     @Override
     public List<CasbinRule> findAllCasbinRules() throws NoSuchFieldException, InvocationTargetException,
             IllegalAccessException, InstantiationException, NoSuchMethodException {
-        String sql = "select type, arg_1, arg_2, arg_3 from fw_resource_policies";
+        String sql = "select type, arg_1, arg_2, arg_3, arg_4, arg_5, arg_6  from fw_resource_policies";
 
         List<Object[]> queryResult = executeNativeQuery(sql);
 
-        List<Pair<String, Class>> params = ReflectionUtil.getFieldAsPairList(CasbinRule.class, "pType", "arg1", "arg2", "arg3");
+        List<Pair<String, Class>> params = ReflectionUtil.getFieldAsPairList(CasbinRule.class, "pType", "arg1", "arg2", "arg3", "arg4", "arg5", "arg6");
 
         return parseResult(queryResult, params, CasbinRule.class);
     }

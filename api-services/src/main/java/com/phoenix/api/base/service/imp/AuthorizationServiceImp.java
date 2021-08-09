@@ -13,12 +13,14 @@ import org.springframework.util.ResourceUtils;
 
 import java.io.*;
 import java.lang.reflect.InvocationTargetException;
-import java.util.LinkedList;
 import java.util.List;
 
 @Service(BeanIds.AUTHORIZATION_SERVICES)
 @Log4j2
 public class AuthorizationServiceImp implements AuthorizationService {
+
+    private final String POLICY_KEY = "p";
+    private final String GROUP_POLICY_KEY = "g";
 
     private final AuthorizationRepository authorizationRepository;
 
@@ -50,27 +52,32 @@ public class AuthorizationServiceImp implements AuthorizationService {
     }
 
     @Override
-    public void loadPolicies(Model model) {
+    public void loadPolicies(Enforcer enforcer) {
         try {
             List<CasbinRule> rules = authorizationRepository.findAllCasbinRules();
 
             for (CasbinRule rule : rules) {
-                model.addPolicy(rule.getPType(), rule.getPType(), rule.getArguments());
+                if (POLICY_KEY.equals(rule.getPType())) {
+                    enforcer.addPolicy(rule.getArgumentsAsArray());
+                }
+
+                if (GROUP_POLICY_KEY.equals(rule.getPType())) {
+                    enforcer.addGroupingPolicy(rule.getArgumentsAsArray());
+                }
             }
+
         } catch (NoSuchFieldException | InvocationTargetException | IllegalAccessException | InstantiationException | NoSuchMethodException e) {
             log.error(e.getMessage(), e);
         }
     }
 
     @Override
-    public void clearPolicies(Model model) {
-        model.clearPolicy();
+    public void clearPolicies(Enforcer enforcer) {
+        enforcer.clearPolicy();
     }
 
     @Override
-    public boolean enforce(Model model, Object... args) {
-        Enforcer enforcer = new Enforcer(model);
-
+    public boolean enforce(Enforcer enforcer, Object... args) {
         return enforcer.enforce(args);
     }
 
@@ -92,34 +99,4 @@ public class AuthorizationServiceImp implements AuthorizationService {
 
         return stringBuilder.toString();
     }
-
-    private List<String> getRule(String... args) {
-        List<String> rules = new LinkedList<>();
-
-
-        if (args[0] != null && !args[0].isEmpty()) {
-            rules.add(args[0]);
-        }
-
-        if (args[1] != null && !args[1].isEmpty()) {
-            rules.add(args[1]);
-        }
-
-        if (args[2] != null && !args[2].isEmpty()) {
-            rules.add(args[2]);
-        }
-
-        if (args.length > 3 && args[3] != null && !args[3].isEmpty()) {
-            rules.add(args[3]);
-        }
-
-        if (args.length > 4 && args[4] != null && !args[4].isEmpty()) {
-            rules.add(args[4]);
-        }
-
-        return rules;
-
-    }
-
-
 }

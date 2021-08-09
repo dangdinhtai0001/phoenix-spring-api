@@ -10,6 +10,7 @@ import com.phoenix.common.text.HashingText;
 import com.phoenix.common.util.UUIDFactory;
 import com.phoenix.common.util.imp.ConcurrentUUIDFactory;
 import lombok.extern.log4j.Log4j2;
+import org.casbin.jcasbin.main.Enforcer;
 import org.casbin.jcasbin.model.Model;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -41,10 +42,11 @@ public class ApplicationConfiguration {
         this.authorizationService = authorizationService;
     }
 
-    @Bean(BeanIds.AUTHORIZATION_MODEL)
-    public Model createAuthorizationModel() {
-        log.info("Creating authorization model");
-        return authorizationService.loadModelFromPath(authorizationModelPath);
+    @Bean(BeanIds.AUTHORIZATION_ENFORCE)
+    public Enforcer createAuthorizationEnforcer() {
+        log.info("Creating authorization enforcer");
+        Model model = authorizationService.loadModelFromPath(authorizationModelPath);
+        return new Enforcer(model);
     }
 
     /**

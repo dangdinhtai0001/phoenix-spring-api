@@ -9,7 +9,7 @@ import lombok.extern.log4j.Log4j2;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
-import org.casbin.jcasbin.model.Model;
+import org.casbin.jcasbin.main.Enforcer;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -21,18 +21,17 @@ import java.util.List;
 @Log4j2
 public class ApplicationAuthorizationAspect extends AbstractBaseService {
 
-    private final Model authorizationModel;
+    private final Enforcer authorizationEnforcer;
     private final AuthorizationService authorizationService;
-    private final List<ExceptionEntity> exceptionEntities;
 
     public ApplicationAuthorizationAspect(
-            @Qualifier(BeanIds.AUTHORIZATION_MODEL) Model authorizationModel,
+            @Qualifier(BeanIds.AUTHORIZATION_ENFORCE) Enforcer authorizationEnforcer,
             @Qualifier(BeanIds.AUTHORIZATION_SERVICES) AuthorizationService authorizationService,
-            @Qualifier(BeanIds.ALL_EXCEPTION) List<ExceptionEntity> exceptionEntities) {
+            @Qualifier(BeanIds.ALL_EXCEPTION) List<ExceptionEntity> exceptionEntities
+    ) {
         super(exceptionEntities);
-        this.authorizationModel = authorizationModel;
+        this.authorizationEnforcer = authorizationEnforcer;
         this.authorizationService = authorizationService;
-        this.exceptionEntities = exceptionEntities;
     }
 
     @Before(value = "@within(ApplicationAuthorization) || @annotation(ApplicationAuthorization)")
@@ -41,11 +40,11 @@ public class ApplicationAuthorizationAspect extends AbstractBaseService {
 //        log.info("Principal: " + principal);
 //        log.info("monitor.before, class: " + joinPoint.getSignature().getDeclaringType().getSimpleName() + ", method: " + joinPoint.getSignature().getName());
 
+        authorizationService.clearPolicies(authorizationEnforcer);
+        authorizationService.loadPolicies(authorizationEnforcer);
 
-        authorizationService.clearPolicies(authorizationModel);
-        authorizationService.loadPolicies(authorizationModel);
         String[] enforceArgs = new String[]{principal, joinPoint.getSignature().getDeclaringType().getSimpleName(), joinPoint.getSignature().getName()};
-        boolean isAllow = authorizationService.enforce(authorizationModel, enforceArgs);
+        boolean isAllow = authorizationService.enforce(authorizationEnforcer, enforceArgs);
 
         if (!isAllow) {
             throw getApplicationException("AUTH_004");

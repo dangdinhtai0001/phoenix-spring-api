@@ -1,14 +1,15 @@
 package com.phoenix.api.base.service;
 
+import org.casbin.jcasbin.main.Enforcer;
 import org.casbin.jcasbin.model.Model;
 
 public interface AuthorizationService {
     Model loadModelFromPath(String path);
 
-    void loadPolicies(Model model);
+    void loadPolicies(Enforcer enforcer);
 
-    void clearPolicies(Model model);
+    void clearPolicies(Enforcer enforcer);
 
-    boolean enforce(Model model, Object... args);
+    boolean enforce(Enforcer enforcer, Object... args);
 
 }
