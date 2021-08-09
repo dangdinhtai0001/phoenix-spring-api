@@ -5,7 +5,8 @@
 
 package com.phoenix.util;
 
-import com.phoenix.util.imp.ConcurrentUUIDFactory;
+import com.phoenix.common.util.UUIDFactory;
+import com.phoenix.common.util.imp.ConcurrentUUIDFactory;
 import org.junit.Test;
 
 import java.util.UUID;

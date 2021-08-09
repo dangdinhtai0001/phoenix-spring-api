@@ -9,7 +9,6 @@ package com.phoenix.sql.builder;
 
 import com.phoenix.common.builder.InsertBuilder;
 import com.phoenix.common.builder.SelectBuilder;
-import com.phoenix.common.builder.SubSelectBuilder;
 import org.junit.Test;
 
 public class TestSqlBuilders {

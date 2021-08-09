@@ -5,6 +5,7 @@
 
 package com.phoenix.text;
 
+import com.phoenix.common.util.TextUtil;
 import org.junit.Test;
 
 public class TestTextUtil {

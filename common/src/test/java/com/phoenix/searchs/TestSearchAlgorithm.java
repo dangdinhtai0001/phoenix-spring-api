@@ -5,8 +5,9 @@
 
 package com.phoenix.searchs;
 
-import com.phoenix.searchs.imp.BinarySearch;
-import com.phoenix.searchs.imp.IterativeBinarySearch;
+import com.phoenix.common.searchs.SearchAlgorithm;
+import com.phoenix.common.searchs.imp.BinarySearch;
+import com.phoenix.common.searchs.imp.IterativeBinarySearch;
 import org.junit.Test;
 
 import java.util.Arrays;

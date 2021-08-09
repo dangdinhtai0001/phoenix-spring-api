@@ -5,7 +5,8 @@
 
 package com.phoenix.time;
 
-import com.phoenix.time.imp.SystemTimeProvider;
+import com.phoenix.common.time.TimeProvider;
+import com.phoenix.common.time.imp.SystemTimeProvider;
 import org.junit.Test;
 
 public class TimeProviderTest {

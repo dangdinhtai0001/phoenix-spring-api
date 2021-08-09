@@ -5,7 +5,8 @@
 
 package com.phoenix.auth;
 
-import com.phoenix.auth.imp.DefaultJwtProvider;
+import com.phoenix.common.auth.JwtProvider;
+import com.phoenix.common.auth.imp.DefaultJwtProvider;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.impl.DefaultClaims;
 import org.junit.Test;

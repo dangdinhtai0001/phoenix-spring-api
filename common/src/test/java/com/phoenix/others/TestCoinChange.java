@@ -5,6 +5,7 @@
 
 package com.phoenix.others;
 
+import com.phoenix.common.others.CoinChange;
 import org.junit.Test;
 
 public class TestCoinChange {

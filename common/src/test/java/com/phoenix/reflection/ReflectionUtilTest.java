@@ -10,12 +10,12 @@
 
 package com.phoenix.reflection;
 
-import com.phoenix.util.imp.DefaultCount;
+import com.phoenix.common.util.ReflectionUtil;
+import com.phoenix.common.util.imp.DefaultCount;
 import javafx.util.Pair;
 import junit.framework.TestCase;
 
 import java.lang.reflect.Field;
-import java.text.SimpleDateFormat;
 
 public class ReflectionUtilTest extends TestCase {
     public void testGetField() {

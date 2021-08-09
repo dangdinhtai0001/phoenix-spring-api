@@ -5,6 +5,7 @@
 
 package com.phoenix.conversions.base;
 
+import com.phoenix.common.base.RgbHsvConversion;
 import org.junit.Test;
 
 import java.util.Arrays;

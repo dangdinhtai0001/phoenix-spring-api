@@ -5,11 +5,12 @@
 
 package com.phoenix.auth;
 
-import com.phoenix.auth.imp.DefaultTotpCodeGenerator;
-import com.phoenix.auth.imp.DefaultTotpCodeVerifier;
-import com.phoenix.exceptions.TotpCodeGenerationException;
-import com.phoenix.time.TimeProvider;
-import com.phoenix.time.imp.SystemTimeProvider;
+import com.phoenix.common.auth.TotpCodeGenerator;
+import com.phoenix.common.auth.imp.DefaultTotpCodeGenerator;
+import com.phoenix.common.auth.imp.DefaultTotpCodeVerifier;
+import com.phoenix.common.exceptions.TotpCodeGenerationException;
+import com.phoenix.common.time.TimeProvider;
+import com.phoenix.common.time.imp.SystemTimeProvider;
 import org.junit.Test;
 
 public class TestTotpVerifier {

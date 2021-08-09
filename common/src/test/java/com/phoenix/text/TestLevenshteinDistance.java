@@ -5,6 +5,7 @@
 
 package com.phoenix.text;
 
+import com.phoenix.common.text.LevenshteinDistance;
 import org.junit.Test;
 
 public class TestLevenshteinDistance {

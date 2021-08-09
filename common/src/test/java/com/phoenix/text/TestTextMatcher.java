@@ -5,6 +5,7 @@
 
 package com.phoenix.text;
 
+import com.phoenix.common.text.TextMatcher;
 import org.junit.Test;
 
 import java.io.IOException;

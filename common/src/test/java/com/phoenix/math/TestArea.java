@@ -5,7 +5,7 @@
 
 package com.phoenix.math;
 
-import com.phoenix.maths.Area;
+import com.phoenix.common.maths.Area;
 import org.junit.Test;
 
 public class TestArea {
