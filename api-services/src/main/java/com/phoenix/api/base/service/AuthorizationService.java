@@ -7,6 +7,8 @@ public interface AuthorizationService {
 
     void loadPolicies(Model model);
 
-    boolean enforce(Model model, String... args);
+    void clearPolicies(Model model);
+
+    boolean enforce(Model model, Object... args);
 
 }

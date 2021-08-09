@@ -27,13 +27,9 @@ public class BeanIds {
     // ====================================================
     // Repository
     //====================================================
-    public static final String SPECIFICATION_FACTORY = "FW_SPECIFICATION_FACTORY";
-    public static final String AUTHENTICATION_REPOSITORY_IMP = "FW_AUTHENTICATION_REPOSITORY_IMP";
-    public static final String USER_STATUS_REPOSITORY = "FW_USER_STATUS_REPOSITORY";
     public static final String BASE_USER_REPOSITORY_IMP = "FW_USER_REPOSITORY_IMP";
     public static final String EXCEPTION_REPOSITORY_IMP = "FW_EXCEPTION_REPOSITORY_IMP";
-    public static final String MENU_REPOSITORY_IMP = "FW_MENU_REPOSITORY_IMP";
-    public static final String PERMISSION_REPOSITORY_IMP = "FW_PERMISSION_REPOSITORY_IMP";
+    public static final String AUTHORIZATION_REPOSITORY_IMP = "FW_AUTHORIZATION_REPOSITORY_IMP";
 
 
     public static final String USER_REPOSITORY_IMP = "USER_REPOSITORY_IMP";
