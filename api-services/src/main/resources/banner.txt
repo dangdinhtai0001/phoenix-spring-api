@@ -9,7 +9,7 @@ ${Ansi.GREEN}
  |_|
 
  :: Application: ${spring.application.name}
- :: Build version: ${application.build.version}
+ :: Build version: ${application.version.build}
  :: Spring Boot ${spring-boot.formatted-version}
  :: Powered by Spring Boot ${spring-boot.version}
  :: MIT License, Copyright (c) 2020 Đình Tài
