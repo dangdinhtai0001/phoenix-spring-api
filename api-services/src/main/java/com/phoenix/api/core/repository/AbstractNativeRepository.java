@@ -45,7 +45,11 @@ public abstract class AbstractNativeRepository implements NativeRepository {
         Pair<String, Class> pair;
         for (int i = 0; i < params.size(); i++) {
             pair = params.get(i);
-            ReflectionUtil.setField(pair.first(), pair.second(), String.valueOf(record[i]), target);
+            if (record[i] == null) {
+                ReflectionUtil.setField(pair.first(), pair.second(), null, target);
+            } else {
+                ReflectionUtil.setField(pair.first(), pair.second(), String.valueOf(record[i]), target);
+            }
         }
         return target;
     }
@@ -62,7 +66,11 @@ public abstract class AbstractNativeRepository implements NativeRepository {
             target = constructor.newInstance();
             for (int i = 0; i < params.size(); i++) {
                 pair = params.get(i);
-                ReflectionUtil.setField(pair.first(), pair.second(), String.valueOf(record[i]), target);
+                if (record[i] == null) {
+                    ReflectionUtil.setField(pair.first(), pair.second(), null, target);
+                } else {
+                    ReflectionUtil.setField(pair.first(), pair.second(), String.valueOf(record[i]), target);
+                }
             }
             list.add(target);
         }
