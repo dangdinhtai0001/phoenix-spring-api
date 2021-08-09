@@ -5,6 +5,7 @@ import com.phoenix.api.base.constant.BeanIds;
 import com.phoenix.api.base.entities.ExceptionEntity;
 import com.phoenix.api.base.repositories.imp.UserRepositoryImp;
 import com.phoenix.api.base.service.AuthenticationService;
+import com.phoenix.api.core.config.DefaultExceptionCode;
 import com.phoenix.api.core.exception.ApplicationException;
 import com.phoenix.api.core.service.AbstractBaseService;
 import com.phoenix.common.auth.JwtProvider;
@@ -73,13 +74,13 @@ public class AuthenticationServiceImp extends AbstractBaseService implements Aut
 
         } catch (BadCredentialsException e) {
             log.error(e.getMessage());
-            throw getApplicationException("AUTH_001");
+            throw getApplicationException(DefaultExceptionCode.BAD_CREDENTIALS);
         } catch (LockedException e) {
             log.error(e.getMessage());
-            throw getApplicationException("AUTH_002");
+            throw getApplicationException(DefaultExceptionCode.ACCOUNT_LOCKED);
         } catch (AccountExpiredException e) {
             log.error(e.getMessage());
-            throw getApplicationException("AUTH_003");
+            throw getApplicationException(DefaultExceptionCode.ACCOUNT_EXPIRE);
         }
     }
 
@@ -95,7 +96,7 @@ public class AuthenticationServiceImp extends AbstractBaseService implements Aut
 
         if (refreshToken == null || username == null) {
             log.error(("Bad request"));
-            throw getApplicationException("COM_001");
+            throw getApplicationException(DefaultExceptionCode.BAD_REQUEST);
         }
 
         Optional<String> refreshTokenOptional = userRepository.findRefreshTokenByUsername(username);
@@ -103,14 +104,14 @@ public class AuthenticationServiceImp extends AbstractBaseService implements Aut
 
         if (oldRefreshToken == null) {
             log.error(String.format("Can't find user with username: %s", username));
-            throw getApplicationException("AUTH_001");
+            throw getApplicationException(DefaultExceptionCode.BAD_CREDENTIALS);
         }
 
         if (refreshToken.equals(oldRefreshToken)) {
             return generateToken(username, session);
         } else {
             log.error(String.format("Invalid JWT refresh token with username: %s", username));
-            throw getApplicationException("AUTH_005");
+            throw getApplicationException(DefaultExceptionCode.INVALID_REFRESH_JWT);
         }
     }
 
@@ -146,7 +147,7 @@ public class AuthenticationServiceImp extends AbstractBaseService implements Aut
 
         if (result < 0) {
             log.error(String.format("An error occurred while saving the refresh token update for the account: %s", username));
-            throw getApplicationException("DB_001");
+            throw getApplicationException(DefaultExceptionCode.DATABASE_ERROR);
         }
 
         return token;
