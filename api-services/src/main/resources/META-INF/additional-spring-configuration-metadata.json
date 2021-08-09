@@ -22,6 +22,12 @@
       "type": "com.phoenix.api.core.config.ApplicationProperties$Jwt",
       "sourceType": "com.phoenix.api.core.config.ApplicationProperties",
       "sourceMethod": "getJwt()"
+    },
+    {
+      "name": "application.authorization",
+      "type": "com.phoenix.api.core.config.ApplicationProperties$Authorization",
+      "sourceType": "com.phoenix.api.core.config.ApplicationProperties",
+      "sourceMethod": "getAuthorization()"
     }
   ],
   "properties": [
@@ -54,6 +60,11 @@
       "type": "java.lang.String",
       "sourceType": "com.phoenix.api.core.config.ApplicationProperties$Jwt",
       "defaultValue": 36000000
+    },
+    {
+      "name": "application.authorization.model-path",
+      "type": "java.lang.String",
+      "description": "Description for application.authorization.model-path."
     }
   ]
 }
