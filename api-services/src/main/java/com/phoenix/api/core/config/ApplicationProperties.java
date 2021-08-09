@@ -14,6 +14,7 @@ public class ApplicationProperties {
     private Path applicationPath;
     private Version applicationVersion;
     private Jwt applicationJWT;
+    private Jwt applicationAuthorization;
 
     @Getter
     @Setter
@@ -33,6 +34,12 @@ public class ApplicationProperties {
     public static class Jwt {
         private String secret;
         private long expired;
+    }
+
+    @Getter
+    @Setter
+    public static class Authorization {
+        private String modelPath;
     }
 
 
