@@ -6,6 +6,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 public interface AuthorizationRepository {
-    public List<CasbinRule> findAllCasbinRules() throws NoSuchFieldException, InvocationTargetException, IllegalAccessException, InstantiationException, NoSuchMethodException;
+    List<CasbinRule> findAllCasbinRules() throws NoSuchFieldException, InvocationTargetException, IllegalAccessException, InstantiationException, NoSuchMethodException;
 
 }

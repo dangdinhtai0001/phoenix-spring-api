@@ -1,8 +1,11 @@
 package com.phoenix.api.business.model;
 
 
+import com.phoenix.api.core.model.DomainObject;
+
 import java.util.Date;
 
+@DomainObject
 public class User {
     private Long id;
     private String name;

@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.util.ResourceUtils;
 
 import java.io.*;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -59,6 +60,16 @@ public class TestJCasbinService {
 //        enforcer.enforce("user", "UserServiceImp", "countByCondition");
         enforcer.enforce("alice", "data2", "read");
         enforcer.enforce("bob", "data2", "read");
+    }
+
+
+    @Test
+    public void testRemoveList() {
+        List<String> list = new LinkedList<>(Arrays.asList("1", "2", "3", "4"));
+        List<String> list1 = new LinkedList<>(Arrays.asList("1", "2"));
+        list.removeAll(list1);
+
+        System.out.println(list);
     }
 
     //---------------------------------------------------------------------

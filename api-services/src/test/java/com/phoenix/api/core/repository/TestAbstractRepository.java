@@ -35,7 +35,6 @@ public class TestAbstractRepository {
     @Autowired
     @Qualifier(BeanIds.USER_REPOSITORY_IMP)
     private UserRepositoryImp userRepositoryImp;
-    ;
 
     @Test
     public void testFindAll() {

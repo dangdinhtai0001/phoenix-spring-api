@@ -17,7 +17,7 @@ public enum SearchOperation {
     private final String sign;
     private final String value;
 
-    private SearchOperation(String sign, String value) {
+    SearchOperation(String sign, String value) {
         this.sign = sign;
         this.value = value;
     }

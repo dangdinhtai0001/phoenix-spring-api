@@ -20,6 +20,7 @@ public class BeanIds {
     public static final String DEFAULT_USER_DETAIL_SERVICES = "FW_DEFAULT_USER_DETAIL_SERVICES";
     public static final String AUTHENTICATION_SERVICES = "FW_AUTHENTICATION_SERVICES";
     public static final String AUTHORIZATION_SERVICES = "FW_AUTHORIZATION_SERVICES";
+    public static final String FILTER_METADATA_SERVICES = "FW_FILTER_METADATA_SERVICES";
 
 
     public static final String USER_SERVICES = "FW_USER_SERVICES";
@@ -30,6 +31,7 @@ public class BeanIds {
     public static final String BASE_USER_REPOSITORY_IMP = "FW_USER_REPOSITORY_IMP";
     public static final String EXCEPTION_REPOSITORY_IMP = "FW_EXCEPTION_REPOSITORY_IMP";
     public static final String AUTHORIZATION_REPOSITORY_IMP = "FW_AUTHORIZATION_REPOSITORY_IMP";
+    public static final String FILTER_METADATA_REPOSITORY_IMP = "FW_FILTER_METADATA_REPOSITORY_IMP";
 
 
     public static final String USER_REPOSITORY_IMP = "USER_REPOSITORY_IMP";
