@@ -9,7 +9,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
 
-public interface AuthService {
+public interface AuthenticationService {
     LinkedHashMap<String, String> login(Map loginRequest, HttpSession session) throws ApplicationException;
 
     ResponseEntity logout(Map logoutRequest, HttpSession session);

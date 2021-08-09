@@ -10,11 +10,8 @@ import javax.persistence.PersistenceContext;
 
 @Repository(BeanIds.EXCEPTION_REPOSITORY_IMP)
 public class ExceptionRepositoryImp extends AbstractBaseRepository<ExceptionEntity, Long> {
-    @PersistenceContext
-    private final EntityManager entityManager;
 
     public ExceptionRepositoryImp(EntityManager entityManager) {
         super(entityManager, ExceptionEntity.class);
-        this.entityManager = entityManager;
     }
 }

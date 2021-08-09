@@ -1,4 +1,4 @@
-package com.phoenix.api.base.service;
+package com.phoenix.api.base.service.imp;
 
 import com.phoenix.api.base.constant.BeanIds;
 import com.phoenix.api.base.model.DefaultUserDetails;

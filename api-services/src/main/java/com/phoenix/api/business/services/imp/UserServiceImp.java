@@ -1,5 +1,6 @@
 package com.phoenix.api.business.services.imp;
 
+import com.phoenix.api.base.authorization.ApplicationAuthorization;
 import com.phoenix.api.base.constant.BeanIds;
 import com.phoenix.api.base.entities.ExceptionEntity;
 import com.phoenix.api.business.repository.UserRepository;
@@ -16,6 +17,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Service(BeanIds.USER_SERVICES)
+@ApplicationAuthorization
 public class UserServiceImp extends AbstractBaseService implements UserService {
     private final UserRepository userRepository;
 

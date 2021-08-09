@@ -4,7 +4,7 @@ import com.phoenix.api.base.constant.ApplicationConstant;
 import com.phoenix.api.base.constant.BeanIds;
 import com.phoenix.api.base.entities.ExceptionEntity;
 import com.phoenix.api.base.repositories.imp.UserRepositoryImp;
-import com.phoenix.api.base.service.AuthService;
+import com.phoenix.api.base.service.AuthenticationService;
 import com.phoenix.api.core.exception.ApplicationException;
 import com.phoenix.api.core.service.AbstractBaseService;
 import com.phoenix.common.auth.JwtProvider;
@@ -30,16 +30,16 @@ import java.util.Map;
 import java.util.Optional;
 
 @Log4j2
-@Service(BeanIds.AUTH_SERVICES)
-public class AuthServiceImp extends AbstractBaseService implements AuthService {
+@Service(BeanIds.AUTHENTICATION_SERVICES)
+public class AuthenticationServiceImp extends AbstractBaseService implements AuthenticationService {
     private final JwtProvider jwtProvider;
     private final UUIDFactory uuidFactory;
     private final AuthenticationManager authenticationManager;
     private final UserRepositoryImp userRepository;
 
-    protected AuthServiceImp(
+    protected AuthenticationServiceImp(
             @Qualifier(BeanIds.JWT_PROVIDER) JwtProvider jwtProvider,
-            @Qualifier(BeanIds.UUID_Factory) UUIDFactory uuidFactory,
+            @Qualifier(BeanIds.UUID_FACTORY) UUIDFactory uuidFactory,
             @Qualifier(BeanIds.DEFAULT_AUTHENTICATION_MANAGER) AuthenticationManager authenticationManager,
             @Qualifier(BeanIds.BASE_USER_REPOSITORY_IMP) UserRepositoryImp userRepository,
             @Qualifier(BeanIds.ALL_EXCEPTION) List<ExceptionEntity> exceptionEntities
