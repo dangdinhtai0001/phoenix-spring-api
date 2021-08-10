@@ -18,12 +18,47 @@ package com.phoenix.common.util;
 import com.phoenix.common.structure.Pair;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Class gồm các hàm static hỗ trợ reflection
  */
 public class ReflectionUtil {
+
+    /**
+     * @param aClass Class cần xử lí
+     * @return List tên các declared method của class
+     */
+    public static List getAllDeclaredMethodsMethodNames(Class aClass) {
+        return Arrays.stream(aClass.getDeclaredMethods()).map(Method::getName).collect(Collectors.toList());
+    }
+
+    /**
+     * @param aClass Class cần xử lí
+     * @return List các declared method của class
+     */
+    public static List getAllDeclaredMethodsMethods(Class aClass) {
+        return Arrays.asList(aClass.getDeclaredMethods());
+    }
+
+    /**
+     * @param aClass Class cần xử lí
+     * @return List tên các method của class
+     */
+    public static List getAllMethodNames(Class aClass) {
+        return Arrays.stream(aClass.getMethods()).map(Method::getName).collect(Collectors.toList());
+    }
+
+    /**
+     * @param aClass Class cần xử lí
+     * @return List tên các method của class
+     */
+    public static List getAllMethods(Class aClass) {
+        return Arrays.asList(aClass.getMethods());
+    }
+
     /**
      * @param aClass Class cần xử lí
      * @return Mảng chứa tất cả các field của class (Không bao gồm các field của supper class)
