@@ -5,10 +5,8 @@
  * @Author: Đặng Đình Tài
  */
 
-package com.phoenix.sql.builder;
+package com.phoenix.common.builder;
 
-import com.phoenix.common.builder.InsertBuilder;
-import com.phoenix.common.builder.SelectBuilder;
 import org.junit.Test;
 
 public class TestSqlBuilders {

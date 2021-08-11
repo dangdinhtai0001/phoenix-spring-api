@@ -3,9 +3,8 @@
  * @Created_date: 7/9/21, 11:10 PM
  */
 
-package com.phoenix.text;
+package com.phoenix.common.text;
 
-import com.phoenix.common.text.TextMatcher;
 import org.junit.Test;
 
 import java.io.IOException;

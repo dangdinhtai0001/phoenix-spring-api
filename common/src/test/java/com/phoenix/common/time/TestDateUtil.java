@@ -8,7 +8,7 @@
  * @Date 6/24/21, 3:21 PM
  */
 
-package com.phoenix.time;
+package com.phoenix.common.time;
 
 import com.phoenix.common.util.DateUtil;
 import org.junit.Assert;

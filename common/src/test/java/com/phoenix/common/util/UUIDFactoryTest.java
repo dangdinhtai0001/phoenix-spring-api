@@ -3,9 +3,8 @@
  * @Created_date: 7/9/21, 11:10 PM
  */
 
-package com.phoenix.util;
+package com.phoenix.common.util;
 
-import com.phoenix.common.util.UUIDFactory;
 import com.phoenix.common.util.imp.ConcurrentUUIDFactory;
 import org.junit.Test;
 

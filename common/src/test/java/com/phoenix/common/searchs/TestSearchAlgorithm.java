@@ -3,9 +3,8 @@
  * @Created_date: 7/9/21, 11:10 PM
  */
 
-package com.phoenix.searchs;
+package com.phoenix.common.searchs;
 
-import com.phoenix.common.searchs.SearchAlgorithm;
 import com.phoenix.common.searchs.imp.BinarySearch;
 import com.phoenix.common.searchs.imp.IterativeBinarySearch;
 import org.junit.Test;

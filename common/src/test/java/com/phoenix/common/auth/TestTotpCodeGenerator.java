@@ -3,9 +3,8 @@
  * @Created_date: 7/9/21, 11:10 PM
  */
 
-package com.phoenix.auth;
+package com.phoenix.common.auth;
 
-import com.phoenix.common.auth.TotpCodeGenerator;
 import com.phoenix.common.auth.imp.DefaultTotpCodeGenerator;
 import com.phoenix.common.exceptions.TotpCodeGenerationException;
 import com.phoenix.common.time.imp.SystemTimeProvider;

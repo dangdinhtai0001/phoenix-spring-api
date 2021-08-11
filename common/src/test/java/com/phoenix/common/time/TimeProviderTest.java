@@ -3,9 +3,8 @@
  * @Created_date: 7/9/21, 11:10 PM
  */
 
-package com.phoenix.time;
+package com.phoenix.common.time;
 
-import com.phoenix.common.time.TimeProvider;
 import com.phoenix.common.time.imp.SystemTimeProvider;
 import org.junit.Test;
 

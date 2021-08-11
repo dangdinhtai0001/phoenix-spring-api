@@ -5,10 +5,8 @@
  * @Author: Đặng Đình Tài
  */
 
-package com.phoenix.sql.builder;
+package com.phoenix.common.builder;
 
-import com.phoenix.common.builder.SelectBuilder;
-import com.phoenix.common.builder.SubSelectBuilder;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

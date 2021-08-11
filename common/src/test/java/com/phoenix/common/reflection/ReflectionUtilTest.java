@@ -8,7 +8,7 @@
  * @Created_date: 6/26/21, 4:26 PM
  */
 
-package com.phoenix.reflection;
+package com.phoenix.common.reflection;
 
 import com.phoenix.common.util.ReflectionUtil;
 import com.phoenix.common.util.imp.DefaultCount;

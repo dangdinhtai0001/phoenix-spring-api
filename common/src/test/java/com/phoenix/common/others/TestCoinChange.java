@@ -3,9 +3,8 @@
  * @Created_date: 7/9/21, 11:10 PM
  */
 
-package com.phoenix.others;
+package com.phoenix.common.others;
 
-import com.phoenix.common.others.CoinChange;
 import org.junit.Test;
 
 public class TestCoinChange {

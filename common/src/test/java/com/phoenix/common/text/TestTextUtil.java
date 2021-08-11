@@ -3,7 +3,7 @@
  * @Created_date: 7/9/21, 11:10 PM
  */
 
-package com.phoenix.text;
+package com.phoenix.common.text;
 
 import com.phoenix.common.util.TextUtil;
 import org.junit.Test;

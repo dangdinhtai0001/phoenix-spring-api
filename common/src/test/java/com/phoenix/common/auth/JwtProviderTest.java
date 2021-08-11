@@ -3,9 +3,8 @@
  * @Created_date: 7/9/21, 11:10 PM
  */
 
-package com.phoenix.auth;
+package com.phoenix.common.auth;
 
-import com.phoenix.common.auth.JwtProvider;
 import com.phoenix.common.auth.imp.DefaultJwtProvider;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.impl.DefaultClaims;

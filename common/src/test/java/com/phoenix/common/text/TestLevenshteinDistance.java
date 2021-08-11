@@ -3,9 +3,8 @@
  * @Created_date: 7/9/21, 11:10 PM
  */
 
-package com.phoenix.text;
+package com.phoenix.common.text;
 
-import com.phoenix.common.text.LevenshteinDistance;
 import org.junit.Test;
 
 public class TestLevenshteinDistance {

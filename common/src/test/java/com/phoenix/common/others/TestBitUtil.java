@@ -3,7 +3,7 @@
  * @Created_date: 7/9/21, 11:10 PM
  */
 
-package com.phoenix.others;
+package com.phoenix.common.others;
 
 import com.phoenix.common.util.BitUtil;
 import org.junit.Test;
