@@ -22,7 +22,7 @@ import java.util.List;
 
 @Configuration(value = "ApplicationConfiguration")
 @Log4j2
-public class ApplicationConfiguration {
+public class ApplicationConfiguration  {
     @Value("${application.jwt.secret}")
     private String secret;
 
