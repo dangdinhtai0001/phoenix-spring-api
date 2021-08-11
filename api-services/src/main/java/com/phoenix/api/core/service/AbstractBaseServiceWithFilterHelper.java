@@ -20,43 +20,85 @@ public abstract class AbstractBaseServiceWithFilterHelper extends AbstractBaseSe
     }
 
     @Override
-    public List<SearchCriteria> mapBusinessObject2Table(List<SearchCriteria> searchCriteriaList, Class businessClass) throws SearchCriteriaException {
+    public List<SearchCriteria> mapBusinessObjectSearchCriteria2Table(List<SearchCriteria> searchCriteriaList, Class businessClass) throws SearchCriteriaException {
         if (searchCriteriaList == null || searchCriteriaList.isEmpty()) {
             return searchCriteriaList;
         }
+        Map<String, FilterMetadataEntity> filterMetadataMap = findFilterMetadataByBusinessClass(businessClass);
+
+        return mapBusinessObjectSearchCriteria2Table(searchCriteriaList, filterMetadataMap);
+    }
+
+    @Override
+    public List<SearchCriteria> mapBusinessObjectSearchCriteria2Table(List<SearchCriteria> searchCriteriaList, Map<String, FilterMetadataEntity> filterMetadataMap) throws SearchCriteriaException {
+        if (searchCriteriaList == null || searchCriteriaList.isEmpty()) {
+            return searchCriteriaList;
+        }
+
+
+        FilterMetadataEntity filterMetadataEntity;
+        for (SearchCriteria searchCriteria : searchCriteriaList) {
+            filterMetadataEntity = filterMetadataMap.getOrDefault(searchCriteria.getKey(), null);
+
+            searchCriteria.setKey(updateBusinessKeys(filterMetadataEntity, searchCriteria.getKey()));
+        }
+        return searchCriteriaList;
+    }
+
+    @Override
+    public List<String> mapBusinessObjectField2TableColumn(List<String> fieldNames, Map<String, FilterMetadataEntity> filterMetadataMap) throws SearchCriteriaException {
+        if (fieldNames == null || fieldNames.isEmpty()) {
+            return fieldNames;
+        }
+
+        FilterMetadataEntity filterMetadataEntity;
+
+        for (int i = 0; i < fieldNames.size(); i++) {
+            filterMetadataEntity = filterMetadataMap.getOrDefault(fieldNames.get(i), null);
+
+            fieldNames.set(i, updateBusinessKeys(filterMetadataEntity, fieldNames.get(i)));
+        }
+
+        return fieldNames;
+    }
+
+    @Override
+    public List<String> mapBusinessObjectField2TableColumn(List<String> fieldNames, Class businessClass) throws SearchCriteriaException {
+        if (fieldNames == null || fieldNames.isEmpty()) {
+            return fieldNames;
+        }
+
+        Map<String, FilterMetadataEntity> filterMetadataMap = findFilterMetadataByBusinessClass(businessClass);
+
+        return mapBusinessObjectField2TableColumn(fieldNames, filterMetadataMap);
+    }
+
+    //************************************************************************************************************************************
+    //***************
+    //************************************************************************************************************************************
+
+
+    private String updateBusinessKeys(FilterMetadataEntity filterMetadataEntity, String key) throws SearchCriteriaException {
+        if (filterMetadataEntity == null
+                || TextUtil.isNullOrEmpty(filterMetadataEntity.getTable())
+                || TextUtil.isNullOrEmpty(filterMetadataEntity.getColumn()
+        )) {
+            throw new SearchCriteriaException(String.format("Missing metadata about the field '%s'", key));
+        }
+
+        if (filterMetadataEntity.getAlias() == null || filterMetadataEntity.getAlias().isEmpty()) {
+            return (String.format("%s.%s", filterMetadataEntity.getTable(), filterMetadataEntity.getColumn()));
+        } else {
+            return (String.format("%s.%s", filterMetadataEntity.getAlias(), filterMetadataEntity.getColumn()));
+        }
+    }
+
+    private Map<String, FilterMetadataEntity> findFilterMetadataByBusinessClass(Class businessClass) {
         String className = businessClass.getName();
 
         List<FilterMetadataEntity> filterMetadataList = filterMetadataRepository.findByObject(className);
 
-        return mapBusinessObject2Table(searchCriteriaList, filterMetadataList);
-    }
-
-    @Override
-    public List<SearchCriteria> mapBusinessObject2Table(List<SearchCriteria> searchCriteriaList, List<FilterMetadataEntity> filterMetadataList) throws SearchCriteriaException {
-        if (searchCriteriaList == null || searchCriteriaList.isEmpty()) {
-            return searchCriteriaList;
-        }
-
-        Map<String, FilterMetadataEntity> map = filterMetadataList.stream()
+        return filterMetadataList.stream()
                 .collect(Collectors.toMap(FilterMetadataEntity::getField, filterMetadataEntity -> filterMetadataEntity));
-
-        FilterMetadataEntity filterMetadataEntity;
-        for (SearchCriteria searchCriteria : searchCriteriaList) {
-            filterMetadataEntity = map.getOrDefault(searchCriteria.getKey(), null);
-
-            if (filterMetadataEntity == null
-                    || TextUtil.isNullOrEmpty(filterMetadataEntity.getTable())
-                    || TextUtil.isNullOrEmpty(filterMetadataEntity.getColumn()
-            )) {
-                throw new SearchCriteriaException(String.format("Missing metadata about the field '%s'", searchCriteria.getKey()));
-            }
-
-            if (filterMetadataEntity.getAlias() == null || filterMetadataEntity.getAlias().isEmpty()) {
-                searchCriteria.setKey(String.format("%s.%s", filterMetadataEntity.getTable(), filterMetadataEntity.getColumn()));
-            } else {
-                searchCriteria.setKey(String.format("%s.%s", filterMetadataEntity.getAlias(), filterMetadataEntity.getColumn()));
-            }
-        }
-        return searchCriteriaList;
     }
 }

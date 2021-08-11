@@ -63,7 +63,8 @@ public class UserServiceImp extends AbstractBaseServiceWithFilterHelper implemen
         OrderBy orderBy = new OrderByRequest(orderByKeys, direction).getOderBy();
 
         try {
-            conditions = mapBusinessObject2Table(conditions, User.class);
+            orderBy.setKeys(mapBusinessObjectField2TableColumn(orderBy.getKeys(), User.class));
+            conditions = mapBusinessObjectSearchCriteria2Table(conditions, User.class);
             return userRepository.findByCondition(conditions, pageOffset, pageSize, orderBy);
         } catch (SearchCriteriaException | NoSuchFieldException | InvocationTargetException | IllegalAccessException | InstantiationException | NoSuchMethodException e) {
             throw new ApplicationException(e.getMessage(), "");
@@ -75,7 +76,7 @@ public class UserServiceImp extends AbstractBaseServiceWithFilterHelper implemen
         List<SearchCriteria> conditions = getListOfSearchCriteria(listConditionRequests);
 
         try {
-            conditions = mapBusinessObject2Table(conditions, User.class);
+            conditions = mapBusinessObjectSearchCriteria2Table(conditions, User.class);
             return userRepository.countByCondition(conditions);
         } catch (SearchCriteriaException e) {
             log.warn(e.getMessage(), e);

@@ -23,14 +23,14 @@ class AbstractBaseServiceTest extends AbstractBaseServiceWithFilterHelper {
         List<SearchCriteria> searchCriteriaList = initSearchCriteriaList();
         List<FilterMetadataEntity> filterMetadataList = initFilterMetadataEntities();
 
-        List<SearchCriteria> result = mapBusinessObject2Table(searchCriteriaList, filterMetadataList);
+        List<SearchCriteria> result = mapBusinessObjectSearchCriteria2Table(searchCriteriaList, filterMetadataList);
 
         for (SearchCriteria searchCriteria : result) {
             System.out.println(searchCriteria);
         }
     }
 
-    public List<SearchCriteria> mapBusinessObject2Table(List<SearchCriteria> searchCriteriaList, List<FilterMetadataEntity> filterMetadataList) throws SearchCriteriaException {
+    public List<SearchCriteria> mapBusinessObjectSearchCriteria2Table(List<SearchCriteria> searchCriteriaList, List<FilterMetadataEntity> filterMetadataList) throws SearchCriteriaException {
         Map<String, FilterMetadataEntity> map = filterMetadataList.stream()
                 .collect(Collectors.toMap(FilterMetadataEntity::getField, filterMetadataEntity -> filterMetadataEntity));
 
