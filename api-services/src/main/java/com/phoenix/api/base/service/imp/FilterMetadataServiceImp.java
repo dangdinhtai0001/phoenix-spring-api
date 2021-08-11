@@ -2,7 +2,7 @@ package com.phoenix.api.base.service.imp;
 
 import com.phoenix.api.base.constant.BeanIds;
 import com.phoenix.api.base.entities.ExceptionEntity;
-import com.phoenix.api.base.entities.FilterMetadata;
+import com.phoenix.api.base.entities.FilterMetadataEntity;
 import com.phoenix.api.base.repositories.FilterMetadataRepository;
 import com.phoenix.api.base.service.FilterMetadataService;
 import com.phoenix.api.core.repository.specification.Specifications;
@@ -33,15 +33,15 @@ public class FilterMetadataServiceImp extends AbstractBaseService implements Fil
     @Override
     public void saveDataByClassName(String className) {
         try {
-            List<FilterMetadata> filterMetadataList = new LinkedList<>();
+            List<FilterMetadataEntity> filterMetadataList = new LinkedList<>();
             List<String> fieldNamesList = new LinkedList<>();
 
             Class aClass = Class.forName(className);
             List<Field> fields = ReflectionUtil.getAllFields(aClass);
 
-            FilterMetadata filterMetadata;
+            FilterMetadataEntity filterMetadata;
             for (Field field : fields) {
-                filterMetadata = new FilterMetadata();
+                filterMetadata = new FilterMetadataEntity();
                 filterMetadata.setObject(className);
                 filterMetadata.setField(field.getName());
                 filterMetadata.setFieldType(field.getType().getName());
@@ -51,26 +51,26 @@ public class FilterMetadataServiceImp extends AbstractBaseService implements Fil
                 fieldNamesList.add(field.getName());
             }
 
-            Specification<FilterMetadata> specification = Specifications.<FilterMetadata>and()
+            Specification<FilterMetadataEntity> specification = Specifications.<FilterMetadataEntity>and()
                     .eq("object", className)
                     .in("field", fieldNamesList)
                     .build();
 
-            List<FilterMetadata> exitsFilterMetadata = filterMetadataRepository.findAll(specification);
+            List<FilterMetadataEntity> exitsFilterMetadata = filterMetadataRepository.findAll(specification);
 
             filterMetadataList.removeAll(exitsFilterMetadata);
 
             filterMetadataRepository.saveAllAndFlush(filterMetadataList);
 
         } catch (ClassNotFoundException e) {
-            log.warn("FilterMetadata", e);
+            log.warn("FilterMetadataEntity", e);
         }
     }
 
 
     @Override
     public List saveDataByListClassName(List<String> listClassName) {
-        List<FilterMetadata> filterMetadataList = new LinkedList<>();
+        List<FilterMetadataEntity> filterMetadataList = new LinkedList<>();
         List<String> fieldNamesList = new LinkedList<>();
         Class aClass;
         List<Field> fields;
@@ -91,12 +91,12 @@ public class FilterMetadataServiceImp extends AbstractBaseService implements Fil
             }
         }
 
-        Specification<FilterMetadata> specification = Specifications.<FilterMetadata>and()
+        Specification<FilterMetadataEntity> specification = Specifications.<FilterMetadataEntity>and()
                 .in("object", listClassName)
                 .in("field", fieldNamesList)
                 .build();
 
-        List<FilterMetadata> exitsFilterMetadata = filterMetadataRepository.findAll(specification);
+        List<FilterMetadataEntity> exitsFilterMetadata = filterMetadataRepository.findAll(specification);
 
         filterMetadataList.removeAll(exitsFilterMetadata);
 
@@ -110,9 +110,9 @@ public class FilterMetadataServiceImp extends AbstractBaseService implements Fil
     //region private methods
     //******************************************************************************************************
 
-    private FilterMetadata createFilterMetadataFromFieldAndClassname(Field field, String className) {
-        FilterMetadata filterMetadata;
-        filterMetadata = new FilterMetadata();
+    private FilterMetadataEntity createFilterMetadataFromFieldAndClassname(Field field, String className) {
+        FilterMetadataEntity filterMetadata;
+        filterMetadata = new FilterMetadataEntity();
         filterMetadata.setObject(className);
         filterMetadata.setField(field.getName());
         filterMetadata.setFieldType(field.getType().getName());

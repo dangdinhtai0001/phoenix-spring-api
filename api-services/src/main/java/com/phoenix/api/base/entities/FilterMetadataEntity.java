@@ -19,7 +19,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @ToString(callSuper = true)
-public class FilterMetadata extends BaseEntity<Long> {
+public class FilterMetadataEntity extends BaseEntity<Long> {
 
     @Column(name = "object_")
     private String object;
@@ -48,9 +48,9 @@ public class FilterMetadata extends BaseEntity<Long> {
     @Override
     public boolean equals(Object o) {
 //        if (this == o) return true;
-//        if (!(o instanceof FilterMetadata)) return false;
+//        if (!(o instanceof FilterMetadataEntity)) return false;
 //        if (!super.equals(o)) return false;
-        FilterMetadata that = (FilterMetadata) o;
+        FilterMetadataEntity that = (FilterMetadataEntity) o;
         return getObject().equals(that.getObject()) && getField().equals(that.getField());
     }
 

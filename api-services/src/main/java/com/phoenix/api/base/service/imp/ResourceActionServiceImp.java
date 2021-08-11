@@ -2,7 +2,7 @@ package com.phoenix.api.base.service.imp;
 
 import com.phoenix.api.base.constant.BeanIds;
 import com.phoenix.api.base.entities.ExceptionEntity;
-import com.phoenix.api.base.entities.ResourceAction;
+import com.phoenix.api.base.entities.ResourceActionEntity;
 import com.phoenix.api.base.repositories.ResourceActionRepository;
 import com.phoenix.api.base.service.ResourceActionService;
 import com.phoenix.api.core.repository.specification.Specifications;
@@ -31,7 +31,7 @@ public class ResourceActionServiceImp extends AbstractBaseService implements Res
 
     @Override
     public List saveDataByListClassName(List<String> listClassName) {
-        List<ResourceAction> resourceActionList = new LinkedList<>();
+        List<ResourceActionEntity> resourceActionList = new LinkedList<>();
         List<String> allMethodsNamesList = new LinkedList<>();
         Class aClass;
         List<String> methodsName;
@@ -52,12 +52,12 @@ public class ResourceActionServiceImp extends AbstractBaseService implements Res
             }
         }
 
-        Specification<ResourceAction> specification = Specifications.<ResourceAction>and()
+        Specification<ResourceActionEntity> specification = Specifications.<ResourceActionEntity>and()
                 .in("resource", listClassName)
                 .in("action", allMethodsNamesList)
                 .build();
 
-        List<ResourceAction> exitsResourceAction = resourceActionRepository.findAll(specification);
+        List<ResourceActionEntity> exitsResourceAction = resourceActionRepository.findAll(specification);
 
         resourceActionList.removeAll(exitsResourceAction);
 
@@ -68,8 +68,8 @@ public class ResourceActionServiceImp extends AbstractBaseService implements Res
     //******************************** region private methods
     //******************************************************************************************************
 
-    private ResourceAction getResourceAction(String resource, String action, String description) {
-        ResourceAction resourceAction = new ResourceAction();
+    private ResourceActionEntity getResourceAction(String resource, String action, String description) {
+        ResourceActionEntity resourceAction = new ResourceActionEntity();
 
         resourceAction.setResource(resource);
         resourceAction.setAction(action);

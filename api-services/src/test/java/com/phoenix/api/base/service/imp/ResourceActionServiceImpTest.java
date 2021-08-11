@@ -1,6 +1,6 @@
 package com.phoenix.api.base.service.imp;
 
-import com.phoenix.api.base.entities.ResourceAction;
+import com.phoenix.api.base.entities.ResourceActionEntity;
 import com.phoenix.api.base.service.ResourceActionService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +22,9 @@ class ResourceActionServiceImpTest {
         List<String> list = new ArrayList<>();
         list.add("com.phoenix.api.business.services.imp.UserServiceImp");
 
-        List<ResourceAction> actions = resourceActionService.saveDataByListClassName(list);
+        List<ResourceActionEntity> actions = resourceActionService.saveDataByListClassName(list);
 
-        for (ResourceAction action : actions) {
+        for (ResourceActionEntity action : actions) {
             System.out.println(action);
         }
     }

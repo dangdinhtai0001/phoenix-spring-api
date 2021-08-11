@@ -18,7 +18,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @ToString(callSuper = true)
-public class ResourceAction extends BaseEntity<Long> {
+public class ResourceActionEntity extends BaseEntity<Long> {
 
     @Column(name = "resource")
     private String resource;
@@ -32,8 +32,8 @@ public class ResourceAction extends BaseEntity<Long> {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof ResourceAction)) return false;
-        ResourceAction that = (ResourceAction) o;
+        if (!(o instanceof ResourceActionEntity)) return false;
+        ResourceActionEntity that = (ResourceActionEntity) o;
         return Objects.equals(getResource(), that.getResource()) && Objects.equals(getAction(), that.getAction());
     }
 

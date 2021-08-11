@@ -1,6 +1,6 @@
 package com.phoenix.api.base.repositories.imp;
 
-import com.phoenix.api.base.entities.ResourceAction;
+import com.phoenix.api.base.entities.ResourceActionEntity;
 import com.phoenix.api.base.repositories.ResourceActionRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,17 +19,17 @@ class ResourceActionRepositoryImpTest {
 
     @Test
     public void testSaveAll() throws Exception {
-        ResourceAction resourceAction = new ResourceAction();
+        ResourceActionEntity resourceAction = new ResourceActionEntity();
         resourceAction.setResource("resource-1");
         resourceAction.setAction("action-1");
         resourceAction.setDescription("-----");
 
-        ResourceAction resourceAction2 = new ResourceAction();
+        ResourceActionEntity resourceAction2 = new ResourceActionEntity();
         resourceAction2.setResource("resource-2");
         resourceAction2.setAction("action-2");
         resourceAction2.setDescription("-----");
 
-        List<ResourceAction> resourceActionList = new ArrayList<>();
+        List<ResourceActionEntity> resourceActionList = new ArrayList<>();
         resourceActionList.add(resourceAction);
         resourceActionList.add(resourceAction2);
 
