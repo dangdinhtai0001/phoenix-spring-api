@@ -14,8 +14,7 @@ import java.util.List;
 public class CommonController extends AbstractBaseController {
 
     @GetMapping("/ping")
-    public ResponseEntity ping(@RequestParam(value = "sort", required = false) List<String> sort) {
-        System.out.println(sort.get(0));
+    public ResponseEntity ping() {
         return sendResponse("ping");
     }
 }
