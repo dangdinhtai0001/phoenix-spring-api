@@ -45,4 +45,8 @@ public class TextUtil {
         }
         return true;
     }
+
+    public static boolean isNullOrEmpty(String s) {
+        return s == null || s.isEmpty();
+    }
 }
