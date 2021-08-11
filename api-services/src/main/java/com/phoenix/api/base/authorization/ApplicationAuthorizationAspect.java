@@ -34,22 +34,28 @@ public class ApplicationAuthorizationAspect extends AbstractBaseService {
         this.authorizationService = authorizationService;
     }
 
-    @Before(value = "@within(ApplicationAuthorization) || @annotation(ApplicationAuthorization)")
+    @Before(value = "@within(com.phoenix.api.core.annotation.ApplicationAuthorization) || @annotation(com.phoenix.api.core.annotation.ApplicationAuthorization)")
     public void before(JoinPoint joinPoint) throws ApplicationException {
+        //log.info("monitor.before, class: " + joinPoint.getSignature().getDeclaringType().getName() + ", method: " + joinPoint.getSignature().getName());
+
         String principal = String.valueOf(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-//        log.info("Principal: " + principal);
-//        log.info("monitor.before, class: " + joinPoint.getSignature().getDeclaringType().getSimpleName() + ", method: " + joinPoint.getSignature().getName());
+        String resource = joinPoint.getSignature().getDeclaringType().getName();
+        String action = joinPoint.getSignature().getName();
+        boolean isAllow = false;
 
-        authorizationService.clearPolicies(authorizationEnforcer);
-        authorizationService.loadPolicies(authorizationEnforcer);
+        try {
+            authorizationService.clearPolicies(authorizationEnforcer);
+            authorizationService.loadPolicies(authorizationEnforcer);
 
-        String[] enforceArgs = new String[]{principal, joinPoint.getSignature().getDeclaringType().getSimpleName(), joinPoint.getSignature().getName()};
-        boolean isAllow = authorizationService.enforce(authorizationEnforcer, enforceArgs);
+            String[] enforceArgs = new String[]{principal, resource, action};
+            isAllow = authorizationService.enforce(authorizationEnforcer, enforceArgs);
+        } catch (Exception e) {
+            log.warn(e.getMessage(), e);
+        }
 
         if (!isAllow) {
             throw getApplicationException("AUTH_004");
         }
-
 
     }
 }

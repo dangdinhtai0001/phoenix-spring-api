@@ -1,10 +1,11 @@
 package com.phoenix.api.business.services.imp;
 
-import com.phoenix.api.base.authorization.ApplicationAuthorization;
 import com.phoenix.api.base.constant.BeanIds;
 import com.phoenix.api.base.entities.ExceptionEntity;
 import com.phoenix.api.business.repository.UserRepository;
 import com.phoenix.api.business.services.UserService;
+import com.phoenix.api.core.annotation.ApplicationAuthorization;
+import com.phoenix.api.core.annotation.ApplicationResource;
 import com.phoenix.api.core.exception.ApplicationException;
 import com.phoenix.api.core.exception.SearchCriteriaException;
 import com.phoenix.api.core.model.*;
@@ -18,6 +19,7 @@ import java.util.List;
 
 @Service(BeanIds.USER_SERVICES)
 @ApplicationAuthorization
+@ApplicationResource(description = "User services")
 public class UserServiceImp extends AbstractBaseService implements UserService {
     private final UserRepository userRepository;
 

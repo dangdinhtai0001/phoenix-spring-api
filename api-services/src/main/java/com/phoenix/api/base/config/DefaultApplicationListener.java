@@ -3,6 +3,7 @@ package com.phoenix.api.base.config;
 import com.phoenix.api.base.constant.ApplicationConstant;
 import com.phoenix.api.base.constant.BeanIds;
 import com.phoenix.api.base.service.FilterMetadataService;
+import com.phoenix.api.base.service.ResourceActionService;
 import com.phoenix.api.core.annotation.ApplicationResource;
 import com.phoenix.api.core.annotation.BusinessObject;
 import lombok.Getter;
@@ -12,16 +13,13 @@ import org.springframework.beans.factory.annotation.AnnotatedBeanDefinition;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.EnvironmentAware;
-import org.springframework.context.ResourceLoaderAware;
 import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.ImportBeanDefinitionRegistrar;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.type.filter.AnnotationTypeFilter;
-import org.springframework.stereotype.Component;
 import org.springframework.util.ClassUtils;
 
 import java.lang.annotation.Annotation;
@@ -32,9 +30,10 @@ import java.util.List;
 @Log4j2
 @Getter
 @Setter
-public class DefaultApplicationListener implements EnvironmentAware, ImportBeanDefinitionRegistrar, ResourceLoaderAware {
+public class DefaultApplicationListener implements EnvironmentAware {
 
     private final FilterMetadataService filterMetadataService;
+    private final ResourceActionService resourceActionService;
 
     private Environment environment;
     private ResourceLoader resourceLoader;
@@ -42,8 +41,11 @@ public class DefaultApplicationListener implements EnvironmentAware, ImportBeanD
 
 
     public DefaultApplicationListener(
-            @Qualifier(BeanIds.FILTER_METADATA_SERVICES) FilterMetadataService filterMetadataService) {
+            @Qualifier(BeanIds.FILTER_METADATA_SERVICES) FilterMetadataService filterMetadataService,
+            @Qualifier(BeanIds.RESOURCE_ACTION_SERVICES) ResourceActionService resourceActionService
+    ) {
         this.filterMetadataService = filterMetadataService;
+        this.resourceActionService = resourceActionService;
     }
 
     @EventListener(classes = {ContextRefreshedEvent.class})
@@ -74,21 +76,23 @@ public class DefaultApplicationListener implements EnvironmentAware, ImportBeanD
     }
 
     private void scanApplicationResources() {
-        log.info("Load application resource ");
-
         ClassPathScanningCandidateComponentProvider scanner = getScanner();
 
         AnnotationTypeFilter annotationTypeFilter = new AnnotationTypeFilter(ApplicationResource.class);
         scanner.addIncludeFilter(annotationTypeFilter);
 
+        List<String> listClassName = new LinkedList<>();
         for (BeanDefinition beanDefinition : scanner.findCandidateComponents(ApplicationConstant.BASE_PACKAGE_NAME)) {
-            System.out.println(beanDefinition.getBeanClassName());
+            String className = beanDefinition.getBeanClassName();
+            listClassName.add(className);
         }
 
+        List result = resourceActionService.saveDataByListClassName(listClassName);
 
+        log.info(String.format("Loaded: %d application resource action of %d resource.", result.size(), listClassName.size()));
     }
 
-    protected ClassPathScanningCandidateComponentProvider getScanner() {
+    private ClassPathScanningCandidateComponentProvider getScanner() {
 
         return new ClassPathScanningCandidateComponentProvider(false, this.environment) {
 
@@ -103,9 +107,7 @@ public class DefaultApplicationListener implements EnvironmentAware, ImportBeanD
                                     DefaultApplicationListener.this.classLoader);
                             return !target.isAnnotation();
                         } catch (Exception ex) {
-                            this.logger.error(
-                                    "Could not load target class: " + beanDefinition.getMetadata().getClassName(), ex);
-
+                            log.error(String.format("Could not load target class: %s", beanDefinition.getMetadata().getClassName()), ex);
                         }
                     }
                     return true;
