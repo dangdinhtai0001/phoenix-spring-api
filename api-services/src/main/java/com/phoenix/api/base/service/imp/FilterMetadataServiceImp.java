@@ -14,6 +14,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Field;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -111,6 +112,8 @@ public class FilterMetadataServiceImp extends AbstractBaseService implements Fil
     //******************************************************************************************************
 
     private FilterMetadataEntity createFilterMetadataFromFieldAndClassname(Field field, String className) {
+
+
         FilterMetadataEntity filterMetadata;
         filterMetadata = new FilterMetadataEntity();
         filterMetadata.setObject(className);

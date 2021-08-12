@@ -6,6 +6,7 @@ import com.phoenix.api.base.service.FilterMetadataService;
 import com.phoenix.api.base.service.ResourceActionService;
 import com.phoenix.api.core.annotation.ApplicationResource;
 import com.phoenix.api.core.annotation.BusinessObject;
+import com.phoenix.api.core.annotation.BusinessObjectField;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j2;

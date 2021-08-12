@@ -2,18 +2,34 @@ package com.phoenix.api.business.model;
 
 
 import com.phoenix.api.core.annotation.BusinessObject;
+import com.phoenix.api.core.annotation.BusinessObjectField;
 
 import java.util.Date;
 
 @BusinessObject
 public class User {
+    @BusinessObjectField(table = "fw_user", column = "id", alias = "fu")
     private Long id;
+
+    @BusinessObjectField(table = "profile", column = "name", alias = "p")
     private String name;
+
+    @BusinessObjectField(table = "profile", column = "date_of_birth", alias = "p")
     private Date dateOfBirth;
+
+    @BusinessObjectField(table = "profile", column = "gender", alias = "p")
     private String gender;
+
+    @BusinessObjectField(table = "profile", column = "phone_number", alias = "p")
     private String phoneNumber;
+
+    @BusinessObjectField(table = "profile", column = "avatar", alias = "p")
     private String avatar;
+
+    @BusinessObjectField(table = "fw_user", column = "username", alias = "fu")
     private String username;
+
+    @BusinessObjectField(table = "fw_user", column = "password", alias = "fu")
     private String password;
 
     public User() {
