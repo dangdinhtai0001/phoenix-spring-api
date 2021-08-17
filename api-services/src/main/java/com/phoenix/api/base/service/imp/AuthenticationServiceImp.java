@@ -116,11 +116,11 @@ public class AuthenticationServiceImp extends AbstractBaseService implements Aut
     }
 
     @Override
-    public Optional findProfile(HttpServletRequest request) {
+    public Object findProfile(HttpServletRequest request) {
         Principal principal = request.getUserPrincipal();
         String username = principal.getName();
 
-        return userRepository.findUserProfileByUsername(username);
+        return userRepository.findUserProfileByUsername(username).orElseGet(null);
     }
 
 

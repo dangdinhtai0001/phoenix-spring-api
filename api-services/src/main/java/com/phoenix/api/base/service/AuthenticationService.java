@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Optional;
 
 public interface AuthenticationService {
     LinkedHashMap<String, String> login(Map loginRequest, HttpSession session) throws ApplicationException;
@@ -16,5 +15,5 @@ public interface AuthenticationService {
 
     LinkedHashMap<String, String> refreshToken(Map refreshTokenRequest, HttpSession session) throws ApplicationException;
 
-    Optional findProfile(HttpServletRequest request);
+    Object findProfile(HttpServletRequest request);
 }
