@@ -9,6 +9,7 @@ public class BeanIds {
     public static final String JWT_SECRET_KEY = "FW_SECRET_KEY";
     public static final String UUID_FACTORY = "FW_UUID_FACTORY";
     public static final String AUTHORIZATION_ENFORCE = "FW_AUTHORIZATION_ENFORCE";
+    public static final String SQL_QUERY_FACTORY = "SQL_QUERY_FACTORY";
 
     // ====================================================
     // controller

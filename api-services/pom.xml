@@ -19,6 +19,8 @@
         <maven.test.skip>${global.maven.test.skip}</maven.test.skip>
         <maven.compiler.source>${global.java.version}</maven.compiler.source>
         <maven.compiler.target>${global.java.version}</maven.compiler.target>
+
+        <global.querydsl.version>4.2.2</global.querydsl.version>
     </properties>
 
     <dependencyManagement>
@@ -34,6 +36,28 @@
     </dependencyManagement>
 
     <dependencies>
+        <!-- https://mvnrepository.com/artifact/com.querydsl/querydsl-apt -->
+        <dependency>
+            <groupId>com.querydsl</groupId>
+            <artifactId>querydsl-apt</artifactId>
+            <version>${global.querydsl.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.querydsl/querydsl-sql-codegen -->
+        <dependency>
+            <groupId>com.querydsl</groupId>
+            <artifactId>querydsl-sql-codegen</artifactId>
+            <version>${global.querydsl.version}</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.querydsl/querydsl-sql -->
+        <dependency>
+            <groupId>com.querydsl</groupId>
+            <artifactId>querydsl-sql</artifactId>
+            <version>${global.querydsl.version}</version>
+        </dependency>
+
         <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
         <dependency>
             <groupId>com.google.code.gson</groupId>
@@ -129,7 +153,6 @@
             <artifactId>common</artifactId>
             <version>${module.common.version}</version>
         </dependency>
-
         <!--        modules-->
     </dependencies>
 
@@ -146,6 +169,36 @@
                         </exclude>
                     </excludes>
                 </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>com.querydsl</groupId>
+                <artifactId>querydsl-maven-plugin</artifactId>
+                <version>${global.querydsl.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>export</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <jdbcDriver>com.mysql.cj.jdbc.Driver</jdbcDriver>
+                    <jdbcUrl>jdbc:mysql://localhost:3306/phoenix-v2?allowPublicKeyRetrieval=true&amp;useSSL=false&amp;serverTimezone=UTC&amp;useLegacyDatetimeCode=false?useUnicode=true&amp;characterEncoding=utf8</jdbcUrl>
+                    <jdbcUser>phoenix-v2</jdbcUser>
+                    <jdbcPassword>Abc123456</jdbcPassword>
+                    <packageName>com.phoenix.api.model.querydsl</packageName>
+                    <targetFolder>${project.basedir}/target/generated-sources/java</targetFolder>
+                    <sourceFolder>${project.basedir}/src/generated-sources/java</sourceFolder>
+                </configuration>
+                <dependencies>
+                    <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+                    <dependency>
+                        <groupId>mysql</groupId>
+                        <artifactId>mysql-connector-java</artifactId>
+                        <version>8.0.25</version>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>

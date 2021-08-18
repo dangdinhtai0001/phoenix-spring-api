@@ -9,20 +9,25 @@ import com.phoenix.common.auth.imp.DefaultJwtProvider;
 import com.phoenix.common.text.HashingText;
 import com.phoenix.common.util.UUIDFactory;
 import com.phoenix.common.util.imp.ConcurrentUUIDFactory;
+import com.querydsl.sql.MySQLTemplates;
+import com.querydsl.sql.SQLQueryFactory;
+import com.querydsl.sql.SQLTemplates;
 import lombok.extern.log4j.Log4j2;
 import org.casbin.jcasbin.main.Enforcer;
 import org.casbin.jcasbin.model.Model;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 
+import javax.sql.DataSource;
 import java.util.List;
 
 @Configuration(value = "ApplicationConfiguration")
 @Log4j2
-public class ApplicationConfiguration  {
+public class ApplicationConfiguration {
     @Value("${application.jwt.secret}")
     private String secret;
 
@@ -32,14 +37,31 @@ public class ApplicationConfiguration  {
     @Value("${application.authorization.model-path}")
     private String authorizationModelPath;
 
+
+    private final DataSource dataSource;
+
     private final ExceptionRepositoryImp exceptionRepositoryImp;
     private final AuthorizationService authorizationService;
 
     public ApplicationConfiguration(
             @Qualifier(BeanIds.EXCEPTION_REPOSITORY_IMP) ExceptionRepositoryImp exceptionRepositoryImp,
-            @Qualifier(BeanIds.AUTHORIZATION_SERVICES) AuthorizationService authorizationService) {
+            @Qualifier(BeanIds.AUTHORIZATION_SERVICES) AuthorizationService authorizationService,
+            DataSource dataSource) {
         this.exceptionRepositoryImp = exceptionRepositoryImp;
         this.authorizationService = authorizationService;
+        this.dataSource = dataSource;
+    }
+
+    @Bean(BeanIds.SQL_QUERY_FACTORY)
+    public SQLQueryFactory createSqlQueryFactory() {
+        SQLTemplates templates = MySQLTemplates.builder()
+                .printSchema() // to include the schema in the output
+                .build();
+
+        com.querydsl.sql.Configuration configuration = new com.querydsl.sql.Configuration(templates);
+
+        log.info("Creating sql query factory");
+        return new SQLQueryFactory(configuration, dataSource);
     }
 
     /**
@@ -47,12 +69,12 @@ public class ApplicationConfiguration  {
      */
     @Bean(BeanIds.AUTHORIZATION_ENFORCE)
     public Enforcer createAuthorizationEnforcer() {
-        log.info("Creating authorization enforcer");
         Model model = authorizationService.loadModelFromPath(authorizationModelPath);
         Enforcer enforcer = new Enforcer(model);
         enforcer.setAutoNotifyDispatcher(false);
         enforcer.enableAutoSave(false);
         enforcer.enableLog(false);
+        log.info("Creating authorization enforcer");
         return enforcer;
     }
 
