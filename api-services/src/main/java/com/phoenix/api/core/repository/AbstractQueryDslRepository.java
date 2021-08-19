@@ -1,4 +1,4 @@
-package com.phoenix.api.core.repository.specification;
+package com.phoenix.api.core.repository;
 
 import com.phoenix.api.core.model.JoinType;
 import com.phoenix.api.core.model.SearchCriteria;

@@ -4,7 +4,6 @@ import com.phoenix.api.base.constant.BeanIds;
 import com.phoenix.api.core.model.JoinType;
 import com.phoenix.api.core.model.SearchCriteria;
 import com.phoenix.api.core.model.SearchOperation;
-import com.phoenix.api.core.repository.specification.AbstractQueryDslRepository;
 import com.phoenix.api.model.querydsl.QFwUser;
 import com.phoenix.api.model.querydsl.QProfile;
 import com.querydsl.core.Tuple;
