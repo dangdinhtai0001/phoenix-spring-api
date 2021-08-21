@@ -208,4 +208,19 @@ public class ReflectionUtil {
         }
         return result;
     }
+
+    public static Map getFieldAsMap(Class aClass, String... properties) {
+        Map<String, Class> result = new LinkedHashMap();
+        List<Field> allFields = getAllFields(aClass);
+
+
+        for (String property : properties) {
+            for (Field field : allFields) {
+                if (field.getName().equals(property)) {
+                    result.put(field.getName(), field.getType());
+                }
+            }
+        }
+        return result;
+    }
 }
