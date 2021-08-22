@@ -34,6 +34,8 @@ public interface QueryDslRepository {
 
     PathBuilder getPathBuilder(Class aClass, RelationalPathBase relationalPathBase);
 
+    PathBuilder getPathBuilder(List<PathBuilder> pathBuilders, String anotationTableName);
+
     Expression[] getExpressions(PathBuilder pathBuilder, String... properties);
 
     Expression[] mergeExpressions(Expression[]... expressions);
@@ -52,6 +54,8 @@ public interface QueryDslRepository {
 
     //---------------------------------
 
+    List<Predicate> getPredicateFromSearchCriteria(List<PathBuilder> pathBuilders, List<SearchCriteria> searchCriteriaList);
+
     List<Object> parseResult(List<Tuple> queryResult, Class<?> aClass, String... properties);
 
     //---------------------------------
@@ -62,4 +66,6 @@ public interface QueryDslRepository {
     SQLQuery addOrderBy(SQLQuery query, PathBuilder pathBuilder, String property, OrderDirection direction);
 
     SQLQuery addOrderBy(SQLQuery query, PathBuilder pathBuilder, OrderBy orderBy);
+
+    SQLQuery addOrderBy(SQLQuery query, List<PathBuilder> pathBuilders, OrderBy orderBy);
 }
