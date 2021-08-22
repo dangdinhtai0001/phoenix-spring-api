@@ -1,12 +1,15 @@
 package com.phoenix.api.base.config;
 
 import com.phoenix.api.base.constant.ApplicationConstant;
+import com.phoenix.api.base.constant.BeanIds;
+import com.phoenix.api.base.service.ResourceActionService;
 import com.phoenix.api.core.annotation.ApplicationResource;
 import com.phoenix.api.core.annotation.BusinessObject;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.AnnotatedBeanDefinition;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
@@ -33,14 +36,19 @@ public class DefaultApplicationListener implements EnvironmentAware {
     private ResourceLoader resourceLoader;
     private ClassLoader classLoader;
 
+    private final ResourceActionService resourceActionService;
 
-    public DefaultApplicationListener() {
+
+    public DefaultApplicationListener(
+            @Qualifier(BeanIds.RESOURCE_ACTION_SERVICES)ResourceActionService resourceActionService
+    ) {
+        this.resourceActionService = resourceActionService;
     }
 
     @EventListener(classes = {ContextRefreshedEvent.class})
     public void handleContextRefreshEvent() {
         //scanFilterMetadata();
-        //scanApplicationResources();
+        scanApplicationResources();
     }
 
     //******************************************************************************************************
@@ -75,9 +83,9 @@ public class DefaultApplicationListener implements EnvironmentAware {
             listClassName.add(className);
         }
 
-//        List result = resourceActionService.saveDataByListClassName(listClassName);
+        List result = resourceActionService.saveDataByListClassName(listClassName);
 
-//        log.info(String.format("Loaded: %d application resource action of %d resource.", result.size(), listClassName.size()));
+        log.info(String.format("Loaded: %d application resource action of %d resource.", result.size(), listClassName.size()));
     }
 
     private ClassPathScanningCandidateComponentProvider getScanner() {
