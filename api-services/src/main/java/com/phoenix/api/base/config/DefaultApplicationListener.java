@@ -1,17 +1,12 @@
 package com.phoenix.api.base.config;
 
 import com.phoenix.api.base.constant.ApplicationConstant;
-import com.phoenix.api.base.constant.BeanIds;
-import com.phoenix.api.base.service.FilterMetadataService;
-import com.phoenix.api.base.service.ResourceActionService;
 import com.phoenix.api.core.annotation.ApplicationResource;
 import com.phoenix.api.core.annotation.BusinessObject;
-import com.phoenix.api.core.annotation.BusinessObjectField;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.AnnotatedBeanDefinition;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
@@ -33,27 +28,19 @@ import java.util.List;
 @Setter
 public class DefaultApplicationListener implements EnvironmentAware {
 
-    private final FilterMetadataService filterMetadataService;
-    private final ResourceActionService resourceActionService;
 
     private Environment environment;
     private ResourceLoader resourceLoader;
     private ClassLoader classLoader;
 
 
-    public DefaultApplicationListener(
-            @Qualifier(BeanIds.FILTER_METADATA_SERVICES) FilterMetadataService filterMetadataService,
-            @Qualifier(BeanIds.RESOURCE_ACTION_SERVICES) ResourceActionService resourceActionService
-    ) {
-        this.filterMetadataService = filterMetadataService;
-        this.resourceActionService = resourceActionService;
+    public DefaultApplicationListener() {
     }
 
     @EventListener(classes = {ContextRefreshedEvent.class})
     public void handleContextRefreshEvent() {
-        scanFilterMetadata();
-
-        scanApplicationResources();
+        //scanFilterMetadata();
+        //scanApplicationResources();
     }
 
     //******************************************************************************************************
@@ -71,9 +58,9 @@ public class DefaultApplicationListener implements EnvironmentAware {
             listClassName.add(beanDefinition.getBeanClassName());
         }
 
-        List result = filterMetadataService.saveDataByListClassName(listClassName);
+//        List result = filterMetadataService.saveDataByListClassName(listClassName);
 
-        log.info(String.format("Loaded: %d field of %d business Object", result.size(), listClassName.size()));
+//        log.info(String.format("Loaded: %d field of %d business Object", result.size(), listClassName.size()));
     }
 
     private void scanApplicationResources() {
@@ -88,9 +75,9 @@ public class DefaultApplicationListener implements EnvironmentAware {
             listClassName.add(className);
         }
 
-        List result = resourceActionService.saveDataByListClassName(listClassName);
+//        List result = resourceActionService.saveDataByListClassName(listClassName);
 
-        log.info(String.format("Loaded: %d application resource action of %d resource.", result.size(), listClassName.size()));
+//        log.info(String.format("Loaded: %d application resource action of %d resource.", result.size(), listClassName.size()));
     }
 
     private ClassPathScanningCandidateComponentProvider getScanner() {

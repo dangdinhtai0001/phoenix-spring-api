@@ -2,7 +2,6 @@ package com.phoenix.api.business.services.imp;
 
 import com.phoenix.api.base.constant.BeanIds;
 import com.phoenix.api.base.entities.ExceptionEntity;
-import com.phoenix.api.base.repositories.FilterMetadataRepository;
 import com.phoenix.api.business.model.User;
 import com.phoenix.api.business.repository.UserRepository;
 import com.phoenix.api.business.services.UserService;
@@ -11,7 +10,7 @@ import com.phoenix.api.core.annotation.ApplicationResource;
 import com.phoenix.api.core.exception.ApplicationException;
 import com.phoenix.api.core.exception.SearchCriteriaException;
 import com.phoenix.api.core.model.*;
-import com.phoenix.api.core.service.AbstractBaseServiceWithFilterHelper;
+import com.phoenix.api.core.service.AbstractBaseService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -24,14 +23,14 @@ import java.util.List;
 @ApplicationAuthorization
 @ApplicationResource(description = "User services")
 @Log4j2
-public class UserServiceImp extends AbstractBaseServiceWithFilterHelper implements UserService {
+public class UserServiceImp extends AbstractBaseService implements UserService {
     private final UserRepository userRepository;
 
     public UserServiceImp(
             @Qualifier(BeanIds.USER_REPOSITORY_IMP) UserRepository userRepository,
-            @Qualifier(BeanIds.ALL_EXCEPTION) List<ExceptionEntity> exceptionEntities,
-            @Qualifier(BeanIds.FILTER_METADATA_REPOSITORY_IMP) FilterMetadataRepository filterMetadataRepository) {
-        super(exceptionEntities, filterMetadataRepository);
+            @Qualifier(BeanIds.ALL_EXCEPTION) List<ExceptionEntity> exceptionEntities
+    ) {
+        super(exceptionEntities);
         this.userRepository = userRepository;
     }
 
@@ -62,13 +61,7 @@ public class UserServiceImp extends AbstractBaseServiceWithFilterHelper implemen
         List<SearchCriteria> conditions = getListOfSearchCriteria(listConditionRequests);
         OrderBy orderBy = new OrderByRequest(orderByKeys, direction).getOderBy();
 
-        try {
-            orderBy.setKeys(mapBusinessObjectField2TableColumn(orderBy.getKeys(), User.class));
-            conditions = mapBusinessObjectSearchCriteria2Table(conditions, User.class);
-            return userRepository.findByCondition(conditions, pageOffset, pageSize, orderBy);
-        } catch (SearchCriteriaException | NoSuchFieldException | InvocationTargetException | IllegalAccessException | InstantiationException | NoSuchMethodException e) {
-            throw new ApplicationException(e.getMessage(), "");
-        }
+        return userRepository.findByCondition(conditions, pageOffset, pageSize, orderBy);
     }
 
     @Override
@@ -76,7 +69,6 @@ public class UserServiceImp extends AbstractBaseServiceWithFilterHelper implemen
         List<SearchCriteria> conditions = getListOfSearchCriteria(listConditionRequests);
 
         try {
-            conditions = mapBusinessObjectSearchCriteria2Table(conditions, User.class);
             return userRepository.countByCondition(conditions);
         } catch (SearchCriteriaException e) {
             log.warn(e.getMessage(), e);
