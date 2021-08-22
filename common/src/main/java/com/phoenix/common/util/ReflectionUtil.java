@@ -17,7 +17,9 @@ package com.phoenix.common.util;
 
 import com.phoenix.common.structure.Pair;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -26,6 +28,19 @@ import java.util.stream.Collectors;
  * Class gồm các hàm static hỗ trợ reflection
  */
 public class ReflectionUtil {
+
+    /**
+     * @param aClass Class cần tạo instance mới. Lưu ý, class này cần pahri có hàm dựng không đối số
+     * @return Instance của class
+     * @throws NoSuchMethodException     Nếu không tồn tại hàm dựng không đối số
+     * @throws InvocationTargetException khi khởi tạo instance mới
+     * @throws InstantiationException    khi khởi tạo instance mới
+     * @throws IllegalAccessException    khi khởi tạo instance mới
+     */
+    public static Object createInstance(Class aClass) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+        Constructor constructor = aClass.getConstructor();
+        return constructor.newInstance();
+    }
 
     /**
      * @param aClass Class cần xử lí
@@ -85,6 +100,18 @@ public class ReflectionUtil {
         return list;
     }
 
+
+    public static Class getTypeOfFieldByName(Class aClass, String name) throws NoSuchFieldException {
+        List<Field> fields = getAllFields(aClass);
+
+        Field field = fields.stream()
+                .filter(f -> f.getName().equals(name))
+                .findAny()
+                .orElse(null);
+
+        return field.getType();
+    }
+
     /**
      * @param name   tên field cần tìm
      * @param aClass Class cần xử lí
@@ -98,6 +125,35 @@ public class ReflectionUtil {
                 .findFirst();
 
         return optional.orElse(null);
+    }
+
+
+    /**
+     * @param obj       Instance để set giá trị
+     * @param fieldName Tên field cần set
+     * @param value     Giá trị muốn set
+     * @throws NoSuchFieldException   nếu không tìm thấy field
+     * @throws IllegalAccessException Sai kiểu dữ liệu
+     */
+    public static void setField(Object obj, String fieldName, Object value) throws NoSuchFieldException, IllegalAccessException {
+        Field field;
+        Class objClass;
+
+        objClass = obj.getClass();
+        try {
+            field = objClass.getField(fieldName);
+        } catch (NoSuchFieldException e) {
+            field = findFieldByName(fieldName, objClass);
+        }
+
+        if (field == null) {
+            throw new NoSuchFieldException(String.format("Can't find field: %s of class: ", fieldName, objClass.getSimpleName()));
+        }
+
+        field.setAccessible(true);
+
+        field.set(obj, value);
+
     }
 
     /**
@@ -118,7 +174,7 @@ public class ReflectionUtil {
         }
 
         if (field == null) {
-            throw new NoSuchFieldException(String.format("Can't find field: %s of class: ", fieldName, classOfField.getSimpleName()));
+            throw new NoSuchFieldException(String.format("Can't find field: %s of class: ", fieldName, objClass.getSimpleName()));
         }
 
         field.setAccessible(true);
