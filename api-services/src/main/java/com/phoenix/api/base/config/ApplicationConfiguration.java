@@ -9,10 +9,6 @@ import com.phoenix.common.auth.imp.DefaultJwtProvider;
 import com.phoenix.common.text.HashingText;
 import com.phoenix.common.util.UUIDFactory;
 import com.phoenix.common.util.imp.ConcurrentUUIDFactory;
-import com.querydsl.sql.MySQLTemplates;
-import com.querydsl.sql.SQLQueryFactory;
-import com.querydsl.sql.SQLTemplates;
-import com.querydsl.sql.spring.SpringConnectionProvider;
 import lombok.extern.log4j.Log4j2;
 import org.casbin.jcasbin.main.Enforcer;
 import org.casbin.jcasbin.model.Model;
@@ -22,9 +18,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 
-import javax.inject.Provider;
-import javax.sql.DataSource;
-import java.sql.Connection;
 import java.util.List;
 
 @Configuration(value = "ApplicationConfiguration")
@@ -39,32 +32,15 @@ public class ApplicationConfiguration {
     @Value("${application.authorization.model-path}")
     private String authorizationModelPath;
 
-
-    private final DataSource dataSource;
-
     private final ExceptionRepositoryImp exceptionRepositoryImp;
     private final AuthorizationService authorizationService;
 
     public ApplicationConfiguration(
             @Qualifier(BeanIds.EXCEPTION_REPOSITORY_IMP) ExceptionRepositoryImp exceptionRepositoryImp,
-            @Qualifier(BeanIds.AUTHORIZATION_SERVICES) AuthorizationService authorizationService,
-            DataSource dataSource) {
+            @Qualifier(BeanIds.AUTHORIZATION_SERVICES) AuthorizationService authorizationService
+            ) {
         this.exceptionRepositoryImp = exceptionRepositoryImp;
         this.authorizationService = authorizationService;
-        this.dataSource = dataSource;
-    }
-
-    @Bean(BeanIds.SQL_QUERY_FACTORY)
-    public SQLQueryFactory createSqlQueryFactory() {
-        SQLTemplates templates = MySQLTemplates.builder()
-                .printSchema() // to include the schema in the output
-                .build();
-
-        com.querydsl.sql.Configuration configuration = new com.querydsl.sql.Configuration(templates);
-
-        Provider<Connection> provider = new SpringConnectionProvider(dataSource);
-        log.info("Creating sql query factory");
-        return new SQLQueryFactory(configuration, provider);
     }
 
     /**
