@@ -5,53 +5,88 @@ import com.phoenix.api.business.model.User;
 import com.phoenix.api.business.repository.UserRepository;
 import com.phoenix.api.core.exception.SearchCriteriaException;
 import com.phoenix.api.core.model.BasePagination;
+import com.phoenix.api.core.model.JoinType;
 import com.phoenix.api.core.model.OrderBy;
 import com.phoenix.api.core.model.SearchCriteria;
-import com.phoenix.api.core.repository.AbstractNativeRepository;
+import com.phoenix.api.core.repository.AbstractQueryDslRepository;
+import com.phoenix.api.model.querydsl.QFwUser;
+import com.phoenix.api.model.querydsl.QProfile;
+import com.querydsl.core.types.Expression;
+import com.querydsl.core.types.Predicate;
+import com.querydsl.core.types.dsl.PathBuilder;
+import com.querydsl.sql.SQLQuery;
+import com.querydsl.sql.SQLQueryFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 import java.lang.reflect.InvocationTargetException;
+import java.util.LinkedList;
 import java.util.List;
 
 @Repository(BeanIds.USER_REPOSITORY_IMP)
-public class UserRepositoryImp extends AbstractNativeRepository implements UserRepository {
+@Transactional
+public class UserRepositoryImp extends AbstractQueryDslRepository implements UserRepository {
+    private final SQLQueryFactory queryFactory;
 
-    public UserRepositoryImp(EntityManager entityManager) {
-        super(entityManager);
+    protected UserRepositoryImp(
+            @Qualifier(BeanIds.SQL_QUERY_FACTORY) SQLQueryFactory queryFactory
+    ) {
+        super(queryFactory);
+        this.queryFactory = queryFactory;
+    }
+
+    @Override
+    protected List<PathBuilder> getListPathBuilder() {
+        PathBuilder userPathBuilder = getPathBuilder(QFwUser.class, QFwUser.fwUser);
+        PathBuilder profilePathBuilder = getPathBuilder(QProfile.class, QProfile.profile);
+
+        List<PathBuilder> pathBuilders = new LinkedList<>();
+
+        pathBuilders.add(userPathBuilder);
+        pathBuilders.add(profilePathBuilder);
+
+        return pathBuilders;
     }
 
     @Override
     public long countByCondition(List<SearchCriteria> searchCriteriaList) throws SearchCriteriaException {
-        String condition = getConditionClauseFromSearchCriteria(searchCriteriaList);
-        String sql = "select count(*) from profile p right join fw_user fu on fu.id = p.user_id where " + condition;
-        List<Object> conditions = getParameterFromSearchCriteria(searchCriteriaList);
+        PathBuilder userPathBuilder = getPathBuilder(QFwUser.class, QFwUser.fwUser);
+        PathBuilder profilePathBuilder = getPathBuilder(QProfile.class, QProfile.profile);
 
-        Object queryResult = executeNativeQuery(sql, conditions.toArray()).get(0);
+        SQLQuery query = queryFactory.select().from(userPathBuilder);
 
-        return Long.parseLong(String.valueOf(queryResult));
+        query = join(JoinType.LEFT, query, userPathBuilder, profilePathBuilder, "id", "user_id");
+
+        List<Predicate> predicates = getPredicateFromSearchCriteria(getListPathBuilder(), searchCriteriaList);
+
+        addWhereClause(query, predicates);
+
+        return query.fetchCount();
     }
 
     @Override
-    public BasePagination findByCondition(List<SearchCriteria> searchCriteriaList, int pageOffset, int pageSize, OrderBy oderBy)
-            throws SearchCriteriaException, NoSuchFieldException, InvocationTargetException, IllegalAccessException, InstantiationException, NoSuchMethodException {
-        //Get Condition String from list SearchCriteria
-        String condition = getConditionClauseFromSearchCriteria(searchCriteriaList);
+    public BasePagination findByCondition(List<SearchCriteria> searchCriteriaList, int pageOffset, int pageSize, OrderBy orderBy) {
+        PathBuilder userPathBuilder = getPathBuilder(QFwUser.class, QFwUser.fwUser);
+        PathBuilder profilePathBuilder = getPathBuilder(QProfile.class, QProfile.profile);
 
-        // Get order by clause
-        String order = getOderByClause(oderBy);
+        Expression[] expressions1 = getExpressions(userPathBuilder, "id", "username", "password");
+        Expression[] expressions2 = getExpressions(profilePathBuilder, "name", "date_of_birth", "phone_number", "gender", "avatar");
+        Expression[] expressions = mergeExpressions(expressions1, expressions2);
 
-        // Define sql and total sql
-        String sql = "select fu.id, p.name, p.date_of_birth, p.gender, p.phone_number, p.avatar, fu.username " +
-                "from fw_user fu left join profile p on fu.id = p.USER_ID where " + condition + order;
-        String totalSql = "select count(*) from fw_user fu left join profile p on fu.id = p.USER_ID where " + condition;
+        SQLQuery query = queryFactory.select(expressions).from(userPathBuilder);
 
-        // Get list param for query
-        List<Object> conditions = getParameterFromSearchCriteria(searchCriteriaList);
+        query = join(JoinType.LEFT, query, userPathBuilder, profilePathBuilder, "id", "user_id");
+
+        List<Predicate> predicates = getPredicateFromSearchCriteria(getListPathBuilder(), searchCriteriaList);
+
+        addWhereClause(query, predicates);
+        addOrderBy(query, userPathBuilder, orderBy);
 
         PageRequest pageRequest = PageRequest.of(pageOffset, pageSize);
-//        return parseResult(queryResult, params, User.class);
-        return executeNativeQuery(User.class, pageRequest, totalSql, sql, conditions.toArray());
+
+        return fetchWithPagination(pageRequest, query, User.class, "id", "username", "password", "name", "dateOfBirth", "phoneNumber", "gender", "avatar");
     }
+
 }

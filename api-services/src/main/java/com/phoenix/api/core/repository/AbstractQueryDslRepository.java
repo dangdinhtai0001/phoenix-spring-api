@@ -1,7 +1,9 @@
 package com.phoenix.api.core.repository;
 
-import com.phoenix.api.core.model.JoinType;
-import com.phoenix.api.core.model.SearchCriteria;
+import com.phoenix.api.business.model.User;
+import com.phoenix.api.core.annotation.BusinessObjectField;
+import com.phoenix.api.core.model.*;
+import com.phoenix.common.util.ReflectionUtil;
 import com.querydsl.core.Tuple;
 import com.querydsl.core.support.QueryBase;
 import com.querydsl.core.types.Expression;
@@ -10,7 +12,12 @@ import com.querydsl.core.types.dsl.PathBuilder;
 import com.querydsl.sql.RelationalPathBase;
 import com.querydsl.sql.SQLQuery;
 import com.querydsl.sql.SQLQueryFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 
+import javax.transaction.Transactional;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -18,7 +25,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 
-public abstract class AbstractQueryDslRepository {
+public abstract class AbstractQueryDslRepository implements QueryDslRepository {
 
     private final SQLQueryFactory queryFactory;
 
@@ -26,31 +33,62 @@ public abstract class AbstractQueryDslRepository {
         this.queryFactory = queryFactory;
     }
 
+    //---------------------------------
+
+    protected abstract List<PathBuilder> getListPathBuilder();
+    //---------------------------------
+
+    /**
+     * @param expressions              select clause
+     * @param relationalPathBaseObject from clause
+     * @return SQLQuery
+     */
+    @Override
     public SQLQuery<Tuple> createSelectQuery(Expression[] expressions, RelationalPathBase relationalPathBaseObject) {
         return queryFactory
                 .select(expressions)
                 .from(relationalPathBaseObject);
     }
 
+    /**
+     * @param expressions select clause
+     * @param pathBuilder from clause
+     * @return SQLQuery
+     */
+    @Override
     public SQLQuery<Tuple> createSelectQuery(Expression[] expressions, PathBuilder pathBuilder) {
         return queryFactory
                 .select(expressions)
                 .from(pathBuilder);
     }
 
+    //---------------------------------
+
+    @Override
     public String getTableName(RelationalPathBase relationalPathBase) {
         return relationalPathBase.getTableName();
     }
 
+    @Override
     public PathBuilder getPathBuilder(String className, String tableName) throws ClassNotFoundException {
         Class<?> entityType = Class.forName(className);
         return new PathBuilder(entityType, tableName);
     }
 
+    @Override
     public PathBuilder getPathBuilder(Class aClass, String tableName) {
         return new PathBuilder(aClass, tableName);
     }
 
+    @Override
+    public PathBuilder getPathBuilder(Class aClass, RelationalPathBase relationalPathBase) {
+        String tableName = getTableName(relationalPathBase);
+        return new PathBuilder(aClass, tableName);
+    }
+
+    //---------------------------------
+
+    @Override
     public Expression[] getExpressions(PathBuilder pathBuilder, String... properties) {
         Expression[] expressions = new Expression[properties.length];
 
@@ -61,10 +99,25 @@ public abstract class AbstractQueryDslRepository {
         return expressions;
     }
 
+    @Override
+    public Expression[] mergeExpressions(Expression[]... expressions) {
+        List<Expression> result = new LinkedList<>();
+
+        for (Expression[] expression : expressions) {
+            result.addAll(Arrays.asList(expression));
+        }
+
+        return result.toArray(new Expression[0]);
+    }
+
+    //---------------------------------
+
+    @Override
     public QueryBase addWhereClause(SQLQuery query, Predicate predicate) {
         return query.where(predicate);
     }
 
+    @Override
     public QueryBase addWhereClause(SQLQuery query, List<Predicate> predicates) {
         for (Predicate predicate : predicates) {
             query.where(predicate);
@@ -72,6 +125,9 @@ public abstract class AbstractQueryDslRepository {
         return query;
     }
 
+    //---------------------------------
+
+    @Override
     public Predicate getPredicateFromSearchCriteria(PathBuilder pathBuilder, SearchCriteria criteria) {
         String key = criteria.getKey();
         List<String> stringArguments = criteria.getArguments().stream()
@@ -112,8 +168,13 @@ public abstract class AbstractQueryDslRepository {
         }
     }
 
+    @Override
     public List<Predicate> getPredicateFromSearchCriteria(PathBuilder pathBuilder, List<SearchCriteria> searchCriteriaList) {
         List<Predicate> predicates = new ArrayList<>();
+
+        if (searchCriteriaList == null || searchCriteriaList.isEmpty()) {
+            return predicates;
+        }
 
         for (SearchCriteria criteria : searchCriteriaList) {
             predicates.add(getPredicateFromSearchCriteria(pathBuilder, criteria));
@@ -122,6 +183,87 @@ public abstract class AbstractQueryDslRepository {
         return predicates;
     }
 
+    public List<Predicate> getPredicateFromSearchCriteria(List<PathBuilder> pathBuilders, List<SearchCriteria> searchCriteriaList) {
+        List<Predicate> predicates = new ArrayList<>();
+
+        if (searchCriteriaList == null || searchCriteriaList.isEmpty()) {
+            return predicates;
+        }
+
+        String key;
+        BusinessObjectField annotation;
+        String anotationTableName;
+        PathBuilder pathBuilder;
+
+        for (SearchCriteria criteria : searchCriteriaList) {
+            key = criteria.getKey();
+            annotation = (BusinessObjectField) ReflectionUtil.getAnotationOfField(key, User.class, BusinessObjectField.class);
+            anotationTableName = annotation.table();
+            pathBuilder = null;
+            for (PathBuilder p : pathBuilders) {
+                if(anotationTableName.equals(p.getMetadata().getName())) {
+                    pathBuilder = p;
+                    break;
+                }
+            }
+
+            predicates.add(getPredicateFromSearchCriteria(pathBuilder, criteria));
+        }
+
+        return predicates;
+    }
+
+    //---------------------------------
+
+    @Override
+    public List<Object> parseResult(List<Tuple> queryResult, Class<?> aClass, String... properties) {
+        List result = new LinkedList<>();
+
+        for (Tuple record : queryResult) {
+            Object object = null;
+
+            try {
+                object = ReflectionUtil.createInstance(aClass);
+            } catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
+                e.printStackTrace();
+            }
+
+            for (int i = 0; i < properties.length; i++) {
+                try {
+                    ReflectionUtil.setField(object, properties[i],
+                            record.get(i, ReflectionUtil.getTypeOfFieldByName(aClass, properties[i])));
+                } catch (NoSuchFieldException | IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            }
+
+
+            result.add(object);
+        }
+
+        return result;
+    }
+
+    @Transactional
+    public BasePagination fetchWithPagination(PageRequest pageRequest, SQLQuery query, Class aClass, String... properties) {
+        int limit = pageRequest.getPageSize();
+        int offset = pageRequest.getPageNumber() * pageRequest.getPageSize();
+
+        long total = query.fetchCount();
+
+        query.limit(limit).offset(offset);
+        List<Tuple> queryResult = query.fetch();
+        List results = parseResult(queryResult, User.class, properties);
+
+        // Create result
+        Page page = new PageImpl(results, pageRequest, total);
+
+        return new BasePagination(page);
+    }
+
+    //---------------------------------
+
+    @Override
     public SQLQuery join(JoinType joinType, SQLQuery query, PathBuilder sourceBuilder, PathBuilder joinBuilder,
                          String sourceProperty, String joinProperty) {
 
@@ -142,14 +284,28 @@ public abstract class AbstractQueryDslRepository {
         return query;
     }
 
-    public Expression[] mergeExpressions(Expression[]... expressions) {
-        List<Expression> result = new LinkedList<>();
-
-        for (Expression[] expression : expressions) {
-            result.addAll(Arrays.asList(expression));
+    @Override
+    public SQLQuery addOrderBy(SQLQuery query, PathBuilder pathBuilder, String property, OrderDirection direction) {
+        if (direction == OrderDirection.DESC) {
+            query.orderBy(pathBuilder.getString(property).desc());
         }
 
-        return result.toArray(new Expression[0]);
+        if (direction == OrderDirection.ASC) {
+            query.orderBy(pathBuilder.getString(property).asc());
+        }
+        return query;
     }
+
+    @Override
+    public SQLQuery addOrderBy(SQLQuery query, PathBuilder pathBuilder, OrderBy orderBy) {
+        List<String> keys = orderBy.getKeys();
+
+        for (String key : keys) {
+            query = addOrderBy(query, pathBuilder, key, orderBy.getDirection());
+        }
+
+        return query;
+    }
+
 
 }

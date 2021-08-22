@@ -17,6 +17,7 @@ package com.phoenix.common.util;
 
 import com.phoenix.common.structure.Pair;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -101,6 +102,15 @@ public class ReflectionUtil {
     }
 
 
+    public static Annotation getAnotationOfField(Field field, Class annotationClass) {
+        return field.getAnnotation(annotationClass);
+    }
+
+    public static Annotation getAnotationOfField(String fieldName, Class ObjectClass, Class annotationClass) {
+        Field field = findFieldByName(fieldName, ObjectClass);
+        return field.getAnnotation(annotationClass);
+    }
+
     public static Class getTypeOfFieldByName(Class aClass, String name) throws NoSuchFieldException {
         List<Field> fields = getAllFields(aClass);
 
@@ -108,7 +118,6 @@ public class ReflectionUtil {
                 .filter(f -> f.getName().equals(name))
                 .findAny()
                 .orElse(null);
-
         return field.getType();
     }
 

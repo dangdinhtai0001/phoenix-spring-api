@@ -1,11 +1,14 @@
 package com.phoenix.api.core.repository;
 
 import com.phoenix.api.base.constant.BeanIds;
+import com.phoenix.api.business.model.User;
+import com.phoenix.api.core.model.BasePagination;
 import com.phoenix.api.core.model.JoinType;
 import com.phoenix.api.core.model.SearchCriteria;
 import com.phoenix.api.core.model.SearchOperation;
 import com.phoenix.api.model.querydsl.QFwUser;
 import com.phoenix.api.model.querydsl.QProfile;
+import com.phoenix.common.util.ReflectionUtil;
 import com.querydsl.core.Tuple;
 import com.querydsl.core.types.Expression;
 import com.querydsl.core.types.Predicate;
@@ -15,9 +18,12 @@ import com.querydsl.sql.SQLQueryFactory;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.ActiveProfiles;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @SpringBootTest
@@ -30,6 +36,11 @@ public class TestQueryDsl extends AbstractQueryDslRepository {
     ) {
         super(queryFactory);
         this.queryFactory = queryFactory;
+    }
+
+    @Override
+    protected List<PathBuilder> getListPathBuilder() {
+        return null;
     }
 
     @Test
@@ -50,7 +61,6 @@ public class TestQueryDsl extends AbstractQueryDslRepository {
         SQLQuery<Tuple> query = createSelectQuery(expressions, pathBuilder);
         List<Predicate> predicates = getPredicateFromSearchCriteria(pathBuilder, searchCriteriaList);
         addWhereClause(query, predicates);
-
         List<Tuple> result = query.fetch();
 
         for (Tuple record : result) {
@@ -91,6 +101,8 @@ public class TestQueryDsl extends AbstractQueryDslRepository {
         List<Predicate> predicates = getPredicateFromSearchCriteria(userPathBuilder, searchCriteriaList);
         addWhereClause(query, predicates);
 
+        query.orderBy(userPathBuilder.getString("id").desc());
+
         System.out.println(query.getSQL().getSQL());
 
         List<Tuple> result = query.fetch();
@@ -102,6 +114,67 @@ public class TestQueryDsl extends AbstractQueryDslRepository {
                     record.get(2, String.class),
                     record.get(3, String.class)
             );
+
+            System.out.printf("id: %d, username: %s, password: %s, name:%s%n",
+                    record.get(userPathBuilder.get("id")),
+                    record.get(userPathBuilder.get("username")),
+                    record.get(userPathBuilder.get("password")),
+                    record.get(userPathBuilder.get("name"))
+            );
+
         }
+
+        try {
+            User user = new User();
+            System.out.println(user);
+            ReflectionUtil.setField(user, "name", "dangdinhtai");
+            ReflectionUtil.setField(user, "gender", 1L);
+            ReflectionUtil.setField(user, "dateOfBirth", new Date());
+            System.out.println(user);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
+
+        //------------------------
+    }
+
+    @Test
+    @Transactional
+    public void testParseResult() throws NoSuchFieldException, IllegalAccessException {
+        SearchCriteria criteria = new SearchCriteria("id", SearchOperation.LESS_THAN, 10);
+        SearchCriteria criteria1 = new SearchCriteria("username", SearchOperation.IN, "admin", "user");
+        List<SearchCriteria> searchCriteriaList = new ArrayList<>();
+
+        // --------------------------------------
+
+        String tableName = getTableName(QFwUser.fwUser);
+        PathBuilder pathBuilder = getPathBuilder(QFwUser.class, tableName);
+        Expression[] expressions = getExpressions(pathBuilder, "id", "username", "password");
+
+        SQLQuery<Tuple> query = createSelectQuery(expressions, pathBuilder);
+        List<Predicate> predicates = getPredicateFromSearchCriteria(pathBuilder, searchCriteriaList);
+        addWhereClause(query, predicates);
+//        List<Tuple> result = query.fetch();
+//
+//        for (Tuple record : result) {
+//            System.out.printf("id: %d, username: %s, password: %s%n",
+//                    record.get(pathBuilder.get("id")),
+//                    record.get(pathBuilder.get("username")),
+//                    record.get(pathBuilder.get("password"))
+//            );
+//        }
+//
+//        List<Object> list = parseResult(result, User.class, "id", "username", "password");
+//
+//        for (Object obj : list) {
+//            System.out.println(obj);
+//        }
+
+        PageRequest pageRequest = PageRequest.of(1, 2);
+        BasePagination basePagination = fetchWithPagination(pageRequest, query, User.class, "id", "username", "password");
+
+        System.out.println(basePagination);
+
     }
 }

@@ -89,18 +89,4 @@ public class TestAbstractRepository {
 
         System.out.println(users.getItems());
     }
-
-    @Test
-    public void testCreateOrderBy() throws Exception {
-        List<String> keys = new LinkedList<>();
-        keys.add("id");
-        keys.add("code_");
-
-        OrderByRequest orderByRequest = new OrderByRequest(keys, "ASC");
-
-        OrderBy orderBy = orderByRequest.getOderBy();
-        String orderByClause = userRepositoryImp.getOderByClause(orderBy);
-
-        System.out.println(orderByClause);
-    }
 }
