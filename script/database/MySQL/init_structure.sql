@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.22, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.25, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: phoenix-v2
+-- Host: localhost    Database: phoenix-v2
 -- ------------------------------------------------------
--- Server version	8.0.22
+-- Server version	8.0.25
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -32,30 +32,6 @@ CREATE TABLE `fw_exception` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `fw_filter_metadata`
---
-
-DROP TABLE IF EXISTS `fw_filter_metadata`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `fw_filter_metadata` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `object_` varchar(255) COLLATE utf8mb4_vietnamese_ci NOT NULL,
-  `table_` varchar(255) COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
-  `column_` varchar(255) COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
-  `alias_` varchar(255) COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
-  `field` varchar(255) COLLATE utf8mb4_vietnamese_ci NOT NULL,
-  `field_type` varchar(255) COLLATE utf8mb4_vietnamese_ci NOT NULL,
-  `is_filter` int NOT NULL DEFAULT '0',
-  `filter_type` varchar(255) COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `fw_filters_metadata_id_uindex` (`id`),
-  KEY `fw_filters_metadata_object__index` (`object_`),
-  KEY `fw_filter_metadata_object__field_index` (`object_`,`field`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Table structure for table `fw_resource_action`
 --
 
@@ -64,9 +40,9 @@ DROP TABLE IF EXISTS `fw_resource_action`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `fw_resource_action` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `action` varchar(255) COLLATE utf8mb4_vietnamese_ci NOT NULL,
-  `resource` varchar(255) COLLATE utf8mb4_vietnamese_ci NOT NULL,
-  `description` varchar(255) COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
+  `action` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
+  `resource` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
+  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -126,7 +102,7 @@ DROP TABLE IF EXISTS `fw_user_group`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `fw_user_group` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) COLLATE utf8mb4_vietnamese_ci NOT NULL,
+  `name` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
   UNIQUE KEY `name_UNIQUE` (`name`)
@@ -192,11 +168,11 @@ DROP TABLE IF EXISTS `profile`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `profile` (
   `ID` int NOT NULL AUTO_INCREMENT,
-  `NAME` varchar(50) COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
+  `NAME` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
   `DATE_OF_BIRTH` date DEFAULT NULL,
-  `GENDER` varchar(50) COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
-  `PHONE_NUMBER` varchar(20) COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
-  `AVATAR` varchar(255) COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
+  `GENDER` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
+  `PHONE_NUMBER` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
+  `AVATAR` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
   `USER_ID` bigint NOT NULL,
   PRIMARY KEY (`ID`),
   UNIQUE KEY `PROFILE_USER_ID_uindex` (`USER_ID`),
@@ -213,13 +189,13 @@ DROP TABLE IF EXISTS `spring_session`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `spring_session` (
-  `PRIMARY_ID` char(36) COLLATE utf8mb4_vietnamese_ci NOT NULL,
-  `SESSION_ID` char(36) COLLATE utf8mb4_vietnamese_ci NOT NULL,
+  `PRIMARY_ID` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
+  `SESSION_ID` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
   `CREATION_TIME` bigint NOT NULL,
   `LAST_ACCESS_TIME` bigint NOT NULL,
   `MAX_INACTIVE_INTERVAL` int NOT NULL,
   `EXPIRY_TIME` bigint NOT NULL,
-  `PRINCIPAL_NAME` varchar(100) COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
+  `PRINCIPAL_NAME` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
   PRIMARY KEY (`PRIMARY_ID`),
   UNIQUE KEY `SPRING_SESSION_IX1` (`SESSION_ID`),
   KEY `SPRING_SESSION_IX2` (`EXPIRY_TIME`),
@@ -235,21 +211,13 @@ DROP TABLE IF EXISTS `spring_session_attributes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `spring_session_attributes` (
-  `SESSION_PRIMARY_ID` char(36) COLLATE utf8mb4_vietnamese_ci NOT NULL,
-  `ATTRIBUTE_NAME` varchar(200) COLLATE utf8mb4_vietnamese_ci NOT NULL,
+  `SESSION_PRIMARY_ID` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
+  `ATTRIBUTE_NAME` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
   `ATTRIBUTE_BYTES` blob NOT NULL,
   PRIMARY KEY (`SESSION_PRIMARY_ID`,`ATTRIBUTE_NAME`),
   CONSTRAINT `SPRING_SESSION_ATTRIBUTES_FK` FOREIGN KEY (`SESSION_PRIMARY_ID`) REFERENCES `spring_session` (`PRIMARY_ID`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci ROW_FORMAT=DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping events for database 'phoenix-v2'
---
-
---
--- Dumping routines for database 'phoenix-v2'
---
 
 --
 -- Final view structure for view `fw_resource_policies`
@@ -278,4 +246,4 @@ CREATE TABLE `spring_session_attributes` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-08-11 20:54:09
+-- Dump completed on 2021-08-23  1:03:51

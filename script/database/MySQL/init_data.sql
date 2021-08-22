@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.22, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.25, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: phoenix-v2
+-- Host: localhost    Database: phoenix-v2
 -- ------------------------------------------------------
--- Server version	8.0.22
+-- Server version	8.0.25
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -23,16 +23,6 @@ LOCK TABLES `fw_exception` WRITE;
 /*!40000 ALTER TABLE `fw_exception` DISABLE KEYS */;
 INSERT INTO `fw_exception` VALUES (1,'AUTH_001','Wrong user credentials',400),(2,'AUTH_002','Your account has been locked',401),(3,'AUTH_003','Your account has expired',401),(4,'AUTH_004','Access denied, You do not have permission to access this feature.',403),(5,'DB_001','There was an error saving data to the database',500),(6,'AUTH_005','Invalid JWT refresh token',400),(7,'COM_001','Bad request',400),(8,'COM_002','Internal error',500);
 /*!40000 ALTER TABLE `fw_exception` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `fw_filter_metadata`
---
-
-LOCK TABLES `fw_filter_metadata` WRITE;
-/*!40000 ALTER TABLE `fw_filter_metadata` DISABLE KEYS */;
-INSERT INTO `fw_filter_metadata` VALUES (1,'com.phoenix.api.business.model.User','fw_user','id','fu','id','java.lang.Long',0,NULL),(2,'com.phoenix.api.business.model.User','profile','name','p','name','java.lang.String',0,NULL),(3,'com.phoenix.api.business.model.User','profile','date_of_birth','p','dateOfBirth','java.util.Date',0,NULL),(4,'com.phoenix.api.business.model.User','profile','gender','p','gender','java.lang.String',0,NULL),(5,'com.phoenix.api.business.model.User','profile','phone_number','p','phoneNumber','java.lang.String',0,NULL),(6,'com.phoenix.api.business.model.User','profile','avatar','p','avatar','java.lang.String',0,NULL),(7,'com.phoenix.api.business.model.User','fw_user','username','fu','username','java.lang.String',0,NULL),(8,'com.phoenix.api.business.model.User','fw_user','password','fu','password','java.lang.String',0,NULL);
-/*!40000 ALTER TABLE `fw_filter_metadata` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -111,7 +101,6 @@ UNLOCK TABLES;
 
 LOCK TABLES `spring_session` WRITE;
 /*!40000 ALTER TABLE `spring_session` DISABLE KEYS */;
-INSERT INTO `spring_session` VALUES ('39cbeea6-97fa-402e-a78b-8e7f49237fe6','8d4b9314-0100-41ef-b911-7b51fa7d3ce6',1628687228541,1628689308000,1800,1628691108000,'admin');
 /*!40000 ALTER TABLE `spring_session` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -121,17 +110,8 @@ UNLOCK TABLES;
 
 LOCK TABLES `spring_session_attributes` WRITE;
 /*!40000 ALTER TABLE `spring_session_attributes` DISABLE KEYS */;
-INSERT INTO `spring_session_attributes` VALUES ('39cbeea6-97fa-402e-a78b-8e7f49237fe6','SPRING_SECURITY_CONTEXT',_binary '¨\Ì\0sr\0=org.springframework.security.core.context.SecurityContextImpl\0\0\0\0\0\0&\0L\0authenticationt\02Lorg/springframework/security/core/Authentication;xpsr\0Oorg.springframework.security.authentication.UsernamePasswordAuthenticationToken\0\0\0\0\0\0&\0L\0credentialst\0Ljava/lang/Object;L\0	principalq\0~\0xr\0Gorg.springframework.security.authentication.AbstractAuthenticationToken”™(~nGd\0Z\0\rauthenticatedL\0authoritiest\0Ljava/util/Collection;L\0detailsq\0~\0xpsr\0&java.util.Collections$UnmodifiableList¸%1µ\Ïé\0L\0listt\0Ljava/util/List;xr\0,java.util.Collections$UnmodifiableCollectionB\0Ä\À^˜\0L\0cq\0~\0xpsr\0java.util.ArrayListxÅ\“ô\«aù\0I\0sizexp\0\0\0\0w\0\0\0\0xq\0~\0\rsr\0Horg.springframework.security.web.authentication.WebAuthenticationDetails\0\0\0\0\0\0&\0L\0\rremoteAddresst\0Ljava/lang/String;L\0	sessionIdq\0~\0xpt\0	127.0.0.1t\0$8d4b9314-0100-41ef-b911-7b51fa7d3ce6t\0{raw}123456t\0admin');
 /*!40000 ALTER TABLE `spring_session_attributes` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Dumping events for database 'phoenix-v2'
---
-
---
--- Dumping routines for database 'phoenix-v2'
---
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -142,4 +122,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-08-11 20:54:48
+-- Dump completed on 2021-08-23  1:04:09
