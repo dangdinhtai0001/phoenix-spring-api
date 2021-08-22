@@ -36,6 +36,12 @@
     </dependencyManagement>
 
     <dependencies>
+        <dependency>
+            <groupId>com.querydsl</groupId>
+            <artifactId>querydsl-sql-spring</artifactId>
+            <version>${global.querydsl.version}</version>
+        </dependency>
+
         <!-- https://mvnrepository.com/artifact/com.querydsl/querydsl-apt -->
         <dependency>
             <groupId>com.querydsl</groupId>
@@ -152,6 +158,12 @@
             <groupId>com.phoenix</groupId>
             <artifactId>common</artifactId>
             <version>${module.common.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>RELEASE</version>
+            <scope>compile</scope>
         </dependency>
         <!--        modules-->
     </dependencies>

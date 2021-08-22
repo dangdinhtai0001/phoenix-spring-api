@@ -12,17 +12,19 @@ import com.phoenix.common.util.imp.ConcurrentUUIDFactory;
 import com.querydsl.sql.MySQLTemplates;
 import com.querydsl.sql.SQLQueryFactory;
 import com.querydsl.sql.SQLTemplates;
+import com.querydsl.sql.spring.SpringConnectionProvider;
 import lombok.extern.log4j.Log4j2;
 import org.casbin.jcasbin.main.Enforcer;
 import org.casbin.jcasbin.model.Model;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 
+import javax.inject.Provider;
 import javax.sql.DataSource;
+import java.sql.Connection;
 import java.util.List;
 
 @Configuration(value = "ApplicationConfiguration")
@@ -60,8 +62,9 @@ public class ApplicationConfiguration {
 
         com.querydsl.sql.Configuration configuration = new com.querydsl.sql.Configuration(templates);
 
+        Provider<Connection> provider = new SpringConnectionProvider(dataSource);
         log.info("Creating sql query factory");
-        return new SQLQueryFactory(configuration, dataSource);
+        return new SQLQueryFactory(configuration, provider);
     }
 
     /**
