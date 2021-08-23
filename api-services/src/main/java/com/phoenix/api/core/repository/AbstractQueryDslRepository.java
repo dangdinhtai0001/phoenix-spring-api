@@ -17,6 +17,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 
 import javax.transaction.Transactional;
+import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -70,6 +71,14 @@ public abstract class AbstractQueryDslRepository implements QueryDslRepository {
     }
 
     @Override
+    public String getTableName(String key, Class objectClass) {
+        BusinessObjectField annotation = (BusinessObjectField) ReflectionUtil.getAnotationOfField(key, objectClass, BusinessObjectField.class);
+        return annotation.table();
+    }
+
+    //---------------------------------
+
+    @Override
     public PathBuilder getPathBuilder(String className, String tableName) throws ClassNotFoundException {
         Class<?> entityType = Class.forName(className);
         return new PathBuilder(entityType, tableName);
@@ -87,9 +96,9 @@ public abstract class AbstractQueryDslRepository implements QueryDslRepository {
     }
 
     @Override
-    public PathBuilder getPathBuilder(List<PathBuilder> pathBuilders, String anotationTableName) {
+    public PathBuilder getPathBuilder(List<PathBuilder> pathBuilders, String annotationTableName) {
         for (PathBuilder pathBuilder : pathBuilders) {
-            if (anotationTableName.equals(pathBuilder.getMetadata().getName())) {
+            if (annotationTableName.equals(pathBuilder.getMetadata().getName())) {
                 return pathBuilder;
             }
         }
@@ -194,7 +203,7 @@ public abstract class AbstractQueryDslRepository implements QueryDslRepository {
     }
 
     @Override
-    public List<Predicate> getPredicateFromSearchCriteria(List<PathBuilder> pathBuilders, List<SearchCriteria> searchCriteriaList) {
+    public List<Predicate> getPredicateFromSearchCriteria(Class objectClass, List<PathBuilder> pathBuilders, List<SearchCriteria> searchCriteriaList) {
         List<Predicate> predicates = new ArrayList<>();
 
         if (searchCriteriaList == null || searchCriteriaList.isEmpty()) {
@@ -202,14 +211,12 @@ public abstract class AbstractQueryDslRepository implements QueryDslRepository {
         }
 
         String key;
-        BusinessObjectField annotation;
         String annotationTableName;
         PathBuilder pathBuilder;
 
         for (SearchCriteria criteria : searchCriteriaList) {
             key = criteria.getKey();
-            annotation = (BusinessObjectField) ReflectionUtil.getAnotationOfField(key, User.class, BusinessObjectField.class);
-            annotationTableName = annotation.table();
+            annotationTableName = getTableName(key, objectClass);
             pathBuilder = getPathBuilder(pathBuilders, annotationTableName);
 
             predicates.add(getPredicateFromSearchCriteria(pathBuilder, criteria));
@@ -312,5 +319,19 @@ public abstract class AbstractQueryDslRepository implements QueryDslRepository {
         return query;
     }
 
+    @Override
+    public SQLQuery addOrderBy(SQLQuery query, Class objectClass, List<PathBuilder> pathBuilders, OrderBy orderBy) {
+        List<String> keys = orderBy.getKeys();
+
+        String annotationTableName;
+        PathBuilder pathBuilder;
+        for (String key : keys) {
+            annotationTableName = getTableName(key, objectClass);
+            pathBuilder = getPathBuilder(pathBuilders, annotationTableName);
+            query = addOrderBy(query, pathBuilder, key, orderBy.getDirection());
+        }
+
+        return query;
+    }
 
 }

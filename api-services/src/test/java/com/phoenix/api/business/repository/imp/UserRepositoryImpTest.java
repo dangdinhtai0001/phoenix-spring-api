@@ -37,21 +37,22 @@ class UserRepositoryImpTest {
     }
 
     @Test
-    public void testFind() throws SearchCriteriaException, NoSuchFieldException, InvocationTargetException, IllegalAccessException, InstantiationException, NoSuchMethodException {
+    public void testFind() {
         List<String> keys = new LinkedList<>();
+        keys.add("name");
         keys.add("username");
-        OrderBy orderBy = new OrderBy(keys, OrderDirection.ASC);
+        OrderBy orderBy = new OrderBy(keys, OrderDirection.DESC);
 
         SearchCriteria criteria = new SearchCriteria("id", SearchOperation.LESS_THAN, 10);
         SearchCriteria criteria1 = new SearchCriteria("username", SearchOperation.IN, "admin", "user");
         SearchCriteria criteria2 = new SearchCriteria("name", SearchOperation.LIKE,  "%Cyb%");
         List<SearchCriteria> searchCriteriaList = new ArrayList<>();
         searchCriteriaList.add(criteria);
-        searchCriteriaList.add(criteria1);
-        searchCriteriaList.add(criteria2);
+//        searchCriteriaList.add(criteria1);
+//        searchCriteriaList.add(criteria2);
 
 
-        BasePagination basePagination = userRepository.findByCondition(searchCriteriaList, 0, 3, orderBy);
+        BasePagination basePagination = userRepository.findByCondition(searchCriteriaList, 0, 10, orderBy);
 
         System.out.println(basePagination);
 

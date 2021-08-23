@@ -58,7 +58,7 @@ public class UserRepositoryImp extends AbstractQueryDslRepository implements Use
 
         query = join(JoinType.LEFT, query, userPathBuilder, profilePathBuilder, "id", "user_id");
 
-        List<Predicate> predicates = getPredicateFromSearchCriteria(getListPathBuilder(), searchCriteriaList);
+        List<Predicate> predicates = getPredicateFromSearchCriteria(User.class, getListPathBuilder(), searchCriteriaList);
 
         addWhereClause(query, predicates);
 
@@ -78,14 +78,13 @@ public class UserRepositoryImp extends AbstractQueryDslRepository implements Use
 
         query = join(JoinType.LEFT, query, userPathBuilder, profilePathBuilder, "id", "user_id");
 
-        List<Predicate> predicates = getPredicateFromSearchCriteria(getListPathBuilder(), searchCriteriaList);
+        List<Predicate> predicates = getPredicateFromSearchCriteria(User.class, getListPathBuilder(), searchCriteriaList);
 
         addWhereClause(query, predicates);
-        addOrderBy(query, userPathBuilder, orderBy);
+        addOrderBy(query, User.class, getListPathBuilder(), orderBy);
 
         PageRequest pageRequest = PageRequest.of(pageOffset, pageSize);
 
         return fetchWithPagination(pageRequest, query, User.class, "id", "username", "password", "name", "dateOfBirth", "phoneNumber", "gender", "avatar");
     }
-
 }

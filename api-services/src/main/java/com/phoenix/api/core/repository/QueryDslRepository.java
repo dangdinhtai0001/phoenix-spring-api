@@ -26,6 +26,8 @@ public interface QueryDslRepository {
 
     String getTableName(RelationalPathBase relationalPathBase);
 
+    String getTableName(String key, Class objectClass);
+
     PathBuilder getPathBuilder(String className, String tableName) throws ClassNotFoundException;
 
     PathBuilder getPathBuilder(Class aClass, String tableName);
@@ -52,9 +54,9 @@ public interface QueryDslRepository {
 
     List<Predicate> getPredicateFromSearchCriteria(PathBuilder pathBuilder, List<SearchCriteria> searchCriteriaList);
 
-    //---------------------------------
+    List<Predicate> getPredicateFromSearchCriteria(Class objectClass, List<PathBuilder> pathBuilders, List<SearchCriteria> searchCriteriaList);
 
-    List<Predicate> getPredicateFromSearchCriteria(List<PathBuilder> pathBuilders, List<SearchCriteria> searchCriteriaList);
+    //---------------------------------
 
     List<Object> parseResult(List<Tuple> queryResult, Class<?> aClass, String... properties);
 
@@ -67,5 +69,5 @@ public interface QueryDslRepository {
 
     SQLQuery addOrderBy(SQLQuery query, PathBuilder pathBuilder, OrderBy orderBy);
 
-    SQLQuery addOrderBy(SQLQuery query, List<PathBuilder> pathBuilders, OrderBy orderBy);
+    SQLQuery addOrderBy(SQLQuery query, Class objectClass, List<PathBuilder> pathBuilders, OrderBy orderBy);
 }
