@@ -1,9 +1,6 @@
 package com.phoenix.api.core.repository;
 
-import com.phoenix.api.core.model.JoinType;
-import com.phoenix.api.core.model.OrderBy;
-import com.phoenix.api.core.model.OrderDirection;
-import com.phoenix.api.core.model.SearchCriteria;
+import com.phoenix.api.core.model.*;
 import com.querydsl.core.Tuple;
 import com.querydsl.core.support.QueryBase;
 import com.querydsl.core.types.Expression;
@@ -11,6 +8,7 @@ import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.PathBuilder;
 import com.querydsl.sql.RelationalPathBase;
 import com.querydsl.sql.SQLQuery;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
 
@@ -59,6 +57,8 @@ public interface QueryDslRepository {
     //---------------------------------
 
     List<Object> parseResult(List<Tuple> queryResult, Class<?> aClass, String... properties);
+
+    BasePagination fetchWithPagination(PageRequest pageRequest, SQLQuery query, Class aClass, String... properties);
 
     //---------------------------------
 

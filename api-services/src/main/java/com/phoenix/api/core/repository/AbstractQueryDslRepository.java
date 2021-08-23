@@ -256,7 +256,7 @@ public abstract class AbstractQueryDslRepository implements QueryDslRepository {
         return result;
     }
 
-    @Transactional
+    @Override
     public BasePagination fetchWithPagination(PageRequest pageRequest, SQLQuery query, Class aClass, String... properties) {
         int limit = pageRequest.getPageSize();
         int offset = pageRequest.getPageNumber() * pageRequest.getPageSize();
