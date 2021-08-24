@@ -32,4 +32,7 @@ public class MenuEntity extends BaseEntity<Long> {
 
     @Column(name = "user_groups_required")
     private String userGroupsRequired;
+
+    @Column(name = "is_hidden")
+    private String isHidden;
 }

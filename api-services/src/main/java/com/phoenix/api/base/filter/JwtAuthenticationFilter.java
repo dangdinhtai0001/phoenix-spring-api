@@ -5,6 +5,7 @@ import com.phoenix.common.auth.JwtProvider;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -31,7 +32,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected boolean shouldNotFilter(HttpServletRequest request) {
+    protected boolean shouldNotFilter(@NotNull HttpServletRequest request) {
         return Arrays.stream(ApplicationConstant.PUBLIC_URLS_MATCHER)
                 .anyMatch(e -> new AntPathMatcher().match(e, request.getServletPath()));
     }
@@ -40,9 +41,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
      * Filter the incoming request for a valid token in the request header
      */
     @Override
-    protected void doFilterInternal(HttpServletRequest httpServletRequest,
-                                    HttpServletResponse httpServletResponse,
-                                    FilterChain filterChain) throws IOException {
+    protected void doFilterInternal(@NotNull HttpServletRequest httpServletRequest,
+                                    @NotNull HttpServletResponse httpServletResponse,
+                                    @NotNull FilterChain filterChain) throws IOException {
         try {
             String tokenHeader = httpServletRequest.getHeader(ApplicationConstant.REQUEST_HEADER_AUTHORIZATION);
 
@@ -84,6 +85,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
 
     private String getTokenFromHeader(String header) {
-        return header.substring("bearer ".length());
+        return header.substring(ApplicationConstant.JWT_TOKEN_TYPE.length());
     }
 }
