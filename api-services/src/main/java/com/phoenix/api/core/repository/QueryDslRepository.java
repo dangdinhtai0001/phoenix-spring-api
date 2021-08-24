@@ -56,6 +56,8 @@ public interface QueryDslRepository {
 
     //---------------------------------
 
+    List<Predicate> getPredicateFromSearchCriteria(Class objectClass, List<PathBuilder> pathBuilders, SearchCriteria criteria);
+
     List<Object> parseResult(List<Tuple> queryResult, Class<?> aClass, String... properties);
 
     BasePagination fetchWithPagination(PageRequest pageRequest, SQLQuery query, Class aClass, String... properties);

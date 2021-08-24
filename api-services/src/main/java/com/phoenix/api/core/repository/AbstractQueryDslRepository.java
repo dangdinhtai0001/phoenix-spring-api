@@ -17,7 +17,6 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 
 import javax.transaction.Transactional;
-import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,7 +24,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
+@Transactional
 public abstract class AbstractQueryDslRepository implements QueryDslRepository {
 
     private final SQLQueryFactory queryFactory;
@@ -225,6 +224,28 @@ public abstract class AbstractQueryDslRepository implements QueryDslRepository {
         return predicates;
     }
 
+    @Override
+    public List<Predicate> getPredicateFromSearchCriteria(Class objectClass, List<PathBuilder> pathBuilders, SearchCriteria criteria) {
+        List<Predicate> predicates = new ArrayList<>();
+
+        if (criteria == null) {
+            return predicates;
+        }
+
+        String key;
+        String annotationTableName;
+        PathBuilder pathBuilder;
+
+
+        key = criteria.getKey();
+        annotationTableName = getTableName(key, objectClass);
+        pathBuilder = getPathBuilder(pathBuilders, annotationTableName);
+
+        predicates.add(getPredicateFromSearchCriteria(pathBuilder, criteria));
+
+
+        return predicates;
+    }
     //---------------------------------
 
     @Override
