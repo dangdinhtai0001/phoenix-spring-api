@@ -11,7 +11,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service(BeanIds.DEFAULT_USER_DETAIL_SERVICES)
 @Log4j2
@@ -34,6 +36,8 @@ public class DefaultUserDetailService implements UserDetailsService {
         }
 
         UserPrincipal userPrincipal = optional.get();
+        List<Integer> groups = userRepositoryImp.findGroupIdsByUsername(username);
+        userPrincipal.setGroups(groups.stream().map(String::valueOf).collect(Collectors.toList()));
 
         return new DefaultUserDetails(userPrincipal);
     }
