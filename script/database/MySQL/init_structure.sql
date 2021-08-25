@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.25, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.22, for Win64 (x86_64)
 --
--- Host: localhost    Database: phoenix-v2
+-- Host: 127.0.0.1    Database: phoenix-v2
 -- ------------------------------------------------------
--- Server version	8.0.25
+-- Server version	8.0.22
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -40,12 +40,13 @@ DROP TABLE IF EXISTS `fw_menu`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `fw_menu` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `display_name` varchar(45) COLLATE utf8mb4_vietnamese_ci NOT NULL,
-  `path` varchar(45) COLLATE utf8mb4_vietnamese_ci NOT NULL,
+  `display_name` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
+  `path` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,
   `parent_id` int DEFAULT NULL,
   `display_order` int NOT NULL,
-  `description` varchar(255) COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
-  `user_groups_required` varchar(45) COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
+  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
+  `user_groups_required` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
+  `is_hidden` tinyint(1) DEFAULT '1',
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
@@ -240,6 +241,14 @@ CREATE TABLE `spring_session_attributes` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping events for database 'phoenix-v2'
+--
+
+--
+-- Dumping routines for database 'phoenix-v2'
+--
+
+--
 -- Final view structure for view `fw_resource_policies`
 --
 
@@ -266,4 +275,4 @@ CREATE TABLE `spring_session_attributes` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-08-23 17:15:53
+-- Dump completed on 2021-08-25 23:59:26
