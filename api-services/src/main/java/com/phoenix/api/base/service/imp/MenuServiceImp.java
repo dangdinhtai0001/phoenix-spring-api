@@ -5,17 +5,15 @@ import com.phoenix.api.base.constant.BeanIds;
 import com.phoenix.api.base.entities.ExceptionEntity;
 import com.phoenix.api.base.repositories.MenuRepository;
 import com.phoenix.api.base.service.MenuService;
+import com.phoenix.api.core.model.SearchCriteria;
+import com.phoenix.api.core.model.SearchOperation;
 import com.phoenix.api.core.service.AbstractBaseService;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.ObjectFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpSession;
-import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,8 +37,9 @@ public class MenuServiceImp extends AbstractBaseService implements MenuService {
 
         List<String> list = token.getAuthorities().stream().map(String::valueOf).collect(Collectors.toList());
         Gson gson = new Gson();
-        System.out.println(gson.toJson(list));
-
+        String s = gson.toJson(list);
+        s = "%" + s.substring(1, s.length() - 1) + "%";
+        SearchCriteria searchCriteria = new SearchCriteria("user_groups_required", SearchOperation.LIKE, s);
 
         return menuRepository.findAll();
     }
