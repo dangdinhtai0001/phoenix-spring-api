@@ -3,15 +3,21 @@ package com.phoenix.api.core.repository;
 import com.phoenix.api.business.model.User;
 import com.phoenix.api.core.annotation.BusinessObjectField;
 import com.phoenix.api.core.model.*;
+import com.phoenix.api.model.querydsl.QFwUser;
 import com.phoenix.common.util.ReflectionUtil;
 import com.querydsl.core.Tuple;
 import com.querydsl.core.support.QueryBase;
 import com.querydsl.core.types.Expression;
+import com.querydsl.core.types.Path;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.PathBuilder;
+import com.querydsl.core.types.dsl.StringPath;
+import com.querydsl.sql.RelationalPath;
 import com.querydsl.sql.RelationalPathBase;
 import com.querydsl.sql.SQLQuery;
 import com.querydsl.sql.SQLQueryFactory;
+import com.querydsl.sql.dml.SQLUpdateClause;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -26,6 +32,9 @@ import java.util.stream.Collectors;
 
 @Transactional
 public abstract class AbstractQueryDslRepository implements QueryDslRepository {
+
+    @Value("${spring.datasource.username}")
+    private String datasourceUsername;
 
     private final SQLQueryFactory queryFactory;
 
@@ -75,6 +84,11 @@ public abstract class AbstractQueryDslRepository implements QueryDslRepository {
         return annotation.table();
     }
 
+    @Override
+    public String getDefaultSchemaName() {
+        return this.datasourceUsername;
+    }
+
     //---------------------------------
 
     @Override
@@ -83,13 +97,19 @@ public abstract class AbstractQueryDslRepository implements QueryDslRepository {
         return new PathBuilder(entityType, tableName);
     }
 
+    public RelationalPath getRelationalPathBase(Class<? extends RelationalPathBase> typeClass, RelationalPath relationalPath) {
+        String table = relationalPath.getTableName();
+        String schema = getDefaultSchemaName();
+        return new RelationalPathBase(typeClass, table, schema, table);
+    }
+
     @Override
-    public PathBuilder getPathBuilder(Class aClass, String tableName) {
+    public PathBuilder getPathBuilder(Class<? extends RelationalPathBase> aClass, String tableName) {
         return new PathBuilder(aClass, tableName);
     }
 
     @Override
-    public PathBuilder getPathBuilder(Class aClass, RelationalPathBase relationalPathBase) {
+    public PathBuilder getPathBuilder(Class<? extends RelationalPathBase> aClass, RelationalPathBase relationalPathBase) {
         String tableName = getTableName(relationalPathBase);
         return new PathBuilder(aClass, tableName);
     }
@@ -102,6 +122,25 @@ public abstract class AbstractQueryDslRepository implements QueryDslRepository {
             }
         }
         return null;
+    }
+
+    //---------------------------------
+
+    @Override
+    public StringPath getPathString(PathBuilder pathBuilder, String property) {
+        return pathBuilder.getString(property);
+    }
+
+    @Override
+    public StringPath getPathString(Class<? extends RelationalPathBase> aClass, String tableName, String property) {
+        PathBuilder pathBuilder = getPathBuilder(aClass, tableName);
+        return pathBuilder.getString(property);
+    }
+
+    @Override
+    public StringPath getPathString(Class<? extends RelationalPathBase> aClass, RelationalPathBase relationalPathBase, String property) {
+        PathBuilder pathBuilder = getPathBuilder(aClass, relationalPathBase);
+        return pathBuilder.getString(property);
     }
 
     //---------------------------------
@@ -136,6 +175,12 @@ public abstract class AbstractQueryDslRepository implements QueryDslRepository {
     }
 
     @Override
+    public QueryBase addWhereClause(SQLQuery query, PathBuilder pathBuilder, SearchCriteria criteria) {
+        Predicate predicate = getPredicateFromSearchCriteria(pathBuilder, criteria);
+        return query.where(predicate);
+    }
+
+    @Override
     public QueryBase addWhereClause(SQLQuery query, List<Predicate> predicates) {
         for (Predicate predicate : predicates) {
             query.where(predicate);
@@ -143,8 +188,26 @@ public abstract class AbstractQueryDslRepository implements QueryDslRepository {
         return query;
     }
 
-    //---------------------------------
+    @Override
+    public SQLUpdateClause addWhereClause(SQLUpdateClause sqlUpdateClause, Predicate predicate) {
+        return sqlUpdateClause.where(predicate);
+    }
 
+    @Override
+    public SQLUpdateClause addWhereClause(SQLUpdateClause sqlUpdateClause, PathBuilder pathBuilder, SearchCriteria criteria) {
+        Predicate predicate = getPredicateFromSearchCriteria(pathBuilder, criteria);
+        return sqlUpdateClause.where(predicate);
+    }
+
+    @Override
+    public SQLUpdateClause addWhereClause(SQLUpdateClause sqlUpdateClause, List<Predicate> predicates) {
+        for (Predicate predicate : predicates) {
+            sqlUpdateClause.where(predicate);
+        }
+        return sqlUpdateClause;
+    }
+
+    //---------------------------------
     @Override
     public Predicate getPredicateFromSearchCriteria(PathBuilder pathBuilder, SearchCriteria criteria) {
         String key = criteria.getKey();
@@ -355,4 +418,12 @@ public abstract class AbstractQueryDslRepository implements QueryDslRepository {
         return query;
     }
 
+    //---------------------------------
+
+    @Override
+    public SQLUpdateClause set(SQLUpdateClause query, Path path, Object value) {
+        query.set(path, value);
+
+        return query;
+    }
 }

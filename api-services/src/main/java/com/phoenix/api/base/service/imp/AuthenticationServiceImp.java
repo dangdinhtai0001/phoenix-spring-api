@@ -3,7 +3,7 @@ package com.phoenix.api.base.service.imp;
 import com.phoenix.api.base.constant.ApplicationConstant;
 import com.phoenix.api.base.constant.BeanIds;
 import com.phoenix.api.base.entities.ExceptionEntity;
-import com.phoenix.api.base.repositories.imp.UserRepositoryImp;
+import com.phoenix.api.base.repositories.imp.DefaultUserDetailsRepository;
 import com.phoenix.api.base.service.AuthenticationService;
 import com.phoenix.api.core.config.DefaultExceptionCode;
 import com.phoenix.api.core.exception.ApplicationException;
@@ -36,13 +36,13 @@ public class AuthenticationServiceImp extends AbstractBaseService implements Aut
     private final JwtProvider jwtProvider;
     private final UUIDFactory uuidFactory;
     private final AuthenticationManager authenticationManager;
-    private final UserRepositoryImp userRepository;
+    private final DefaultUserDetailsRepository userRepository;
 
     protected AuthenticationServiceImp(
             @Qualifier(BeanIds.JWT_PROVIDER) JwtProvider jwtProvider,
             @Qualifier(BeanIds.UUID_FACTORY) UUIDFactory uuidFactory,
             @Qualifier(BeanIds.DEFAULT_AUTHENTICATION_MANAGER) AuthenticationManager authenticationManager,
-            @Qualifier(BeanIds.BASE_USER_REPOSITORY_IMP) UserRepositoryImp userRepository,
+            @Qualifier(BeanIds.BASE_USER_REPOSITORY_IMP) DefaultUserDetailsRepository userRepository,
             @Qualifier(BeanIds.ALL_EXCEPTION) List<ExceptionEntity> exceptionEntities
     ) {
         super(exceptionEntities);
@@ -120,7 +120,7 @@ public class AuthenticationServiceImp extends AbstractBaseService implements Aut
         Principal principal = request.getUserPrincipal();
         String username = principal.getName();
 
-        return userRepository.findUserProfileByUsername(username).orElseGet(null);
+        return userRepository.findUserPrincipalByUsername(username).orElseGet(null);
     }
 
 

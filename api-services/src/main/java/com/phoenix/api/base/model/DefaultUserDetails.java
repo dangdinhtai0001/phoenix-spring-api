@@ -21,8 +21,8 @@ public class DefaultUserDetails implements UserDetails {
 
         Set<GrantedAuthority> authorities = new HashSet<>();
 
-        for (String permission : userPrincipal.getPermissions()) {
-            authorities.add(new SimpleGrantedAuthority(permission));
+        for (String group : userPrincipal.getGroups()) {
+            authorities.add(new SimpleGrantedAuthority(group));
         }
 
         return authorities;

@@ -43,7 +43,9 @@ public class PersistenceConfiguration {
 
         SQLTemplates templates = MySQLTemplates.builder()
                 .printSchema() // to include the schema in the output
-                .build();
+                .quote()       // to quote names
+                .newLineToSingleSpace() // to replace new lines with single space in the output
+                .build();      // to get the customized SQLTemplates instance
 
         com.querydsl.sql.Configuration configuration = new com.querydsl.sql.Configuration(templates);
         configuration.setExceptionTranslator(new SpringExceptionTranslator());

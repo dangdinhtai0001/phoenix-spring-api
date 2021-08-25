@@ -4,10 +4,13 @@ import com.phoenix.api.core.model.*;
 import com.querydsl.core.Tuple;
 import com.querydsl.core.support.QueryBase;
 import com.querydsl.core.types.Expression;
+import com.querydsl.core.types.Path;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.PathBuilder;
+import com.querydsl.core.types.dsl.StringPath;
 import com.querydsl.sql.RelationalPathBase;
 import com.querydsl.sql.SQLQuery;
+import com.querydsl.sql.dml.SQLUpdateClause;
 import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
@@ -26,17 +29,25 @@ public interface QueryDslRepository {
 
     String getTableName(String key, Class objectClass);
 
+    String getDefaultSchemaName();
+
     PathBuilder getPathBuilder(String className, String tableName) throws ClassNotFoundException;
 
-    PathBuilder getPathBuilder(Class aClass, String tableName);
-
-    //---------------------------------
-
-    PathBuilder getPathBuilder(Class aClass, RelationalPathBase relationalPathBase);
+    PathBuilder getPathBuilder(Class<? extends RelationalPathBase> aClass, String tableName);
 
     PathBuilder getPathBuilder(List<PathBuilder> pathBuilders, String anotationTableName);
 
+    StringPath getPathString(PathBuilder pathBuilder, String property);
+
+    StringPath getPathString(Class<? extends RelationalPathBase> aClass, String tableName, String property);
+
+    StringPath getPathString(Class<? extends RelationalPathBase> aClass, RelationalPathBase relationalPathBase, String property);
+
     Expression[] getExpressions(PathBuilder pathBuilder, String... properties);
+
+    //---------------------------------
+
+    PathBuilder getPathBuilder(Class<? extends RelationalPathBase> aClass, RelationalPathBase relationalPathBase);
 
     Expression[] mergeExpressions(Expression[]... expressions);
 
@@ -44,7 +55,17 @@ public interface QueryDslRepository {
 
     QueryBase addWhereClause(SQLQuery query, Predicate predicate);
 
+    QueryBase addWhereClause(SQLQuery query, PathBuilder pathBuilder, SearchCriteria criteria);
+
     QueryBase addWhereClause(SQLQuery query, List<Predicate> predicates);
+
+    //---------------------------------
+
+    SQLUpdateClause addWhereClause(SQLUpdateClause sqlUpdateClause, Predicate predicate);
+
+    SQLUpdateClause addWhereClause(SQLUpdateClause sqlUpdateClause, PathBuilder pathBuilder, SearchCriteria criteria);
+
+    SQLUpdateClause addWhereClause(SQLUpdateClause sqlUpdateClause, List<Predicate> predicates);
 
     //---------------------------------
 
@@ -54,9 +75,9 @@ public interface QueryDslRepository {
 
     List<Predicate> getPredicateFromSearchCriteria(Class objectClass, List<PathBuilder> pathBuilders, List<SearchCriteria> searchCriteriaList);
 
-    //---------------------------------
-
     List<Predicate> getPredicateFromSearchCriteria(Class objectClass, List<PathBuilder> pathBuilders, SearchCriteria criteria);
+
+    //---------------------------------
 
     List<Object> parseResult(List<Tuple> queryResult, Class<?> aClass, String... properties);
 
@@ -72,4 +93,6 @@ public interface QueryDslRepository {
     SQLQuery addOrderBy(SQLQuery query, PathBuilder pathBuilder, OrderBy orderBy);
 
     SQLQuery addOrderBy(SQLQuery query, Class objectClass, List<PathBuilder> pathBuilders, OrderBy orderBy);
+
+    SQLUpdateClause set(SQLUpdateClause query, Path path, Object value);
 }
