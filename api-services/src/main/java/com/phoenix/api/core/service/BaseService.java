@@ -5,6 +5,7 @@ import com.phoenix.api.core.exception.ApplicationException;
 import com.phoenix.api.core.model.SearchCriteria;
 import com.phoenix.api.core.model.SearchCriteriaRequest;
 import com.phoenix.api.core.repository.specification.PredicateBuilder;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
 import javax.persistence.criteria.Predicate;
 import java.util.List;
@@ -23,11 +24,9 @@ public interface BaseService {
      */
     ExceptionEntity findExceptionByCode(String code);
 
-    PredicateBuilder getPredicateBuilderFromSearchCriteria(PredicateBuilder predicate, List<SearchCriteria> conditions);
-
-    PredicateBuilder getPredicateBuilderFromSearchCriteria(List<SearchCriteria> conditions, Predicate.BooleanOperator booleanOperator);
-
     String getPropertyOfRequestBodyByKey(Map requestBody, String key);
 
     List<SearchCriteria> getListOfSearchCriteria(List<SearchCriteriaRequest> listConditionRequests);
+
+    UsernamePasswordAuthenticationToken getCurrentSecurityToken();
 }

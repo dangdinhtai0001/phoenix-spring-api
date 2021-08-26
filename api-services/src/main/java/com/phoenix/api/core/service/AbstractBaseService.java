@@ -6,6 +6,8 @@ import com.phoenix.api.core.model.SearchCriteria;
 import com.phoenix.api.core.model.SearchCriteriaRequest;
 import com.phoenix.api.core.repository.specification.PredicateBuilder;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import javax.persistence.criteria.Predicate;
 import java.util.List;
@@ -19,10 +21,7 @@ public abstract class AbstractBaseService implements BaseService {
         this.exceptionEntities = exceptionEntities;
     }
 
-    /**
-     * @param code Code of exception. Stored in fw_exception table and loaded in context.
-     * @return ApplicationException instance
-     */
+    @Override
     public ApplicationException getApplicationException(String code) {
         ExceptionEntity exceptionEntity = findExceptionByCode(code);
 
@@ -30,59 +29,12 @@ public abstract class AbstractBaseService implements BaseService {
                 HttpStatus.valueOf(exceptionEntity.getHttpCode()));
     }
 
+    @Override
     public ExceptionEntity findExceptionByCode(String code) {
         return exceptionEntities
                 .stream()
                 .filter(exceptionEntity -> code.equals(exceptionEntity.getCode()))
                 .findFirst().orElse(null);
-    }
-
-    @Override
-    public PredicateBuilder getPredicateBuilderFromSearchCriteria(PredicateBuilder predicate, List<SearchCriteria> conditions) {
-        for (SearchCriteria criteria : conditions) {
-            switch (criteria.getSearchOperation()) {
-                case BETWEEN:
-                    predicate.between(criteria.getKey(), criteria.getArguments().get(0), criteria.getArguments().get(1));
-                    break;
-                case EQUAL:
-                    predicate.eq(criteria.getKey(), criteria.getArguments().get(0));
-                    break;
-                case GREATER_THAN_OR_EQUAL:
-                    predicate.ge(criteria.getKey(), (Comparable<?>) criteria.getArguments().get(0));
-                    break;
-                case GREATER_THAN:
-                    predicate.gt(criteria.getKey(), (Comparable<?>) criteria.getArguments().get(0));
-                    break;
-                case IN:
-                    predicate.in(criteria.getKey(), criteria.getArguments());
-                    break;
-                case LESS_THAN_OR_EQUAL:
-                    predicate.le(criteria.getKey(), (Comparable<?>) criteria.getArguments().get(0));
-                    break;
-                case LIKE:
-                    predicate.like(criteria.getKey(), String.valueOf(criteria.getArguments().get(0)));
-                    break;
-                case LESS_THAN:
-                    predicate.lt(criteria.getKey(), (Comparable<?>) criteria.getArguments().get(0));
-                    break;
-                case NOT_EQUAL:
-                    predicate.ne(criteria.getKey(), criteria.getArguments().get(0));
-                    break;
-                case NOT_IN:
-                    predicate.notIn(criteria.getKey(), criteria.getArguments());
-                    break;
-                case NOT_LIKE:
-                    predicate.notLike(criteria.getKey(), String.valueOf(criteria.getArguments().get(0)));
-                    break;
-            }
-        }
-        return predicate;
-    }
-
-    @Override
-    public PredicateBuilder getPredicateBuilderFromSearchCriteria(List<SearchCriteria> conditions, Predicate.BooleanOperator booleanOperator) {
-        PredicateBuilder predicateBuilder = new PredicateBuilder<>(booleanOperator);
-        return getPredicateBuilderFromSearchCriteria(predicateBuilder, conditions);
     }
 
     @Override
@@ -102,5 +54,10 @@ public abstract class AbstractBaseService implements BaseService {
             return null;
         }
         return listConditionRequests.stream().map(SearchCriteriaRequest::getSearchCriteria).collect(Collectors.toList());
+    }
+
+    @Override
+    public UsernamePasswordAuthenticationToken getCurrentSecurityToken() {
+        return (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
     }
 }
