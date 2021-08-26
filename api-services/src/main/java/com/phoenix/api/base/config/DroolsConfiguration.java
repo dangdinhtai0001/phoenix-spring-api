@@ -25,6 +25,8 @@ public class DroolsConfiguration {
 
     @Bean(BeanIds.KIE_CONTAINER)
     public ConcurrentHashMap<String, KieContainer> getKieContainerMap() throws IOException {
+        long timeCounter = System.currentTimeMillis();
+
         for (Resource file : getRuleFiles()) {
             KieFileSystem kieFileSystem = kieServices().newKieFileSystem();
             kieFileSystem.write(ResourceFactory.newClassPathResource(RULES_PATH + file.getFilename(), "UTF-8"));
@@ -37,6 +39,8 @@ public class DroolsConfiguration {
             // remove the repo immediately
             //kieServices().getRepository().removeKieModule(releaseId);
         }
+        timeCounter = System.currentTimeMillis() - timeCounter;
+        log.info(String.format("Load: %d rule container in: %d millis", containerMap.size(), timeCounter));
         return containerMap;
     }
 
