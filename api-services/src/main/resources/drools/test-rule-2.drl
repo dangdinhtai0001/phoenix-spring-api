@@ -1,0 +1,11 @@
+package drools;
+
+import com.phoenix.api.core.model.SearchCriteria;
+
+rule "rule-0"
+    when
+        thisSearchCriteria : SearchCriteria ($arguments: arguments);
+        eval($arguments.size() == 0)
+    then
+        System.out.println("List is empty");
+end;

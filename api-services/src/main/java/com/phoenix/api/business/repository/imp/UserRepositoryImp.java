@@ -8,7 +8,7 @@ import com.phoenix.api.core.model.BasePagination;
 import com.phoenix.api.core.model.JoinType;
 import com.phoenix.api.core.model.OrderBy;
 import com.phoenix.api.core.model.SearchCriteria;
-import com.phoenix.api.core.repository.AbstractQueryDslRepository;
+import com.phoenix.api.core.repository.AbstractBaseQueryDslRepository;
 import com.phoenix.api.model.querydsl.QFwUser;
 import com.phoenix.api.model.querydsl.QProfile;
 import com.querydsl.core.types.Expression;
@@ -26,7 +26,7 @@ import java.util.List;
 
 @Repository(BeanIds.USER_REPOSITORY_IMP)
 @Transactional
-public class UserRepositoryImp extends AbstractQueryDslRepository implements UserRepository {
+public class UserRepositoryImp extends AbstractBaseQueryDslRepository implements UserRepository {
     private final SQLQueryFactory queryFactory;
 
     protected UserRepositoryImp(

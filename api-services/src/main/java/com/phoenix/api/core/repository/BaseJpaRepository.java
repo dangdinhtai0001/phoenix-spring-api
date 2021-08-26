@@ -2,12 +2,15 @@ package com.phoenix.api.core.repository;
 
 import com.phoenix.api.core.entity.BaseEntity;
 import com.phoenix.api.core.exception.RepositoryException;
+import com.phoenix.api.core.model.SearchCriteria;
+import com.phoenix.api.core.repository.specification.PredicateBuilder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.criteria.Predicate;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
@@ -18,10 +21,14 @@ import java.util.Optional;
  *
  *             <p> Details: https://docs.spring.io/spring-data/data-jpa/docs/current/api/org/springframework/data/jpa/repository/support/SimpleJpaRepository.html</p>
  */
-public interface BaseRepository<T extends BaseEntity<ID>, ID extends Serializable> {
+public interface BaseJpaRepository<T extends BaseEntity<ID>, ID extends Serializable> {
     //---------------------------------------------------------------------------------
     //--------------------------- COUNT GROUP
     //---------------------------------------------------------------------------------
+
+    Specification<T> getSpecificationFromSearchCriteria(PredicateBuilder<T> predicateBuilder, List<SearchCriteria> conditions);
+
+    Specification<T> getSpecificationFromSearchCriteria(List<SearchCriteria> conditions, Predicate.BooleanOperator booleanOperator);
 
     /**
      * @return the number of instances.

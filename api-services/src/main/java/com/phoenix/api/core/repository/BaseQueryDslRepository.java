@@ -15,7 +15,7 @@ import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
 
-public interface QueryDslRepository {
+public interface BaseQueryDslRepository {
 
     //---------------------------------
 

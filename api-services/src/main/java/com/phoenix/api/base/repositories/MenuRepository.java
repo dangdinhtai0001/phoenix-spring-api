@@ -1,7 +1,7 @@
 package com.phoenix.api.base.repositories;
 
 import com.phoenix.api.base.entities.MenuEntity;
-import com.phoenix.api.core.repository.BaseRepository;
+import com.phoenix.api.core.repository.BaseJpaRepository;
 
-public interface MenuRepository extends BaseRepository<MenuEntity, Long> {
+public interface MenuRepository extends BaseJpaRepository<MenuEntity, Long> {
 }

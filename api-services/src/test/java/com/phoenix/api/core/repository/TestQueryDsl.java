@@ -28,7 +28,7 @@ import java.util.List;
 
 @SpringBootTest
 @ActiveProfiles(profiles = "dev")
-public class TestQueryDsl extends AbstractQueryDslRepository {
+public class TestQueryDsl extends AbstractBaseQueryDslRepository {
     private final SQLQueryFactory queryFactory;
 
     protected TestQueryDsl(

@@ -3,7 +3,6 @@ package com.phoenix.api.core.repository;
 import com.phoenix.api.business.model.User;
 import com.phoenix.api.core.annotation.BusinessObjectField;
 import com.phoenix.api.core.model.*;
-import com.phoenix.api.model.querydsl.QFwUser;
 import com.phoenix.common.util.ReflectionUtil;
 import com.querydsl.core.Tuple;
 import com.querydsl.core.support.QueryBase;
@@ -31,14 +30,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Transactional
-public abstract class AbstractQueryDslRepository implements QueryDslRepository {
+public abstract class AbstractBaseQueryDslRepository implements BaseQueryDslRepository {
 
     @Value("${spring.datasource.username}")
     private String datasourceUsername;
 
     private final SQLQueryFactory queryFactory;
 
-    protected AbstractQueryDslRepository(SQLQueryFactory queryFactory) {
+    protected AbstractBaseQueryDslRepository(SQLQueryFactory queryFactory) {
         this.queryFactory = queryFactory;
     }
 

@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
-public interface NativeRepository {
+public interface BaseNativeRepository {
     /**
      * @param sql    Câu lệnh sql (hàm này chỉ dùng cho các lệnh ko cần thực hiện transaction như select )
      * @param params các param để truyền vào
@@ -44,7 +44,7 @@ public interface NativeRepository {
      * <br/>
      * <br/>
      *
-     * @param record thường sẽ là kết quả của hàm {@link NativeRepository#executeNativeQuery}
+     * @param record thường sẽ là kết quả của hàm {@link BaseNativeRepository#executeNativeQuery}
      * @param params Danh sách các {@link Pair}
      * @param aClass class target
      * @return 1 instance của class aClass
@@ -58,7 +58,7 @@ public interface NativeRepository {
             throws NoSuchFieldException, IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException;
 
     /**
-     * Tương tự: {{@link NativeRepository#parseResult(Object[], List, Class)}} nhưng áp dụng cho List các Object[] - chính là kết quả của hàm {@link NativeRepository#executeNativeQuery}
+     * Tương tự: {{@link BaseNativeRepository#parseResult(Object[], List, Class)}} nhưng áp dụng cho List các Object[] - chính là kết quả của hàm {@link BaseNativeRepository#executeNativeQuery}
      */
     List parseResult(List<Object[]> results, List<Pair<String, Class>> params, Class aClass)
             throws NoSuchFieldException, IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException;

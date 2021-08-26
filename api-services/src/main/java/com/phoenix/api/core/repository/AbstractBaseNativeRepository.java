@@ -17,10 +17,10 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedList;
 import java.util.List;
 
-public abstract class AbstractNativeRepository implements NativeRepository {
+public abstract class AbstractBaseNativeRepository implements BaseNativeRepository {
     private final EntityManager entityManager;
 
-    public AbstractNativeRepository(EntityManager entityManager) {
+    public AbstractBaseNativeRepository(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 

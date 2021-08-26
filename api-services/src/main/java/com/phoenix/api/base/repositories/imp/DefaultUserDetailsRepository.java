@@ -6,7 +6,7 @@ import com.phoenix.api.base.repositories.UserRepository;
 import com.phoenix.api.core.model.JoinType;
 import com.phoenix.api.core.model.SearchCriteria;
 import com.phoenix.api.core.model.SearchOperation;
-import com.phoenix.api.core.repository.AbstractQueryDslRepository;
+import com.phoenix.api.core.repository.AbstractBaseQueryDslRepository;
 import com.phoenix.api.model.querydsl.QFwUser;
 import com.phoenix.api.model.querydsl.QFwUserGroup;
 import com.phoenix.api.model.querydsl.QFwUserGroupMapping;
@@ -32,7 +32,7 @@ import java.util.stream.Collectors;
 
 @Repository(BeanIds.BASE_USER_REPOSITORY_IMP)
 @Log4j2
-public class DefaultUserDetailsRepository extends AbstractQueryDslRepository implements UserRepository {
+public class DefaultUserDetailsRepository extends AbstractBaseQueryDslRepository implements UserRepository {
 
     private final SQLQueryFactory queryFactory;
 
