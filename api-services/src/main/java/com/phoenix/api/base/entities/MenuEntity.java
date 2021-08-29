@@ -35,4 +35,7 @@ public class MenuEntity extends BaseEntity<Long> {
 
     @Column(name = "is_hidden")
     private String isHidden;
+
+    @Column(name = "icon")
+    private String icon;
 }
