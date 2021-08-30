@@ -6,9 +6,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.util.ResourceUtils;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class TestJCasbinService {
     @Test
@@ -161,4 +164,32 @@ public class TestJCasbinService {
             return rules;
         }
     }
+
+
+    @Test
+    public void test() {
+        String formula = "( H1 + H2 + H3 )- ( H3 - ( H6 + H7 - H8 ) )";
+
+//        formula = formula.replaceAll("\\s+","");
+
+        recursive_bracket_parser(formula, 0);
+    }
+
+    private int recursive_bracket_parser(String s, int index) {
+        while (index < s.length()) {
+            if (s.charAt(index) ==  '(') {
+                index = recursive_bracket_parser(s, index + 1);
+            } else if (s.charAt(index) == ')') {
+                return index + 1;
+            } else {
+                //do smt
+                System.out.println(s.charAt(index));
+                index = index + 1;
+                return index;
+            }
+        }
+
+        return -1;
+    }
+
 }

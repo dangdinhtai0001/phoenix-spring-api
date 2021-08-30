@@ -38,13 +38,7 @@ public class MenuServiceImp extends AbstractBaseService implements MenuService {
         UsernamePasswordAuthenticationToken token = getCurrentSecurityToken();
         List<String> list = token.getAuthorities().stream().map(a -> "%" + a + "%").collect(Collectors.toList());
         List<SearchCriteria> searchCriteriaList = new LinkedList<>();
-        for (String group : list) {
-            searchCriteriaList.add(new SearchCriteria("userGroupsRequired", SearchOperation.LIKE, group));
-        }
 
-        Sort sort = Sort.by(Sort.Direction.ASC, "parentId", "displayOrder");
-        Specification<MenuEntity> specification = menuRepository.getSpecificationFromSearchCriteria(searchCriteriaList, Predicate.BooleanOperator.OR);
-
-        return menuRepository.findAll(specification, sort);
+        return menuRepository.findAll(searchCriteriaList);
     }
 }

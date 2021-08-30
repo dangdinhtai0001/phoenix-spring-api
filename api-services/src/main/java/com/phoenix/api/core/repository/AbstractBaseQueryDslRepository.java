@@ -7,6 +7,7 @@ import com.phoenix.common.util.ReflectionUtil;
 import com.querydsl.core.Tuple;
 import com.querydsl.core.support.QueryBase;
 import com.querydsl.core.types.Expression;
+import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Path;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.PathBuilder;
@@ -388,6 +389,27 @@ public abstract class AbstractBaseQueryDslRepository implements BaseQueryDslRepo
         if (direction == OrderDirection.ASC) {
             query.orderBy(pathBuilder.getString(property).asc());
         }
+
+        return query;
+    }
+
+    @Override
+    public SQLQuery addOrderBy(SQLQuery query, PathBuilder pathBuilder, List<String> properties, OrderDirection direction) {
+        OrderSpecifier[] orderSpecifiers = new OrderSpecifier[0];
+        if (direction == OrderDirection.DESC) {
+            orderSpecifiers = properties.stream()
+                    .map(property -> pathBuilder.getString(property).desc())
+                    .toArray(OrderSpecifier[]::new);
+        }
+
+        if (direction == OrderDirection.ASC) {
+            orderSpecifiers = properties.stream()
+                    .map(property -> pathBuilder.getString(property).asc())
+                    .toArray(OrderSpecifier[]::new);
+        }
+
+        query.orderBy(orderSpecifiers);
+
         return query;
     }
 
@@ -395,9 +417,7 @@ public abstract class AbstractBaseQueryDslRepository implements BaseQueryDslRepo
     public SQLQuery addOrderBy(SQLQuery query, PathBuilder pathBuilder, OrderBy orderBy) {
         List<String> keys = orderBy.getKeys();
 
-        for (String key : keys) {
-            query = addOrderBy(query, pathBuilder, key, orderBy.getDirection());
-        }
+        query = addOrderBy(query, pathBuilder, keys, orderBy.getDirection());
 
         return query;
     }

@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 @SpringBootTest
@@ -44,5 +46,26 @@ public class TestKieServices {
 
         System.out.println(timeCounter);
 
+    }
+
+    @Test
+    public void testFireRules2() {
+        SearchCriteria criteria = new SearchCriteria("key", SearchOperation.EQUAL, "123", "123");
+        List<SearchCriteria> searchCriteriaList = new LinkedList<>();
+
+        System.out.println(searchCriteriaList);
+        long timeCounter = System.currentTimeMillis();
+
+        KieContainer kieContainer = kieContainerMap.get("test-rule-3.drl");
+        KieSession kieSession = kieContainer.newKieSession();
+        kieSession.insert(criteria);
+        kieSession.setGlobal("listSearchCriteria", searchCriteriaList);
+        kieSession.fireAllRules();
+        kieSession.dispose();
+
+        timeCounter = System.currentTimeMillis() - timeCounter;
+
+        System.out.println(searchCriteriaList);
+        System.out.println(timeCounter);
     }
 }

@@ -1,0 +1,17 @@
+package drools;
+
+import com.phoenix.api.core.model.SearchCriteria;
+import com.phoenix.api.core.model.SearchOperation;
+
+global java.util.List listSearchCriteria;
+
+rule "insert search criteria"
+    when
+        thisSearchCriteria : SearchCriteria ($arguments: arguments);
+        eval($arguments.size() > 0)
+    then
+        SearchCriteria $criteria = new SearchCriteria();
+        $criteria.setKey("key_");
+        $criteria.setSearchOperation(SearchOperation.LIKE);
+        listSearchCriteria.add($criteria);
+end;

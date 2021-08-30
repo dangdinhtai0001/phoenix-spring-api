@@ -2,6 +2,7 @@ package com.phoenix.api.core.model;
 
 import lombok.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 @NoArgsConstructor
@@ -12,4 +13,9 @@ import java.util.List;
 public class OrderBy {
     private List<String> keys;
     private OrderDirection direction;
+
+    public OrderBy(OrderDirection direction, String... keys) {
+        this.direction = direction;
+        this.keys = Arrays.asList(keys);
+    }
 }

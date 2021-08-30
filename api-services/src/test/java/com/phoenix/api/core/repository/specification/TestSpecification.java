@@ -80,4 +80,31 @@ public class TestSpecification {
 
         System.out.println(exceptionRepositoryImp.findAll(specification));
     }
+
+    @Test
+    public void testFindWithSearchCriteria2() {
+        List<SearchCriteria> conditions = new LinkedList<>();
+
+        conditions.add(new SearchCriteria("code", SearchOperation.LIKE, "%2%"));
+        conditions.add(new SearchCriteria("id", SearchOperation.GREATER_THAN, 1));
+
+        Specifications.and();
+
+        PredicateBuilder<ExceptionEntity> predicate = new PredicateBuilder<>(Predicate.BooleanOperator.AND);
+
+        for (SearchCriteria criteria : conditions) {
+            if (criteria.getSearchOperation() == SearchOperation.LIKE) {
+                predicate.like(criteria.getKey(), String.valueOf(criteria.getArguments().get(0)));
+            }
+
+            if (criteria.getSearchOperation() == SearchOperation.GREATER_THAN) {
+                predicate.gt(criteria.getKey(), (Comparable<?>) criteria.getArguments().get(0));
+            }
+        }
+
+
+        Specification<ExceptionEntity> specification = predicate.build();
+
+        System.out.println(exceptionRepositoryImp.findAll(specification));
+    }
 }

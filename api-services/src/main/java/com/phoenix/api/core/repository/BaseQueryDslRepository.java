@@ -90,6 +90,8 @@ public interface BaseQueryDslRepository {
 
     SQLQuery addOrderBy(SQLQuery query, PathBuilder pathBuilder, String property, OrderDirection direction);
 
+    SQLQuery addOrderBy(SQLQuery query, PathBuilder pathBuilder, List<String> properties, OrderDirection direction);
+
     SQLQuery addOrderBy(SQLQuery query, PathBuilder pathBuilder, OrderBy orderBy);
 
     SQLQuery addOrderBy(SQLQuery query, Class objectClass, List<PathBuilder> pathBuilders, OrderBy orderBy);
