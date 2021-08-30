@@ -22,7 +22,7 @@ public class MenuEntity extends BaseEntity<Long> {
     private String path;
 
     @Column(name = "parent_id")
-    private Long parentId;
+    private Integer parentId;
 
     @Column(name = "display_order")
     private int displayOrder;
@@ -34,7 +34,7 @@ public class MenuEntity extends BaseEntity<Long> {
     private String userGroupsRequired;
 
     @Column(name = "is_hidden")
-    private String isHidden;
+    private Boolean isHidden;
 
     @Column(name = "icon")
     private String icon;

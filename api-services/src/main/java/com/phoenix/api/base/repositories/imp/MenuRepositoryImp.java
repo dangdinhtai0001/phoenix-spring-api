@@ -4,15 +4,11 @@ import com.phoenix.api.base.constant.BeanIds;
 import com.phoenix.api.base.entities.MenuEntity;
 import com.phoenix.api.base.repositories.MenuRepository;
 import com.phoenix.api.business.model.User;
-import com.phoenix.api.core.model.JoinType;
 import com.phoenix.api.core.model.OrderBy;
 import com.phoenix.api.core.model.OrderDirection;
 import com.phoenix.api.core.model.SearchCriteria;
-import com.phoenix.api.core.repository.AbstractBaseJpaRepository;
 import com.phoenix.api.core.repository.AbstractBaseQueryDslRepository;
 import com.phoenix.api.model.querydsl.QFwMenu;
-import com.phoenix.api.model.querydsl.QFwUser;
-import com.phoenix.api.model.querydsl.QProfile;
 import com.querydsl.core.Tuple;
 import com.querydsl.core.types.Expression;
 import com.querydsl.core.types.Predicate;
@@ -22,7 +18,6 @@ import com.querydsl.sql.SQLQueryFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -66,8 +61,8 @@ public class MenuRepositoryImp extends AbstractBaseQueryDslRepository implements
         addOrderBy(query, menuPathBuilder, orderBy);
 
         //return query.fetch();
-         List<Tuple> queryResult =  query.fetch();
+        List<Tuple> queryResult = query.fetch();
 
-         return parseResult(queryResult, MenuEntity.class,"id", "displayName", "path", "parentId");
+        return parseResult(queryResult, MenuEntity.class, "id", "displayName", "path", "parentId", "displayOrder", "description", "isHidden", "icon");
     }
 }
