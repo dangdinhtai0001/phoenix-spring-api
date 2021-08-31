@@ -6,6 +6,7 @@ import com.phoenix.api.base.repositories.MenuRepository;
 import com.phoenix.api.business.model.User;
 import com.phoenix.api.core.model.OrderBy;
 import com.phoenix.api.core.model.OrderDirection;
+import com.phoenix.api.core.model.QueryExpression;
 import com.phoenix.api.core.model.SearchCriteria;
 import com.phoenix.api.core.repository.AbstractBaseQueryDslRepository;
 import com.phoenix.api.model.querydsl.QFwMenu;
@@ -15,12 +16,14 @@ import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.PathBuilder;
 import com.querydsl.sql.SQLQuery;
 import com.querydsl.sql.SQLQueryFactory;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import java.util.LinkedList;
 import java.util.List;
 
+@Log4j2
 @Repository(BeanIds.MENU_REPOSITORY_IMP)
 public class MenuRepositoryImp extends AbstractBaseQueryDslRepository implements MenuRepository {
 
@@ -42,11 +45,11 @@ public class MenuRepositoryImp extends AbstractBaseQueryDslRepository implements
 
     @Override
     public List findAll() {
-        return findAll(null);
+        return findAll(null, null);
     }
 
     @Override
-    public List findAll(List<SearchCriteria> searchCriteriaList) {
+    public List findAll(List<SearchCriteria> searchCriteriaList, List<QueryExpression> queryExpressions) {
         PathBuilder menuPathBuilder = getPathBuilder(QFwMenu.class, QFwMenu.fwMenu);
 
         Expression[] expressions = getExpressions(menuPathBuilder, "id", "display_name", "path", "parent_id", "display_order", "description", "is_hidden", "icon");
@@ -56,12 +59,14 @@ public class MenuRepositoryImp extends AbstractBaseQueryDslRepository implements
         List<Predicate> predicates = getPredicateFromSearchCriteria(User.class, getListPathBuilder(), searchCriteriaList);
 
         addWhereClause(query, predicates);
+        addWhereClause(queryExpressions, query);
 
         OrderBy orderBy = new OrderBy(OrderDirection.ASC, "parent_id", "display_order");
         addOrderBy(query, menuPathBuilder, orderBy);
 
-        //return query.fetch();
         List<Tuple> queryResult = query.fetch();
+
+        log.info(query.getSQL().getSQL());
 
         return parseResult(queryResult, MenuEntity.class, "id", "displayName", "path", "parentId", "displayOrder", "description", "isHidden", "icon");
     }

@@ -8,6 +8,7 @@ import com.querydsl.core.types.Path;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.PathBuilder;
 import com.querydsl.core.types.dsl.StringPath;
+import com.querydsl.sql.RelationalPath;
 import com.querydsl.sql.RelationalPathBase;
 import com.querydsl.sql.SQLQuery;
 import com.querydsl.sql.dml.SQLUpdateClause;
@@ -33,6 +34,8 @@ public interface BaseQueryDslRepository {
 
     PathBuilder getPathBuilder(String className, String tableName) throws ClassNotFoundException;
 
+    RelationalPath getRelationalPathBase(Class<? extends RelationalPathBase> typeClass, RelationalPath relationalPath);
+
     PathBuilder getPathBuilder(Class<? extends RelationalPathBase> aClass, String tableName);
 
     PathBuilder getPathBuilder(List<PathBuilder> pathBuilders, String anotationTableName);
@@ -53,13 +56,15 @@ public interface BaseQueryDslRepository {
 
     //---------------------------------
 
+    QueryBase addWhereClause (List<QueryExpression> expressions, SQLQuery query);
+
+    QueryBase addWhereClause(SQLQuery query, QueryExpression expression);
+
     QueryBase addWhereClause(SQLQuery query, Predicate predicate);
 
     QueryBase addWhereClause(SQLQuery query, PathBuilder pathBuilder, SearchCriteria criteria);
 
     QueryBase addWhereClause(SQLQuery query, List<Predicate> predicates);
-
-    //---------------------------------
 
     SQLUpdateClause addWhereClause(SQLUpdateClause sqlUpdateClause, Predicate predicate);
 

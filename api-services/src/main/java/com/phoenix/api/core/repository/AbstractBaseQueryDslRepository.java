@@ -10,6 +10,7 @@ import com.querydsl.core.types.Expression;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Path;
 import com.querydsl.core.types.Predicate;
+import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.PathBuilder;
 import com.querydsl.core.types.dsl.StringPath;
 import com.querydsl.sql.RelationalPath;
@@ -73,17 +74,29 @@ public abstract class AbstractBaseQueryDslRepository implements BaseQueryDslRepo
 
     //---------------------------------
 
+    /**
+     * @param relationalPathBase something like: QFwUser.fwUser
+     * @return Table name
+     */
     @Override
     public String getTableName(RelationalPathBase relationalPathBase) {
         return relationalPathBase.getTableName();
     }
 
+    /**
+     * @param key         Tên field của business class.
+     * @param objectClass Business object
+     * @return Tên của table map với field của business class
+     */
     @Override
     public String getTableName(String key, Class objectClass) {
         BusinessObjectField annotation = (BusinessObjectField) ReflectionUtil.getAnotationOfField(key, objectClass, BusinessObjectField.class);
         return annotation.table();
     }
 
+    /**
+     * @return Tên của current schema (Đang lấy dựa trên username của datasource)
+     */
     @Override
     public String getDefaultSchemaName() {
         return this.datasourceUsername;
@@ -97,6 +110,7 @@ public abstract class AbstractBaseQueryDslRepository implements BaseQueryDslRepo
         return new PathBuilder(entityType, tableName);
     }
 
+    @Override
     public RelationalPath getRelationalPathBase(Class<? extends RelationalPathBase> typeClass, RelationalPath relationalPath) {
         String table = relationalPath.getTableName();
         String schema = getDefaultSchemaName();
@@ -168,6 +182,27 @@ public abstract class AbstractBaseQueryDslRepository implements BaseQueryDslRepo
     }
 
     //---------------------------------
+
+    @Override
+    public QueryBase addWhereClause(SQLQuery query, QueryExpression expression) {
+        if (expression.getType() == ExpressionType.BOOLEAN) {
+            query.where(Expressions.booleanTemplate(expression.getExpression(), expression.getArguments()));
+        }
+        return query;
+    }
+
+    @Override
+    public QueryBase addWhereClause(List<QueryExpression> expressions, SQLQuery query) {
+        if (expressions == null || expressions.size() == 0) {
+            return query;
+        }
+
+        for (QueryExpression expression : expressions) {
+            addWhereClause(query, expression);
+        }
+
+        return query;
+    }
 
     @Override
     public QueryBase addWhereClause(SQLQuery query, Predicate predicate) {
