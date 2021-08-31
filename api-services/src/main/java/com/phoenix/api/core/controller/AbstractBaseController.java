@@ -1,6 +1,7 @@
 package com.phoenix.api.core.controller;
 
 import com.phoenix.api.core.exception.ApplicationException;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -34,6 +35,10 @@ public abstract class AbstractBaseController implements BaseController {
 
     @Override
     public ResponseEntity sendResponse(Object response) {
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        HttpHeaders headers = new HttpHeaders();
+
+        headers.add("Access-Control-Allow-Origin", "*");
+
+        return new ResponseEntity<>(response, headers, HttpStatus.OK);
     }
 }

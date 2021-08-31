@@ -38,7 +38,7 @@ public class ApplicationConfiguration {
     public ApplicationConfiguration(
             @Qualifier(BeanIds.EXCEPTION_REPOSITORY_IMP) ExceptionRepositoryImp exceptionRepositoryImp,
             @Qualifier(BeanIds.AUTHORIZATION_SERVICES) AuthorizationService authorizationService
-            ) {
+    ) {
         this.exceptionRepositoryImp = exceptionRepositoryImp;
         this.authorizationService = authorizationService;
     }
