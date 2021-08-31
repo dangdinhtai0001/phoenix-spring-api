@@ -91,7 +91,7 @@ public class DefaultUserDetailsRepository extends AbstractBaseQueryDslRepository
         userPrincipal.setPasswordSalt(record.get(4, String.class));
         userPrincipal.setStatus(record.get(5, String.class));
 
-        log.info(query.getSQL().getSQL());
+        log.debug(query.getSQL().getSQL());
 
         return Optional.of(userPrincipal);
     }
@@ -112,7 +112,7 @@ public class DefaultUserDetailsRepository extends AbstractBaseQueryDslRepository
         SearchCriteria criteria = new SearchCriteria("username", SearchOperation.EQUAL, username);
         addWhereClause(query, userPathBuilder, criteria);
 
-        log.info(query.getSQL().getSQL());
+        log.debug(query.getSQL().getSQL());
 
         List<Tuple> queryResult = query.fetch();
 
@@ -145,7 +145,7 @@ public class DefaultUserDetailsRepository extends AbstractBaseQueryDslRepository
         SearchCriteria criteria = new SearchCriteria("username", SearchOperation.EQUAL, username);
         addWhereClause(query, userPathBuilder, criteria);
 
-        log.info(query.getSQL().getSQL());
+        log.debug(query.getSQL().getSQL());
 
         Tuple queryResult = (Tuple) query.fetchOne();
 

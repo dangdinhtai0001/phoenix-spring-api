@@ -66,7 +66,7 @@ public class MenuRepositoryImp extends AbstractBaseQueryDslRepository implements
 
         List<Tuple> queryResult = query.fetch();
 
-        log.info(query.getSQL().getSQL());
+        log.debug(query.getSQL().getSQL());
 
         return parseResult(queryResult, MenuEntity.class, "id", "displayName", "path", "parentId", "displayOrder", "description", "isHidden", "icon");
     }

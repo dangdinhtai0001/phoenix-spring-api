@@ -138,11 +138,11 @@ public class AuthenticationServiceImp extends AbstractBaseService implements Aut
         long now = timeProvider.getTime();
 
         LinkedHashMap<String, String> token = new LinkedHashMap<>();
-        token.put("access_token", accessToken);
-        token.put("refresh_token", refreshToken);
-        token.put("token_type", ApplicationConstant.JWT_TOKEN_TYPE);
-        token.put("session_id", session.getId());
-        token.put("expires_in", String.valueOf((now + jwtProvider.getTtlMillis())));
+        token.put("accessToken", accessToken);
+        token.put("refreshToken", refreshToken);
+        token.put("tokenType", ApplicationConstant.JWT_TOKEN_TYPE);
+        token.put("sessionId", session.getId());
+        token.put("expiresIn", String.valueOf((now + jwtProvider.getTtlMillis())));
 
         int result = userRepository.updateRefreshTokenByUsername(refreshToken, username);
 

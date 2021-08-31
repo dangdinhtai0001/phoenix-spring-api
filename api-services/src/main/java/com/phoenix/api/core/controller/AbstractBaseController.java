@@ -35,10 +35,6 @@ public abstract class AbstractBaseController implements BaseController {
 
     @Override
     public ResponseEntity sendResponse(Object response) {
-        HttpHeaders headers = new HttpHeaders();
-
-        headers.add("Access-Control-Allow-Origin", "*");
-
-        return new ResponseEntity<>(response, headers, HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
