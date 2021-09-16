@@ -5,6 +5,7 @@ import com.phoenix.core.model.query.QueryExpression;
 import com.phoenix.core.model.query.SearchCriteria;
 import com.querydsl.core.Tuple;
 import com.querydsl.core.types.Predicate;
+import com.querydsl.core.types.dsl.PathBuilder;
 import com.querydsl.sql.RelationalPathBase;
 import com.querydsl.sql.SQLQuery;
 import com.querydsl.sql.SQLQueryFactory;
@@ -53,8 +54,9 @@ public abstract class AbstractSingleQueryDslRepository extends AbstractCoreQuery
     //===================================================
 
     @Override
-    public Long defaultInsert(List<com.phoenix.common.structure.Tuple> tuples) {
-        SQLInsertClause sqlInsertClause = createInsertClause(getRelationalPathBase(), tuples);
+    public <T extends RelationalPathBase<T>> Long defaultInsert(List<com.phoenix.common.structure.Tuple> tuples) {
+        RelationalPathBase<T> relationalPathBase = getRelationalPathBase();
+        SQLInsertClause sqlInsertClause = createInsertClause(relationalPathBase, tuples);
 
         if (sqlInsertClause == null) {
             return 0L;
@@ -64,8 +66,9 @@ public abstract class AbstractSingleQueryDslRepository extends AbstractCoreQuery
     }
 
     @Override
-    public Long defaultInsert(com.phoenix.common.structure.Tuple tuple) {
-        SQLInsertClause sqlInsertClause = createInsertClause(getRelationalPathBase(), getRelationalPathBase(), tuple);
+    public <T extends RelationalPathBase<T>> Long defaultInsert(com.phoenix.common.structure.Tuple tuple) {
+        RelationalPathBase<T> relationalPathBase = getRelationalPathBase();
+        SQLInsertClause sqlInsertClause = createInsertClause(relationalPathBase, tuple);
 
         if (sqlInsertClause == null) {
             return 0L;
@@ -99,52 +102,58 @@ public abstract class AbstractSingleQueryDslRepository extends AbstractCoreQuery
         return createSelectQuery(relationalPathBase, columns);
     }
 
-    protected SQLQuery createSingleSelectQuery(List<SearchCriteria> criteriaList, List<QueryExpression> queryExpressions, String... fields) {
+    protected <T extends RelationalPathBase<T>> SQLQuery createSingleSelectQuery(List<SearchCriteria> criteriaList, List<QueryExpression> queryExpressions, String... fields) {
         SQLQuery query = createSingleSelectQuery(fields);
-        List<Predicate> predicates = getPredicateFromSearchCriteria(getPathBuilder(), criteriaList);
+        RelationalPathBase<T> relationalPathBase = getRelationalPathBase();
+        List<Predicate> predicates = getPredicateFromSearchCriteria(relationalPathBase, criteriaList);
         addWhereClause(query, predicates);
         addWhereClause(queryExpressions, query);
 
         return query;
     }
 
-    protected SQLQuery createSingleSelectQuery(List<SearchCriteria> criteriaList, String... fields) {
+    protected <T extends RelationalPathBase<T>> SQLQuery createSingleSelectQuery(List<SearchCriteria> criteriaList, String... fields) {
         SQLQuery query = createSingleSelectQuery(fields);
-        List<Predicate> predicates = getPredicateFromSearchCriteria(getPathBuilder(), criteriaList);
+        RelationalPathBase<T> relationalPathBase = getRelationalPathBase();
+        List<Predicate> predicates = getPredicateFromSearchCriteria(relationalPathBase, criteriaList);
         addWhereClause(query, predicates);
 
         return query;
     }
 
-    protected SQLQuery createSingleSelectQuery(OrderBy orderBy, String... fields) {
+    protected <T extends RelationalPathBase<T>> SQLQuery createSingleSelectQuery(OrderBy orderBy, String... fields) {
         SQLQuery query = createSingleSelectQuery(fields);
-        addOrderBy(query, getPathBuilder(), orderBy);
+        RelationalPathBase<T> relationalPathBase = getRelationalPathBase();
+        addOrderBy(query, relationalPathBase, orderBy);
 
         return query;
     }
 
-    protected SQLQuery createSingleSelectQuery(List<SearchCriteria> criteriaList, List<QueryExpression> queryExpressions,
-                                               OrderBy orderBy, String... fields) {
+    protected <T extends RelationalPathBase<T>> SQLQuery createSingleSelectQuery(List<SearchCriteria> criteriaList, List<QueryExpression> queryExpressions,
+                                                                                 OrderBy orderBy, String... fields) {
         SQLQuery query = createSingleSelectQuery(criteriaList, queryExpressions, fields);
-        addOrderBy(query, getPathBuilder(), orderBy);
+        RelationalPathBase<T> relationalPathBase = getRelationalPathBase();
+        addOrderBy(query, relationalPathBase, orderBy);
 
         return query;
     }
 
-    protected SQLQuery createSingleSelectQuery(List<SearchCriteria> criteriaList, List<QueryExpression> queryExpressions,
-                                               OrderBy[] orders, String... fields) {
+    protected <T extends RelationalPathBase<T>> SQLQuery createSingleSelectQuery(List<SearchCriteria> criteriaList, List<QueryExpression> queryExpressions,
+                                                                                 OrderBy[] orders, String... fields) {
         SQLQuery query = createSingleSelectQuery(criteriaList, queryExpressions, fields);
+        RelationalPathBase<T> relationalPathBase = getRelationalPathBase();
         for (OrderBy orderBy : orders) {
-            addOrderBy(query, getPathBuilder(), orderBy);
+            addOrderBy(query, relationalPathBase, orderBy);
         }
 
         return query;
     }
 
-    protected SQLQuery createSingleSelectQuery(List<SearchCriteria> criteriaList, OrderBy[] orders, String... fields) {
+    protected <T extends RelationalPathBase<T>> SQLQuery createSingleSelectQuery(List<SearchCriteria> criteriaList, OrderBy[] orders, String... fields) {
         SQLQuery query = createSingleSelectQuery(criteriaList, fields);
+        RelationalPathBase<T> relationalPathBase = getRelationalPathBase();
         for (OrderBy orderBy : orders) {
-            addOrderBy(query, getPathBuilder(), orderBy);
+            addOrderBy(query, relationalPathBase, orderBy);
         }
 
         return query;
@@ -152,4 +161,10 @@ public abstract class AbstractSingleQueryDslRepository extends AbstractCoreQuery
 
 
     //===================================================
+
+
+    @Override
+    protected com.phoenix.common.structure.Tuple getRelationalPathMap() {
+        return null;
+    }
 }

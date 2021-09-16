@@ -1,14 +1,11 @@
 package com.phoenix.base.repository.imp;
 
-import com.phoenix.api.model.querydsl.QFwException;
 import com.phoenix.base.constant.BeanIds;
 import com.phoenix.base.model.ExceptionModel;
+import com.phoenix.base.model.querydsl.QFwException;
 import com.phoenix.base.repository.ExceptionRepository;
-import com.phoenix.core.model.DefaultException;
-import com.phoenix.core.repository.AbstractCoreQueryDslRepository;
 import com.phoenix.core.repository.AbstractSingleQueryDslRepository;
 import com.querydsl.core.Tuple;
-import com.querydsl.core.types.dsl.PathBuilder;
 import com.querydsl.sql.RelationalPathBase;
 import com.querydsl.sql.SQLQueryFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -24,7 +21,6 @@ public class ExceptionRepositoryImp extends AbstractSingleQueryDslRepository imp
         super(queryFactory);
     }
 
-
     @Override
     public List<ExceptionModel> findAll() {
         String[] columns = {"id", "code_", "message_", "http_code"};
@@ -39,8 +35,11 @@ public class ExceptionRepositoryImp extends AbstractSingleQueryDslRepository imp
         return QFwException.class;
     }
 
+
     @Override
-    protected RelationalPathBase getRelationalPathBase() {
+    protected RelationalPathBase<QFwException> getRelationalPathBase() {
         return QFwException.fwException;
     }
+
+
 }

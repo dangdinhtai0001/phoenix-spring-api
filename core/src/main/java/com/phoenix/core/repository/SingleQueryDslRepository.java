@@ -3,6 +3,7 @@ package com.phoenix.core.repository;
 import com.phoenix.core.model.query.OrderBy;
 import com.phoenix.core.model.query.SearchCriteria;
 import com.querydsl.core.Tuple;
+import com.querydsl.sql.RelationalPathBase;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ public interface SingleQueryDslRepository {
 
     List<Tuple> defaultFindAll(List<SearchCriteria> criteriaList, OrderBy[] orders, String... columns);
 
-    Long defaultInsert(List<com.phoenix.common.structure.Tuple> tuples);
+    <T extends RelationalPathBase<T>> Long defaultInsert(List<com.phoenix.common.structure.Tuple> tuples);
 
-    Long defaultInsert(com.phoenix.common.structure.Tuple tuple);
+    <T extends RelationalPathBase<T>> Long defaultInsert(com.phoenix.common.structure.Tuple tuple);
 }

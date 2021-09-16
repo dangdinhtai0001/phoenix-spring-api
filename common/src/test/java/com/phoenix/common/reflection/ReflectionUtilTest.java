@@ -10,9 +10,9 @@
 
 package com.phoenix.common.reflection;
 
+import com.phoenix.common.structure.Pair;
 import com.phoenix.common.util.ReflectionUtil;
 import com.phoenix.common.util.imp.DefaultCount;
-import javafx.util.Pair;
 import junit.framework.TestCase;
 
 import java.lang.reflect.Field;

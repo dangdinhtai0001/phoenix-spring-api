@@ -154,7 +154,7 @@
                     <jdbcUrl>jdbc:mysql://localhost:3306/phoenix-v2?allowPublicKeyRetrieval=true&amp;useSSL=false&amp;serverTimezone=UTC&amp;useLegacyDatetimeCode=false?useUnicode=true&amp;characterEncoding=utf8</jdbcUrl>
                     <jdbcUser>phoenix-v2</jdbcUser>
                     <jdbcPassword>Abc123456</jdbcPassword>
-                    <packageName>com.phoenix.api.model.querydsl</packageName>
+                    <packageName>com.phoenix.base.model.querydsl</packageName>
                     <targetFolder>${project.basedir}/target/generated-sources/java</targetFolder>
                     <sourceFolder>${project.basedir}/src/generated-sources/java</sourceFolder>
                 </configuration>

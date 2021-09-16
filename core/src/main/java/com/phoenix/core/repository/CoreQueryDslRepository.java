@@ -100,6 +100,8 @@ public interface CoreQueryDslRepository {
      */
     PathBuilder<?> getPathBuilder(List<PathBuilder<?>> pathBuilders, String tableName);
 
+    <T extends RelationalPathBase<T>> PathBuilder<T> getPathBuilder(RelationalPathBase<T> relationalPathBase);
+
     /**
      * @param typeClass      ví dụ: QFwUser.class
      * @param relationalPath ví dụ: QFwUser.fwUser
@@ -155,6 +157,8 @@ public interface CoreQueryDslRepository {
 
     QueryBase<?> addWhereClause(SQLQuery<?> query, PathBuilder pathBuilder, SearchCriteria criteria);
 
+    <T extends RelationalPathBase<T>> QueryBase<?> addWhereClause(SQLQuery<?> query, RelationalPathBase<T> relationalPathBase, SearchCriteria criteria);
+
     QueryBase<?> addWhereClause(SQLQuery<?> query, List<Predicate> predicates);
 
     SQLUpdateClause addWhereClause(SQLUpdateClause sqlUpdateClause, Predicate predicate);
@@ -164,6 +168,10 @@ public interface CoreQueryDslRepository {
     SQLUpdateClause addWhereClause(SQLUpdateClause sqlUpdateClause, List<Predicate> predicates);
 
     //---------------------------------
+
+    <T extends RelationalPathBase<T>> Predicate getPredicateFromSearchCriteria(RelationalPathBase<T> relationalPathBase, SearchCriteria criteria);
+
+    <T extends RelationalPathBase<T>> List<Predicate> getPredicateFromSearchCriteria(RelationalPathBase<T> relationalPathBase, List<SearchCriteria> searchCriteriaList);
 
     Predicate getPredicateFromSearchCriteria(PathBuilder pathBuilder, SearchCriteria criteria);
 
@@ -179,8 +187,17 @@ public interface CoreQueryDslRepository {
 
     //---------------------------------
 
-    SQLQuery join(JoinType joinType, SQLQuery query, PathBuilder sourceBuilder, PathBuilder joinBuilder,
-                  String sourceProperty, String joinProperty);
+    //---------------------------------
+    <T extends RelationalPathBase<T>> SQLQuery join(JoinType joinType, SQLQuery query,
+                                                    RelationalPathBase<T> leftRelationalPathBase, RelationalPathBase<T> rightRelationalPathBase,
+                                                    String leftColumn, String rightColumn);
+
+    <T extends RelationalPathBase<T>, E extends RelationalPathBase<E>> SQLQuery join(
+            JoinType joinType, SQLQuery query,
+            PathBuilder<T> leftBuilder, PathBuilder<E> rightBuilder,
+            String leftColumn, String rightColumn);
+
+    <T extends RelationalPathBase<T>> SQLQuery addOrderBy(SQLQuery query, RelationalPathBase<T> relationalPathBase, OrderBy orderBy);
 
     SQLQuery addOrderBy(SQLQuery query, PathBuilder pathBuilder, String property, OrderDirection direction);
 

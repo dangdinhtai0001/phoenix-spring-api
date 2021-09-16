@@ -9,7 +9,10 @@ import com.querydsl.core.types.*;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.PathBuilder;
 import com.querydsl.core.types.dsl.StringPath;
-import com.querydsl.sql.*;
+import com.querydsl.sql.RelationalPath;
+import com.querydsl.sql.RelationalPathBase;
+import com.querydsl.sql.SQLQuery;
+import com.querydsl.sql.SQLQueryFactory;
 import com.querydsl.sql.dml.SQLInsertClause;
 import com.querydsl.sql.dml.SQLUpdateClause;
 import org.springframework.beans.factory.annotation.Value;
@@ -36,7 +39,7 @@ public abstract class AbstractCoreQueryDslRepository implements CoreQueryDslRepo
 
     //---------------------------------
 
-    protected abstract List<PathBuilder<?>> getListPathBuilder();
+    protected abstract com.phoenix.common.structure.Tuple getRelationalPathMap();
 
     //---------------------------------
 
@@ -108,6 +111,13 @@ public abstract class AbstractCoreQueryDslRepository implements CoreQueryDslRepo
             }
         }
         return null;
+    }
+
+    @Override
+    public <T extends RelationalPathBase<T>> PathBuilder<T> getPathBuilder(RelationalPathBase<T> relationalPathBase) {
+        Class<? extends T> relationalPathBaseType = relationalPathBase.getType();
+        String tableName = relationalPathBase.getTableName();
+        return new PathBuilder<>(relationalPathBaseType, tableName);
     }
 
     @Override
@@ -222,7 +232,10 @@ public abstract class AbstractCoreQueryDslRepository implements CoreQueryDslRepo
         return query.where(predicate);
     }
 
-    public <T extends RelationalPathBase<T>>QueryBase<?> addWhereClause(SQLQuery<?> query, RelationalPathBase<T> relationalPathBase, SearchCriteria criteria) {
+    @Override
+    public <T extends RelationalPathBase<T>> QueryBase<?> addWhereClause(SQLQuery<?> query, RelationalPathBase<T> relationalPathBase, SearchCriteria criteria) {
+        PathBuilder<T> pathBuilder = getPathBuilder(relationalPathBase);
+
         Predicate predicate = getPredicateFromSearchCriteria(pathBuilder, criteria);
         return query.where(predicate);
     }
@@ -255,6 +268,20 @@ public abstract class AbstractCoreQueryDslRepository implements CoreQueryDslRepo
     }
 
     //---------------------------------
+
+    @Override
+    public <T extends RelationalPathBase<T>> Predicate getPredicateFromSearchCriteria(RelationalPathBase<T> relationalPathBase, SearchCriteria criteria) {
+        PathBuilder<T> pathBuilder = getPathBuilder(relationalPathBase);
+        return getPredicateFromSearchCriteria(pathBuilder, criteria);
+    }
+
+    @Override
+    public <T extends RelationalPathBase<T>> List<Predicate> getPredicateFromSearchCriteria(RelationalPathBase<T> relationalPathBase, List<SearchCriteria> searchCriteriaList) {
+
+        PathBuilder<T> pathBuilder = getPathBuilder(relationalPathBase);
+
+        return getPredicateFromSearchCriteria(pathBuilder, searchCriteriaList);
+    }
 
     @Override
     public Predicate getPredicateFromSearchCriteria(PathBuilder pathBuilder, SearchCriteria criteria) {
@@ -388,32 +415,55 @@ public abstract class AbstractCoreQueryDslRepository implements CoreQueryDslRepo
     }
 
     //---------------------------------
+    @Override
+    public <T extends RelationalPathBase<T>> SQLQuery join(JoinType joinType, SQLQuery query,
+                                                           RelationalPathBase<T> leftRelationalPathBase, RelationalPathBase<T> rightRelationalPathBase,
+                                                           String leftColumn, String rightColumn) {
+
+        PathBuilder<T> leftBuilder = getPathBuilder(leftRelationalPathBase);
+        PathBuilder<T> rightBuilder = getPathBuilder(rightRelationalPathBase);
+
+        return join(joinType, query, leftBuilder, rightBuilder, leftColumn, rightColumn);
+    }
 
     @Override
-    public SQLQuery join(JoinType joinType, SQLQuery query, PathBuilder sourceBuilder, PathBuilder joinBuilder,
-                         String sourceProperty, String joinProperty) {
+    public <T extends RelationalPathBase<T>, E extends RelationalPathBase<E>> SQLQuery join(
+            JoinType joinType, SQLQuery query, PathBuilder<T> leftBuilder, PathBuilder<E> rightBuilder,
+            String leftColumn, String rightColumn) {
 
-        Predicate predicate = sourceBuilder.getString(sourceProperty).eq(joinBuilder.getString(joinProperty));
+        Predicate predicate = leftBuilder.getString(leftColumn).eq(rightBuilder.getString(rightColumn));
 
         if (joinType == JoinType.LEFT_JOIN) {
-            query.leftJoin(joinBuilder).on(predicate);
+            query.leftJoin(rightBuilder).on(predicate);
         }
 
         if (joinType == JoinType.RIGHT_JOIN) {
-            query.rightJoin(joinBuilder).on(predicate);
+            query.rightJoin(rightBuilder).on(predicate);
         }
 
         if (joinType == JoinType.INNER_JOIN) {
-            query.innerJoin(joinBuilder).on(predicate);
+            query.innerJoin(rightBuilder).on(predicate);
         }
 
         if (joinType == JoinType.JOIN) {
-            query.join(joinBuilder).on(predicate);
+            query.join(rightBuilder).on(predicate);
         }
 
         if (joinType == JoinType.FULL_JOIN) {
-            query.fullJoin(joinBuilder).on(predicate);
+            query.fullJoin(rightBuilder).on(predicate);
         }
+
+        return query;
+    }
+
+    //---------------------------------
+
+    @Override
+    public <T extends RelationalPathBase<T>> SQLQuery addOrderBy(SQLQuery query, RelationalPathBase<T> relationalPathBase, OrderBy orderBy) {
+        List<String> keys = orderBy.getKeys();
+        PathBuilder<T> pathBuilder = getPathBuilder(relationalPathBase);
+
+        query = addOrderBy(query, pathBuilder, keys, orderBy.getDirection());
 
         return query;
     }

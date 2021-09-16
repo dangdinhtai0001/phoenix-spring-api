@@ -1,9 +1,8 @@
 package com.phoenix.base.repository.imp;
 
-import com.google.gson.Gson;
-import com.phoenix.api.model.querydsl.QFwResourceAction;
 import com.phoenix.base.constant.BeanIds;
 import com.phoenix.base.model.ResourceActionModel;
+import com.phoenix.base.model.querydsl.QFwResourceAction;
 import com.phoenix.base.repository.ResourceActionRepository;
 import com.phoenix.core.model.query.SearchCriteria;
 import com.phoenix.core.repository.AbstractSingleQueryDslRepository;
