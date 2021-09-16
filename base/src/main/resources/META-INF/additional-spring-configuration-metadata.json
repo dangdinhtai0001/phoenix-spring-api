@@ -1,0 +1,70 @@
+{
+  "groups": [
+    {
+      "name": "application",
+      "type": "com.phoenix.base.config.ApplicationProperties",
+      "sourceType": "com.phoenix.base.config.ApplicationProperties"
+    },
+    {
+      "name": "application.path",
+      "type": "com.phoenix.base.config.ApplicationProperties$Path",
+      "sourceType": "com.phoenix.base.config.ApplicationProperties",
+      "sourceMethod": "getPath()"
+    },
+    {
+      "name": "application.version",
+      "type": "com.phoenix.base.config.ApplicationProperties$Version",
+      "sourceType": "com.phoenix.base.config.ApplicationProperties",
+      "sourceMethod": "getVersion()"
+    },
+    {
+      "name": "application.jwt",
+      "type": "com.phoenix.base.config.ApplicationProperties$Jwt",
+      "sourceType": "com.phoenix.base.config.ApplicationProperties",
+      "sourceMethod": "getJwt()"
+    },
+    {
+      "name": "application.authorization",
+      "type": "com.phoenix.base.config.ApplicationProperties$Authorization",
+      "sourceType": "com.phoenix.base.config.ApplicationProperties",
+      "sourceMethod": "getAuthorization()"
+    }
+  ],
+  "properties": [
+    {
+      "name": "application.path.prefix",
+      "type": "java.lang.String",
+      "sourceType": "com.phoenix.base.config.ApplicationProperties$Path",
+      "defaultValue": "api"
+    },
+    {
+      "name": "application.version.service",
+      "type": "java.lang.String",
+      "sourceType": "com.phoenix.base.config.ApplicationProperties$Version",
+      "defaultValue": "v0"
+    },
+    {
+      "name": "application.version.build",
+      "type": "java.lang.String",
+      "sourceType": "com.phoenix.base.config.ApplicationProperties$Version",
+      "defaultValue": "0.0.0"
+    },
+    {
+      "name": "application.jwt.secret",
+      "type": "java.lang.String",
+      "sourceType": "com.phoenix.base.config.ApplicationProperties$Jwt",
+      "defaultValue": "T2VLzjTvmjCGDjxP"
+    },
+    {
+      "name": "application.jwt.expired",
+      "type": "java.lang.String",
+      "sourceType": "com.phoenix.base.config.ApplicationProperties$Jwt",
+      "defaultValue": 36000000
+    },
+    {
+      "name": "application.authorization.model-path",
+      "type": "java.lang.String",
+      "description": "Description for application.authorization.model-path."
+    }
+  ]
+}
