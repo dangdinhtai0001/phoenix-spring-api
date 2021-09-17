@@ -2,6 +2,7 @@ package com.phoenix.base.repository.imp;
 
 import com.phoenix.base.constant.BeanIds;
 import com.phoenix.base.model.ResourceActionModel;
+import com.phoenix.base.model.querydsl.QFwException;
 import com.phoenix.base.model.querydsl.QFwResourceAction;
 import com.phoenix.base.repository.ResourceActionRepository;
 import com.phoenix.core.model.query.SearchCriteria;
@@ -41,12 +42,13 @@ public class ResourceActionRepositoryImp extends AbstractSingleQueryDslRepositor
     }
 
     @Override
-    protected Class getRelationalPathBaseClass() {
+    protected Class<QFwResourceAction> getRelationalPathBaseClass() {
         return QFwResourceAction.class;
     }
 
     @Override
-    protected RelationalPathBase getRelationalPathBase() {
-        return QFwResourceAction.fwResourceAction;
+    protected RelationalPathBase<QFwResourceAction> getRelationalPathBase() {
+        return new QFwResourceAction("fw_resource_action", getDefaultSchemaName());
     }
+
 }

@@ -23,7 +23,7 @@ public class ExceptionRepositoryImp extends AbstractSingleQueryDslRepository imp
 
     @Override
     public List<ExceptionModel> findAll() {
-        String[] columns = {"id", "code_", "message_", "http_code"};
+        String[] columns = {"id", "code_", "message_", "httpCode"};
         String[] fields = {"id", "code", "message", "httpCode"};
         List<Tuple> queryResult = defaultFindAll(columns);
 
@@ -31,14 +31,14 @@ public class ExceptionRepositoryImp extends AbstractSingleQueryDslRepository imp
     }
 
     @Override
-    protected Class getRelationalPathBaseClass() {
+    protected Class<QFwException> getRelationalPathBaseClass() {
         return QFwException.class;
     }
 
 
     @Override
     protected RelationalPathBase<QFwException> getRelationalPathBase() {
-        return QFwException.fwException;
+        return new QFwException("fw_exception", getDefaultSchemaName());
     }
 
 

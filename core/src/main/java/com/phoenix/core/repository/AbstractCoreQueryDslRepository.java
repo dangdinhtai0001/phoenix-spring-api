@@ -153,8 +153,8 @@ public abstract class AbstractCoreQueryDslRepository implements CoreQueryDslRepo
         List<Path<?>> pathList = relationalPathBase.getColumns();
         List<Path<?>> result = new ArrayList<>(columns.length);
 
-        for (Path<?> path : pathList) {
-            for (String column : columns) {
+        for (String column : columns) {
+            for (Path<?> path : pathList) {
                 if (path.getMetadata().getName().equals(column)) {
                     result.add(path);
                     break;
