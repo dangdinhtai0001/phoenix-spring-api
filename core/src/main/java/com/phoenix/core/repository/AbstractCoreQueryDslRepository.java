@@ -149,7 +149,7 @@ public abstract class AbstractCoreQueryDslRepository implements CoreQueryDslRepo
     //---------------------------------
 
     @Override
-    public <T extends RelationalPathBase<T>> Path<?>[] getPaths(RelationalPathBase<T> relationalPathBase, String... columns) {
+    public <T extends RelationalPathBase<T>> Path<T>[] getPaths(RelationalPathBase<T> relationalPathBase, String... columns) {
         List<Path<?>> pathList = relationalPathBase.getColumns();
         List<Path<?>> result = new ArrayList<>(columns.length);
 

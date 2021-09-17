@@ -2,10 +2,7 @@ package com.phoenix.base.repository.imp;
 
 import com.phoenix.base.constant.BeanIds;
 import com.phoenix.base.model.UserPrincipal;
-import com.phoenix.base.model.querydsl.QFwUser;
-import com.phoenix.base.model.querydsl.QFwUserGroup;
-import com.phoenix.base.model.querydsl.QFwUserGroupMapping;
-import com.phoenix.base.model.querydsl.QFwUserStatus;
+import com.phoenix.base.model.querydsl.*;
 import com.phoenix.base.repository.UserRepository;
 import com.phoenix.common.structure.imp.DiTupleImpl;
 import com.phoenix.core.model.query.JoinType;
@@ -44,11 +41,11 @@ public class DefaultUserDetailsRepository extends AbstractCoreQueryDslRepository
     }
 
     @Override
-    protected com.phoenix.common.structure.Tuple getRelationalPathMap() {
-        RelationalPathBase<QFwUser> userRelationalPath = getRelationalPathBase(QFwUser.class, QFwUser.fwUser);
-        RelationalPathBase<QFwUserStatus> userStatusRelationalPath = getRelationalPathBase(QFwUserStatus.class, QFwUserStatus.fwUserStatus);
-        RelationalPathBase<QFwUserGroup> userGroupRelationalPath = getRelationalPathBase(QFwUserGroup.class, QFwUserGroup.fwUserGroup);
-        RelationalPathBase<QFwUserGroupMapping> userGroupMappingRelationalPath = getRelationalPathBase(QFwUserGroupMapping.class, QFwUserGroupMapping.fwUserGroupMapping);
+    public com.phoenix.common.structure.Tuple getRelationalPathMap() {
+        RelationalPathBase<QFwUser> userRelationalPath = new QFwUser("fw_user", getDefaultSchemaName());
+        RelationalPathBase<QFwUserStatus> userStatusRelationalPath = new QFwUserStatus("fw_user_status", getDefaultSchemaName());
+        RelationalPathBase<QFwUserGroup> userGroupRelationalPath = new QFwUserGroup("fw_user_group", getDefaultSchemaName());
+        RelationalPathBase<QFwUserGroupMapping> userGroupMappingRelationalPath = new QFwUserGroupMapping("fw_user_group_mapping", getDefaultSchemaName());
 
         String[] expressions = {userRelationalPath.getTableName(), userStatusRelationalPath.getTableName(),
                 userGroupRelationalPath.getTableName(), userGroupMappingRelationalPath.getTableName()};
@@ -62,17 +59,17 @@ public class DefaultUserDetailsRepository extends AbstractCoreQueryDslRepository
         RelationalPathBase<QFwUser> userPath = getRelationalPathMap().get(QFwUser.fwUser.getTableName(), RelationalPathBase.class);
         RelationalPathBase<QFwUserStatus> userStatusPath = getRelationalPathMap().get(QFwUserStatus.fwUserStatus.getTableName(), RelationalPathBase.class);
 
-        Path<?>[] userColumns = getPaths(userPath, "id", "username", "password", "hash_algorithm", "password_salt");
+        Path<QFwUser>[] userColumns = getPaths(userPath, "id", "username", "password", "hashAlgorithm", "passwordSalt");
         Path<?>[] userStatusColumns = getPaths(userStatusPath, "name");
         Path<?>[] columns = mergePath(userColumns, userStatusColumns);
 
+        //create query
         SQLQuery query = queryFactory.select(columns).from(userPath);
-
-
         join(JoinType.RIGHT_JOIN, query, getPathBuilder(userPath), getPathBuilder(userStatusPath), "status_id", "id");
-
         SearchCriteria criteria = new SearchCriteria("username", SearchOperation.EQUAL, username);
         addWhereClause(query, userPath, criteria);
+
+        log.debug(query.getSQL().getSQL());
 
         List<Tuple> queryResult = query.fetch();
         if (queryResult.isEmpty()) {

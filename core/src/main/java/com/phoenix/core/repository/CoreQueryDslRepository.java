@@ -106,6 +106,9 @@ public interface CoreQueryDslRepository {
      * @param typeClass      ví dụ: QFwUser.class
      * @param relationalPath ví dụ: QFwUser.fwUser
      * @return RelationalPath {@link com.querydsl.sql.RelationalPath}
+     * @Note Hàm này đang gặp lỗi getColumns return null => dùng khai báo bình thường dạng
+     * new QFwException("fw_exception", getDefaultSchemaName())
+     * để tahy thế
      */
     <T extends RelationalPathBase<T>> RelationalPathBase<T> getRelationalPathBase(Class<T> typeClass, RelationalPath<T> relationalPath);
 
@@ -139,7 +142,7 @@ public interface CoreQueryDslRepository {
 
     //---------------------------------
 
-    <T extends RelationalPathBase<T>> Path<?>[] getPaths(RelationalPathBase<T> relationalPathBase, String... columns);
+    <T extends RelationalPathBase<T>> Path<T>[] getPaths(RelationalPathBase<T> relationalPathBase, String... columns);
 
     Path<?>[] mergePath(Path<?>[]... paths);
 
