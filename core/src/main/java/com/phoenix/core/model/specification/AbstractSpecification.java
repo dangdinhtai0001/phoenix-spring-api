@@ -1,4 +1,4 @@
-package com.phoenix.api.core.model.specification;
+package com.phoenix.core.model.specification;
 
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.util.StringUtils;

@@ -1,6 +1,6 @@
-package com.phoenix.api.core.repository.specification;
+package com.phoenix.core.repository.specification;
 
-import com.phoenix.api.core.model.specification.*;
+import com.phoenix.core.model.specification.*;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.CriteriaBuilder;

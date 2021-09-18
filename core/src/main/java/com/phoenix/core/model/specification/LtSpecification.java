@@ -1,4 +1,4 @@
-package com.phoenix.api.core.model.specification;
+package com.phoenix.core.model.specification;
 
 import javax.annotation.Nullable;
 import javax.persistence.criteria.*;

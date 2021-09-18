@@ -1,4 +1,4 @@
-package com.phoenix.api.core.repository.specification;
+package com.phoenix.core.repository.specification;
 
 import static javax.persistence.criteria.Predicate.BooleanOperator.AND;
 import static javax.persistence.criteria.Predicate.BooleanOperator.OR;
