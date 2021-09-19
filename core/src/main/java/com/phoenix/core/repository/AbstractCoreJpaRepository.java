@@ -1,9 +1,9 @@
 package com.phoenix.core.repository;
 
 import com.phoenix.core.exception.RepositoryException;
-import com.phoenix.api.core.repository.specification.PredicateBuilder;
 import com.phoenix.core.entity.BaseEntity;
 import com.phoenix.core.model.query.SearchCriteria;
+import com.phoenix.core.repository.specification.PredicateBuilder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;

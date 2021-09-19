@@ -37,11 +37,11 @@ public abstract class AbstractCoreQueryDslRepository implements CoreQueryDslRepo
         this.queryFactory = queryFactory;
     }
 
-    //---------------------------------
+    //---------------------------------------------------------------------------------------------------
 
     protected abstract com.phoenix.common.structure.Tuple getRelationalPathMap();
 
-    //---------------------------------
+    //---------------------------------------------------------------------------------------------------
 
     @Override
     public <T extends RelationalPathBase<T>> SQLQuery<Tuple> createSelectQuery(RelationalPathBase<T> relationalPathBase,
@@ -72,7 +72,7 @@ public abstract class AbstractCoreQueryDslRepository implements CoreQueryDslRepo
                 .from(pathBuilder);
     }
 
-    //---------------------------------
+    //---------------------------------------------------------------------------------------------------
 
     @Override
     public <T> String getTableName(RelationalPathBase<T> relationalPathBase) {
@@ -90,7 +90,7 @@ public abstract class AbstractCoreQueryDslRepository implements CoreQueryDslRepo
         return this.datasourceUsername;
     }
 
-    //---------------------------------
+    //---------------------------------------------------------------------------------------------------
 
     @Override
     public <T extends RelationalPathBase<T>> PathBuilder<T> getPathBuilder(Class<T> aClass, String tableName) {
@@ -127,7 +127,7 @@ public abstract class AbstractCoreQueryDslRepository implements CoreQueryDslRepo
         return new RelationalPathBase<>(typeClass, table, schema, table);
     }
 
-    //---------------------------------
+    //---------------------------------------------------------------------------------------------------
 
     @Override
     public <T extends RelationalPathBase<T>> StringPath getPathString(PathBuilder<T> pathBuilder, String column) {
@@ -146,7 +146,7 @@ public abstract class AbstractCoreQueryDslRepository implements CoreQueryDslRepo
         return pathBuilder.getString(column);
     }
 
-    //---------------------------------
+    //---------------------------------------------------------------------------------------------------
 
     @Override
     public <T extends RelationalPathBase<T>> Path<T>[] getPaths(RelationalPathBase<T> relationalPathBase, String... columns) {
@@ -198,7 +198,7 @@ public abstract class AbstractCoreQueryDslRepository implements CoreQueryDslRepo
         return result.toArray(new Expression[0]);
     }
 
-    //---------------------------------
+    //---------------------------------------------------------------------------------------------------
 
     @Override
     public QueryBase<?> addWhereClause(SQLQuery<?> query, QueryExpression expression) {
@@ -267,7 +267,7 @@ public abstract class AbstractCoreQueryDslRepository implements CoreQueryDslRepo
         return sqlUpdateClause;
     }
 
-    //---------------------------------
+    //---------------------------------------------------------------------------------------------------
 
     @Override
     public <T extends RelationalPathBase<T>> Predicate getPredicateFromSearchCriteria(RelationalPathBase<T> relationalPathBase, SearchCriteria criteria) {
@@ -297,7 +297,6 @@ public abstract class AbstractCoreQueryDslRepository implements CoreQueryDslRepo
                         String.valueOf(stringArguments.get(0)),
                         String.valueOf(stringArguments.get(1))
                 );
-            //--------------------------------------
             case EQUAL:
                 return pathBuilder.getString(key).eq(stringArguments.get(0));
             case GREATER_THAN_OR_EQUAL:
@@ -314,7 +313,6 @@ public abstract class AbstractCoreQueryDslRepository implements CoreQueryDslRepo
                 return pathBuilder.getString(key).ne(stringArguments.get(0));
             case NOT_LIKE:
                 return pathBuilder.getString(key).notLike(stringArguments.get(0));
-            //--------------------------------------
             case IN:
                 return pathBuilder.getString(key).in(stringArguments);
             case NOT_IN:
@@ -384,7 +382,7 @@ public abstract class AbstractCoreQueryDslRepository implements CoreQueryDslRepo
 
         return predicates;
     }
-    //---------------------------------
+    //---------------------------------------------------------------------------------------------------
 
     @Override
     public <T> List<T> parseResult(List<Tuple> queryResult, Class<T> instanceClass, String... properties) {
@@ -414,7 +412,7 @@ public abstract class AbstractCoreQueryDslRepository implements CoreQueryDslRepo
         return result;
     }
 
-    //---------------------------------
+    //---------------------------------------------------------------------------------------------------
     @Override
     public <T extends RelationalPathBase<T>> SQLQuery join(JoinType joinType, SQLQuery query,
                                                            RelationalPathBase<T> leftRelationalPathBase, RelationalPathBase<T> rightRelationalPathBase,
@@ -456,7 +454,7 @@ public abstract class AbstractCoreQueryDslRepository implements CoreQueryDslRepo
         return query;
     }
 
-    //---------------------------------
+    //---------------------------------------------------------------------------------------------------
 
     @Override
     public <T extends RelationalPathBase<T>> SQLQuery addOrderBy(SQLQuery query, RelationalPathBase<T> relationalPathBase, OrderBy orderBy) {
@@ -525,7 +523,7 @@ public abstract class AbstractCoreQueryDslRepository implements CoreQueryDslRepo
         return query;
     }
 
-    //---------------------------------
+    //---------------------------------------------------------------------------------------------------
 
     @Override
     public SQLUpdateClause set(SQLUpdateClause query, Path path, Object value) {
@@ -534,7 +532,7 @@ public abstract class AbstractCoreQueryDslRepository implements CoreQueryDslRepo
         return query;
     }
 
-    //---------------------------------
+    //---------------------------------------------------------------------------------------------------
     @Override
     public <T extends RelationalPathBase<T>> SQLInsertClause createInsertClause(RelationalPathBase<T> relationalPathBase, Path[] paths, Object[] values) {
         SQLInsertClause insert = queryFactory.insert(relationalPathBase);
@@ -593,7 +591,7 @@ public abstract class AbstractCoreQueryDslRepository implements CoreQueryDslRepo
                 .select(subQueryExpression);
     }
 
-    //---------------------------------
+    //---------------------------------------------------------------------------------------------------
 
 
 }

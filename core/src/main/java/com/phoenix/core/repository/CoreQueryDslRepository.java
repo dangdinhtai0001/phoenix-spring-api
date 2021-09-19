@@ -19,7 +19,7 @@ import java.util.List;
 
 public interface CoreQueryDslRepository {
 
-    //---------------------------------
+    //---------------------------------------------------------------------------------------------------
 
     /**
      * @param relationalPathBase (something like : QFwResourceAction.fwResourceAction)
@@ -53,7 +53,7 @@ public interface CoreQueryDslRepository {
      */
     SQLQuery<Tuple> createSelectQuery(Expression[] expressions, PathBuilder pathBuilder);
 
-    //---------------------------------
+    //---------------------------------------------------------------------------------------------------
 
     /**
      * @param relationalPathBase something like: QFwUser.fwUser
@@ -75,7 +75,7 @@ public interface CoreQueryDslRepository {
      */
     String getDefaultSchemaName();
 
-    //---------------------------------
+    //---------------------------------------------------------------------------------------------------
 
     /**
      * @param aClass    Class (phải kế thừa từ {@link RelationalPathBase})
@@ -112,7 +112,7 @@ public interface CoreQueryDslRepository {
      */
     <T extends RelationalPathBase<T>> RelationalPathBase<T> getRelationalPathBase(Class<T> typeClass, RelationalPath<T> relationalPath);
 
-    //---------------------------------
+    //---------------------------------------------------------------------------------------------------
 
     /**
      * @param pathBuilder {@link com.querydsl.core.types.dsl.PathBuilder}
@@ -140,7 +140,7 @@ public interface CoreQueryDslRepository {
      */
     <T extends RelationalPathBase<T>> StringPath getPathString(Class<T> RelationalPathBaseClass, RelationalPathBase<T> relationalPathBase, String column);
 
-    //---------------------------------
+    //---------------------------------------------------------------------------------------------------
 
     <T extends RelationalPathBase<T>> Path<T>[] getPaths(RelationalPathBase<T> relationalPathBase, String... columns);
 
@@ -150,7 +150,7 @@ public interface CoreQueryDslRepository {
 
     Expression[] mergeExpressions(Expression[]... expressions);
 
-    //---------------------------------
+    //---------------------------------------------------------------------------------------------------
 
     QueryBase<?> addWhereClause(SQLQuery<?> query, QueryExpression expression);
 
@@ -170,7 +170,7 @@ public interface CoreQueryDslRepository {
 
     SQLUpdateClause addWhereClause(SQLUpdateClause sqlUpdateClause, List<Predicate> predicates);
 
-    //---------------------------------
+    //---------------------------------------------------------------------------------------------------
 
     <T extends RelationalPathBase<T>> Predicate getPredicateFromSearchCriteria(RelationalPathBase<T> relationalPathBase, SearchCriteria criteria);
 
@@ -184,17 +184,27 @@ public interface CoreQueryDslRepository {
 
     List<Predicate> getPredicateFromSearchCriteria(Class objectClass, List<PathBuilder<?>> pathBuilders, SearchCriteria criteria);
 
-    //---------------------------------
+    //---------------------------------------------------------------------------------------------------
 
     <T> List<T> parseResult(List<Tuple> queryResult, Class<T> instanceClass, String... properties);
 
-    //---------------------------------
+    //---------------------------------------------------------------------------------------------------
 
-    //---------------------------------
     <T extends RelationalPathBase<T>> SQLQuery join(JoinType joinType, SQLQuery query,
                                                     RelationalPathBase<T> leftRelationalPathBase, RelationalPathBase<T> rightRelationalPathBase,
                                                     String leftColumn, String rightColumn);
 
+    /**
+     * @param joinType     {@link com.phoenix.core.model.query.JoinType} Kiểu join (DEFAULT, INNER_JOIN, JOIN, LEFT_JOIN, RIGHT_JOIN, FULL_JOIN)
+     * @param query        Đối tượng SQLQuery
+     * @param leftBuilder  PathBuilder của mệnh đề bên trái lệnh join
+     * @param rightBuilder PathBuilder của mệnh đề bên phải lệnh join
+     * @param leftColumn   Tên columns ứng vs leftBuilder
+     * @param rightColumn  Tên columns ứng vs RightBuilder
+     * @param <T>          extends {@link RelationalPathBase}
+     * @param <E>          extends {@link RelationalPathBase}
+     * @return SQLQuery ban đầu nhưng được thêm mệnh đề join
+     */
     <T extends RelationalPathBase<T>, E extends RelationalPathBase<E>> SQLQuery join(
             JoinType joinType, SQLQuery query,
             PathBuilder<T> leftBuilder, PathBuilder<E> rightBuilder,
@@ -212,7 +222,7 @@ public interface CoreQueryDslRepository {
 
     SQLUpdateClause set(SQLUpdateClause query, Path path, Object value);
 
-    //---------------------------------
+    //---------------------------------------------------------------------------------------------------
 
     <T extends RelationalPathBase<T>> SQLInsertClause createInsertClause(RelationalPathBase<T> relationalPathBase, Path[] paths, Object[] values);
 
