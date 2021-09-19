@@ -39,8 +39,8 @@ class ExceptionRepositoryImpTest {
         Path<?>[] paths = exceptionRepositoryImp.getPaths(relationalPathBase, columns);
         SQLQuery query = exceptionRepositoryImp.createSelectQuery(relationalPathBase, paths);
 
-        QueryExpression expression = new QueryExpression("id > 1 and  id < 6",
-                ExpressionType.BOOLEAN, QFwException.fwException.id);
+        QueryExpression expression = new QueryExpression("id > 1 and  http_code = 401",
+                ExpressionType.BOOLEAN);
 
         exceptionRepositoryImp.addWhereClause(query, expression);
 
@@ -49,7 +49,5 @@ class ExceptionRepositoryImpTest {
         for (Tuple tuple : queryResult) {
             System.out.println(tuple);
         }
-
-
     }
 }
